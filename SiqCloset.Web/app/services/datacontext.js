@@ -15,8 +15,10 @@
         var logSuccess = getLogFn(serviceId, 'success');
         var repoNames = ['customer', 'item', 'batch'];
         var events = config.events;
+        var primePromise;
 
         var service = {
+            prime: prime,
             save: save,
             cancel: cancel,
             markDeleted: markDeleted,
@@ -136,6 +138,19 @@
                 // send the message (the ctrl receives it)
                 common.$broadcast(events.hasChangesChanged, data);
             });
+        }
+
+        function prime() {
+            if (primePromise) return primePromise;
+
+            primePromise = $q.all([service.customer.getAll()])
+                .then(success);
+
+            return primePromise;
+
+            function success() {
+                log('Primed the data');
+            }
         }
 
     }

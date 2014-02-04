@@ -27,7 +27,7 @@
 
         function activate() {
             var promises = [
-                getAllCustomers(),
+                //getAllCustomers(),
                 getCustomerCount(),
                //getCustomersAndItemsCount()
             ];
