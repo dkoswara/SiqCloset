@@ -1,0 +1,17 @@
+﻿<section id="mainbar" class="mainbar" data-ng-controller="shippingAddress as vm">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="input-append">
+                    <input type="text" data-ng-model="vm.batchInput" data-ng-keyup="vm.getItemsFromBatch($event)">
+                        <a class="btn btn-info btn-notext" data-ng-click="vm.getItemsFromBatch($event)">
+                            <i class="icon-search"></i>
+                        </a>
+                    </input>
+                </div>
+                <div class="gridStyle" data-ng-grid="itemsGridOptions">
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

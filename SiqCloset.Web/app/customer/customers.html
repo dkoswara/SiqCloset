@@ -1,0 +1,32 @@
+﻿<section class="mainbar" data-ng-controller="customers as vm">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="form-search">
+                    <div class="btn-group pull-left">
+                        <a class="btn btn-info" href="#/customer/new">
+                            <i class="icon-plus"></i><span>Add Customer</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="widget worange">
+                    <div data-cc-widget-header title="{{vm.title}}" subtitle="{{vm.customers.length}}"></div>
+                    <div class="widget-content user">
+                        <div class="padd" data-ng-repeat="c in vm.customerPartials" data-ng-click="vm.goToCustomer(c)">
+                            <div class="user" title="Go to customer details">
+                                <h6>{{c.name}}</h6>
+                                <!--<h6>{{c.address}}</h6>
+                                    <h6>{{c.phoneNo}}</h6>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-foot">
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

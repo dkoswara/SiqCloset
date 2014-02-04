@@ -1,0 +1,71 @@
+﻿<section class="mainbar" data-ng-controller="customerDetails as vm">
+    <section class="matter">
+        <div class="container-fluid">
+            <div>
+                <button class ="btn btn-info" data-ng-click="vm.goBack()">
+                    <i class="icon-hand-left"></i>Back
+                </button>
+                <button class ="btn btn-info" 
+                        data-ng-click="vm.cancel()"
+                        data-ng-disabled="!vm.canCancel">
+                    <i class="icon-undo"></i>Cancel
+                </button>
+                <button class ="btn btn-info" 
+                        data-ng-click="vm.save()"
+                        data-ng-disabled="!vm.canSave">
+                    <i class="icon-save"></i>Save
+                </button>
+                <button class ="btn btn-danger" 
+                        data-ng-click="vm.deleteCustomer()">
+                    <i class="icon-trash"></i>Delete
+                </button>
+                <span data-ng-show="vm.hasChanges" class="dissolve-animation ng-hide">
+                    <i class="icon-asterisk icon-asterisk-large"></i>
+                </span>
+            </div>
+            <div class="widget wlightblue">
+                <div data-cc-widget-header title="Edit {{vm.customer.name || 'New Customer'}}"></div>
+                <div class="widget-content user">
+                    <div>
+                        <div>
+                            <label>Full Name</label>
+                            <input data-ng-model="vm.customer.name" data-z-validate placeholder="Full Name"/>
+                        </div>
+                        <div>
+                            <label>Address</label>
+                            <textarea data-ng-model="vm.customer.address" placeholder="Address"/>
+                        </div>
+                        <div>
+                            <label>Phone Number</label>
+                            <input data-ng-model="vm.customer.phoneNo" placeholder="Phone No"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="widget wred">
+                <div data-cc-widget-header title="{{vm.getSelectedTitle()}}"></div>
+                <div class="widget-content user">
+                    <div>
+                        <div>
+                            <label>Select customer:</label>
+                            <select data-ng-options="c.name for c in vm.customersToSelect" data-ng-model="vm.selectedCustomer"></select>
+                        </div>
+                        <div>
+                            <label>Full Name</label>
+                            <input data-ng-model="vm.selectedCustomer.name" placeholder="Full Name"/>
+                        </div>
+                        <div>
+                            <label>Address</label>
+                            <textarea data-ng-model="vm.selectedCustomer.address" placeholder="Address"/>
+                        </div>
+                        <div>
+                            <label>Phone Number</label>
+                            <input data-ng-model="vm.selectedCustomer.phoneNo" placeholder="Phone No"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

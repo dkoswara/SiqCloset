@@ -1,0 +1,33 @@
+﻿<section class="mainbar" data-ng-controller="masterCustomerAddress as vm">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="widget wviolet">
+                    <div data-cc-widget-header title="{{vm.title}}"></div>
+                    <div class="widget-content user">
+                        <input type="file" ng-file-select="vm.onFileSelect($files)" />
+                        <a class="btn btn-info" data-ng-click="vm.saveAllCustomers()">
+                            <i class="icon-save"></i>
+                            <span>Save All Customers</span>
+                        </a>
+                        <a class="btn btn-info" data-ng-click="vm.showData()">
+                            <i class="icon-check"></i>
+                            <span>Show Saved Data</span>
+                        </a>
+                        
+                    </div>
+                    <div class="padd" data-ng-repeat="c in vm.customers">
+                        <div class="user">
+                            <h6>{{c.name}}</h6>
+                            <h6>{{c.address}}</h6>
+                            <h6>{{c.phoneNo}}</h6>
+                        </div>
+                    </div>
+                    <div class="widget-foot">
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

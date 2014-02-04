@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiqCloset.Web", "SiqCloset.Web\SiqCloset.Web.csproj", "{E18DFCD3-2100-4A70-873F-3A2D2D50E09C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiqCloset.Model", "SiqCloset.Model\SiqCloset.Model.csproj", "{B6999A68-8E6F-4A41-B2B0-28B5445237A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiqCloset.DataAccess", "SiqCloset.DataAccess\SiqCloset.DataAccess.csproj", "{6739956D-DF29-4404-A16A-8D095E1B44F6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E18DFCD3-2100-4A70-873F-3A2D2D50E09C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E18DFCD3-2100-4A70-873F-3A2D2D50E09C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E18DFCD3-2100-4A70-873F-3A2D2D50E09C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E18DFCD3-2100-4A70-873F-3A2D2D50E09C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6999A68-8E6F-4A41-B2B0-28B5445237A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6999A68-8E6F-4A41-B2B0-28B5445237A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6999A68-8E6F-4A41-B2B0-28B5445237A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6999A68-8E6F-4A41-B2B0-28B5445237A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6739956D-DF29-4404-A16A-8D095E1B44F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6739956D-DF29-4404-A16A-8D095E1B44F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6739956D-DF29-4404-A16A-8D095E1B44F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6739956D-DF29-4404-A16A-8D095E1B44F6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

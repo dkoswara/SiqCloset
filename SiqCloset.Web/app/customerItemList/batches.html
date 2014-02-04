@@ -1,0 +1,22 @@
+﻿<section class="mainbar" data-ng-controller="batches as vm">
+    <section class="matter">
+        <div class="container-fluid">
+            
+            <div class="row-fluid">
+                <div class="widget worange">
+                    <div data-cc-widget-header title="{{vm.title}}" subtitle="{{vm.batches.length}}"></div>
+                    <div class="widget-content user">
+                        <div class="padd" data-ng-repeat="b in vm.batchPartials" data-ng-click="vm.goToBatch(b)">
+                            <div class="user" title="Go to batch details">
+                                <h6>Batch {{b.batchID}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-foot">
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
