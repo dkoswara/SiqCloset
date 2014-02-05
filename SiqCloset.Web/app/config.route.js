@@ -94,6 +94,13 @@
                     }
                 }
             }, {
+                url: '/customerItemList/:id',
+                config: {
+                    title: 'Customer Item List',
+                    templateUrl: 'app/customerItemList/customerItemList.html',
+                    settings: { }
+                }
+            }, {
                 url: '/customer/:id',
                 config: {
                     title: 'customer',
