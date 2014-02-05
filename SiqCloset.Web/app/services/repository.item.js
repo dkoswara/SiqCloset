@@ -43,10 +43,10 @@
             function querySucceeded(data) {
                 var results = data.results;
                 self.log('Retrieved [Items Projection] from remote data source', results.length, true);
-                return createItemsMap(results);
+                return createItemsArray(results);
             }
             
-            function createItemsMap(results) {
+            function createItemsArray(results) {
                 var itemsMap = [];
                 results.forEach(function (r) {
                     var item = {
