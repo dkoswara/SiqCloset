@@ -540,4 +540,11 @@ a {
     width: auto; 
     height: 1000px
 }
+
+.gridStyle2 {
+    border: 1px solid rgb(212,212,212);
+    width: 925px; 
+    height: 1000px;
+    font-size: 10pt
+}
 /*#endregion */

@@ -43,7 +43,7 @@
                     { field: 'notes', displayName: 'Notes', width: 150 },
                     { field: 'custName', displayName: 'Customer Name', width: 200 },
                     { field: 'itemCode', displayName: 'Item Code', width: 100 },
-                    { field: 'itemName', displayName: 'Item Name', width: 200 },
+                    { field: 'itemName', displayName: 'Item Name', width: 300 },
                     { field: 'boxNo', displayName: 'Box No', width: 75 },
                     { field: 'price', displayName: 'Price', width: 100 }
                 ]
