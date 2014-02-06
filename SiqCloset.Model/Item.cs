@@ -11,6 +11,7 @@ namespace SiqCloset.Model
         public string Type { get; set; }
         public decimal Price { get; set; }
         public string ShipVia { get; set; }
+        public string Notes { get; set; }
         public Guid? CustomerID { get; set; }
         public Guid? BoxID { get; set; }
         public int? BatchID { get; set; }

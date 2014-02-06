@@ -61,6 +61,7 @@
                         code: box['ItemCode'],
                         name: box['ItemName'],
                         price: box['Price'],
+                        notes: box['Notes'],
                         boxID: newBox.boxID,
                         batchID: newBatch.batchID,
                         customerID: getCustomerId(box['CustomerName']),
