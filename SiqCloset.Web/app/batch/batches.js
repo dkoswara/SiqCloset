@@ -33,7 +33,7 @@
 
         function goToBatch(batch) {
             if (batch && batch.batchID) {
-                $location.path('/customerItemList/' + batch.batchID);
+                $location.path('/batch/' + batch.batchID);
             }
         }
 

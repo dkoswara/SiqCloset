@@ -1,0 +1,31 @@
+﻿<section id="mainbar" class="mainbar" data-ng-controller="batchDetails as vm">
+    <section class="matter">
+        <div class="container-fluid">
+            <div>
+                <button class ="btn btn-info" 
+                        data-ng-click="vm.save()"
+                        data-ng-disabled="!vm.canSave">
+                    <i class="icon-save"></i>Save
+                </button>
+                <button class ="btn btn-info" 
+                        data-ng-click="vm.cancel()"
+                        data-ng-disabled="!vm.canCancel">
+                    <i class="icon-undo"></i>Cancel
+                </button>
+                <span data-ng-show="vm.hasChanges" class="dissolve-animation ng-hide">
+                    <i class="icon-asterisk icon-asterisk-large"></i>
+                </span>
+            </div>
+
+            <div class="widget wlightblue">
+                
+
+                <div data-cc-widget-header title="Edit Batch {{vm.batchID || 'New Batch'}}"></div>
+                
+                <div class="widget-content user">
+                    <div class="gridStyle" style="width: 925px; font-size: 10pt" data-ng-grid="itemsGridOptions"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
