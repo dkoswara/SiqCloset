@@ -7,6 +7,7 @@
 
     function AbstractRepository(common, config) {
         var EntityQuery = breeze.EntityQuery;
+        var logError = common.logger.getLogFn(this.serviceId, 'error');
 
         // Abstract repo gets its derived object's this.manager
         function Ctor() {
@@ -56,7 +57,7 @@
         
         function _queryFailed(error) {
         	var msg = config.appErrorPrefix + 'Error retrieving data.' + error.message;
-        	this.logError(msg, error);
+        	logError(msg, error);
         	throw error;
         }
         

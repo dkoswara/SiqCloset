@@ -10,6 +10,7 @@
         var Predicate = breeze.Predicate;
         var entityName = model.modelInfo.Item.entityName;
         var resourceName = model.modelInfo.Item.resourceName;
+        var orderBy = 'box.boxNo';
         
         function Ctor(mgr) {
             this.serviceId = serviceId;
@@ -19,6 +20,7 @@
             this.zStorageWip = zStorageWip;
             // Exposed data access functions
             this.getProjection = getProjection;
+            this.getItems = getItems;
         }
 
         // Allow this repo to have access to the Abstract Repo
@@ -35,8 +37,8 @@
             var predicate = Predicate.create('batch.batchID', '==', batchNumber);
             return EntityQuery.from(resourceName)
                 .where(predicate)
-                .select("box.boxNo, code, name, customer.name, customer.address, customer.phoneNo")
-                .orderBy("box.boxNo")
+                .select('box.boxNo, code, name, customer.name, customer.address, customer.phoneNo')
+                .orderBy(orderBy)
                 .using(self.manager).execute()
                 .to$q(querySucceeded, self._queryFailed);
 
@@ -67,6 +69,25 @@
                     itemsMap.push(item);
                 });
                 return itemsMap;
+            }
+        }
+
+        function getItems(batchNumber) {
+            var self = this;
+
+            var predicate = Predicate.create('batch.batchID', '==', batchNumber);
+            return EntityQuery.from(resourceName)
+                .where(predicate)
+                .orderBy(orderBy)
+                .expand('customer, box, batch')
+                .toType(entityName)
+                .using(self.manager).execute()
+                .to$q(querySucceeded, self._queryFailed);
+
+            function querySucceeded(data) {
+                var results = data.results;
+                self.log('Retrieved [Items Details] from remote data source', results.length, true);
+                return results;
             }
         }
     }

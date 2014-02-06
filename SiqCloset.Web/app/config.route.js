@@ -87,17 +87,17 @@
                 url: '/batch',
                 config: {
                     title: 'Customer Item List',
-                    templateUrl: 'app/customerItemList/batches.html',
+                    templateUrl: 'app/batch/batches.html',
                     settings: {
                         nav: 6,
                         content: '<i class="icon-briefcase"></i> Customer Item List'
                     }
                 }
             }, {
-                url: '/customerItemList/:id',
+                url: '/batch/:id',
                 config: {
-                    title: 'Customer Item List',
-                    templateUrl: 'app/customerItemList/customerItemList.html',
+                    title: 'batch',
+                    templateUrl: 'app/batch/batchDetails.html',
                     settings: { }
                 }
             }, {

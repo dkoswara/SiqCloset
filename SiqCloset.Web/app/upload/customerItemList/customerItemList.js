@@ -1,10 +1,10 @@
 ﻿(function () {
     'use strict';
-    var controllerId = 'customerItemList';
+    var controllerId = 'uploadCIL';
     angular.module('app').controller(controllerId,
-        ['common', 'customerItemListReader', 'datacontext', customerItemList]);
+        ['common', 'customerItemListReader', 'datacontext', uploadCIL]);
 
-    function customerItemList(common, customerItemListReader, datacontext) {
+    function uploadCIL(common, customerItemListReader, datacontext) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
         var logError = getLogFn(controllerId, 'error');
@@ -41,6 +41,7 @@
             reader.onload = function (e) {
                 var data = e.target.result;
                 customerItemLists = fn(data, vm.batchNumber);
+                log('Finished reading CIL');
             };
             reader.readAsBinaryString(file);
         }
