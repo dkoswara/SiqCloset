@@ -547,4 +547,8 @@ a {
     height: 1000px;
     font-size: 10pt
 }
+
+.ngCell {
+    overflow: visible;
+}
 /*#endregion */

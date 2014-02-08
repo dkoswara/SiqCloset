@@ -12,11 +12,18 @@
         var log = getLogFn(controllerId);
         var logError = getLogFn(controllerId, 'error');
 
+        vm.getTitle = getTitle;
+        vm.customerLookups = [];
         vm.items = [];
+        vm.selectedItems = [];
         vm.hasChanges = false;
         vm.isSaving = false;
         vm.save = save;
         vm.cancel = cancel;
+
+        vm.selected = undefined;
+        vm.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+        vm.onSelect = onSelect;
 
         Object.defineProperty(vm, 'canSave', {
             get: canSave
@@ -33,8 +40,10 @@
         activate();
 
         function activate() {
+            getCustomerLookups();
             onHasChanges();
             setItemsGrid();
+            onEndEditCell();
             vm.batchID = $routeParams.id;
             common.activateController([getRequestedBatch()], controllerId)
                .then(function () {
@@ -42,33 +51,77 @@
                });
         }
 
+        function getTitle() {
+            if (vm.batchID.lastIndexOf('new') != -1) {
+                var newBatchID = vm.batchID.substring(3);
+                return 'Edit New Batch ' + newBatchID;
+            }
+            return 'Edit Batch ' + vm.batchID;
+        }
+
+        function getCustomerLookups() {
+            vm.customerLookups = datacontext.customer.getLocalFromManager();
+        }
+
         function getRequestedBatch() {
             var val = vm.batchID;
+            if (val.lastIndexOf('new') != -1) {
+                vm.newBatch = datacontext.batch.create(vm.batchID.substring(3));
+                return vm.items = [];
+            }
+
             return datacontext.item.getItems(val)
-                .then(function (data) {
-                    vm.items = data;
-                }, function (error) {
-                    logError('Unable to get batch ' + val);
-                    goToBatches();
-                });
+                .then(querySucceeded, queryFailed);
+
+            function querySucceeded(data) {
+                vm.items = data;
+                setCustName();
+            }
+
+            function queryFailed(error) {
+                logError('Unable to get batch ' + val);
+                goToBatches();
+            }
+        }
+
+        function setCustName() {
+            vm.items.forEach(function (i) {
+                if (i.customer) {
+                    i.custName = i.customer.name;
+                }
+            });
         }
 
         function setItemsGrid() {
             $scope.itemsGridOptions = {
                 data: 'vm.items',
-                enableCellSelection: true,
-                enableRowSelection: false,
+                selectedItems: vm.selectedItems,
+                multiSelect: false,
                 enableCellEdit: true,
                 columnDefs: [
                     { field: 'notes', displayName: 'Notes', width: 150 },
-                    { field: 'customer.name', displayName: 'Customer Name', width: 200 },
+                    {
+                        field: 'custName', displayName: 'Customer Name', width: 215,
+                        cellTemplate: '/app/batch/custSelTmplTypeAhead.html', enableCellEdit: false
+                    },
                     { field: 'code', displayName: 'Item Code', width: 100 },
                     { field: 'name', displayName: 'Item Name', width: 300 },
                     { field: 'box.boxNo', displayName: 'Box No', width: 75 },
-                    { field: 'price', displayName: 'Price', width: 100 }
+                    { field: 'price', displayName: 'Price', width: 85 }
                 ]
             };
         }
+        
+
+        function onEndEditCell() {
+            $scope.$on('ngGridEventEndCellEdit', function (evt) {
+                var entity = evt.targetScope.row.entity;
+            });
+        }
+
+        function onSelect($item, $model, $label) {
+            vm.selectedItems[0].customerID = $item.customerID;
+        };
 
         function goToBatches() { $location.path('/batch'); }
 
@@ -93,6 +146,14 @@
 
         function cancel() {
             datacontext.cancel();
+
+            if (vm.newBatch && vm.newBatch.entityAspect.entityState.isDetached()) {
+                goToBatches();
+            } else {
+                setCustName();
+            }
+
+
         }
     }
 })();

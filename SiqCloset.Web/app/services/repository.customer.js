@@ -184,6 +184,7 @@
         }
         
         function getLocalFromManager(em) {
+            if (!em) em = this.manager;
             return EntityQuery.from(resourceName)
                 .select('customerID, name, address, phoneNo')
                 .orderBy(orderBy)

@@ -1,7 +1,16 @@
 ﻿<section class="mainbar" data-ng-controller="batches as vm">
     <section class="matter">
         <div class="container-fluid">
-            
+            <div class="row-fluid">
+                <div class="btn-group pull-left">
+                    <!--<a class="btn btn-info" href="#/batch/new">
+                            <i class="icon-plus"></i><span>Add Batch</span>
+                        </a>-->
+                    <a class="btn btn-info" href="" data-ng-click="vm.addNewBatch()">
+                            <i class="icon-plus"></i><span>Add Batch</span>
+                        </a>
+                    </div>
+            </div>
             <div class="row-fluid">
                 <div class="widget worange">
                     <div data-cc-widget-header title="{{vm.title}}" subtitle="{{vm.batches.length}}"></div>

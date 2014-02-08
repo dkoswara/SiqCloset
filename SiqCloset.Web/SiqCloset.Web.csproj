@@ -110,11 +110,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\customerItemList\batches.html" />
-    <Content Include="app\customerItemList\batches.js" />
-    <Content Include="app\customerItemList\customerItemList.html" />
-    <Content Include="app\customerItemList\customerItemList.js" />
-    <Content Include="app\customerItemList\customerSelectionTemplate.html" />
+    <Content Include="app\batch\batches.html" />
+    <Content Include="app\batch\batches.js" />
+    <Content Include="app\batch\batchDetails.html" />
+    <Content Include="app\batch\batchDetails.js" />
+    <Content Include="app\batch\custSelTmplTypeAhead.html" />
+    <Content Include="app\batch\custSelTmplDropDown.html" />
     <Content Include="app\services\repository.batch.js" />
     <Content Include="app\upload\customerItemList\customerItemList.html" />
     <Content Include="app\upload\customerItemList\customerItemList.js" />

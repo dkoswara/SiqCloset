@@ -1,0 +1,6 @@
+﻿<div>
+    <input type="text" 
+           data-ng-model="COL_FIELD" 
+           typeahead="customer.name for customer in vm.customerLookups | filter:$viewValue | limitTo:8"
+           typeahead-on-select="vm.onSelect($item, $model, $label)" />
+</div>

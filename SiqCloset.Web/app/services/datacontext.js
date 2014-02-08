@@ -144,9 +144,14 @@
             if (primePromise) return primePromise;
 
             primePromise = $q.all([service.customer.getAll()])
+                .then(extendMetadata)
                 .then(success);
 
             return primePromise;
+
+            function extendMetadata() {
+                var metadataStore = manager.metadataStore;
+            }
 
             function success() {
                 log('Primed the data');

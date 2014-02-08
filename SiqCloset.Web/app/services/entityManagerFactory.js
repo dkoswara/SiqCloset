@@ -2,16 +2,16 @@
     'use strict';
     
     var serviceId = 'entityManagerFactory';
-    angular.module('app').factory(serviceId, ['config', emFactory]);
+    angular.module('app').factory(serviceId, ['config', 'model', emFactory]);
 
-    function emFactory(config) {
+    function emFactory(config, model) {
         breeze.config.initializeAdapterInstance('modelLibrary', 'backingStore', true);
         breeze.NamingConvention.camelCase.setAsDefault();
 
         new breeze.ValidationOptions({ validateOnAttach: false }).setAsDefault();
         
         var serviceName = config.remoteServiceName;
-        var metadataStore = new breeze.MetadataStore();
+        var metadataStore = createMetadataStore();
 
         var provider = {
             metadataStore: metadataStore,
@@ -26,6 +26,12 @@
                 metadataStore: metadataStore
             });
             return mgr;
+        }
+
+        function createMetadataStore() {
+            var store = new breeze.MetadataStore();
+            model.configureMetadataStore(store);
+            return store;
         }
     }
 })();

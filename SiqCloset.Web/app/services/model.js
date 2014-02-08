@@ -28,15 +28,29 @@
         };
         
         var service = {
+            configureMetadataStore: configureMetadataStore,
             modelInfo: modelInfo,
             createNullos: createNullos,
         };
 
         return service;
+
+        function configureMetadataStore(metadataStore) {
+            registerItem(metadataStore);
+        }
         
         function Customer() {
             this.isPartial = false;
             //this.id = null;
+        }
+
+        function registerItem(metadataStore) {
+            metadataStore.registerEntityTypeCtor(modelInfo.Item.entityName, Item);
+
+            function Item() {
+                
+            }
+
         }
 
         function createNullos(manager) {

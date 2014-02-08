@@ -20,6 +20,7 @@
             this.zStorage = zStorage;
 
             // Exposed data access functions
+            this.create = create;
             this.getPartials = getPartials;
             this.getCount = getCount;
         }
@@ -31,6 +32,10 @@
         AbstractRepository.extend(Ctor);
 
         return Ctor;
+
+        function create(batchNumber) {
+            return this.manager.createEntity(entityName, { batchID: batchNumber });
+        }
 
         function getPartials(forceRefresh) {
             var self = this;

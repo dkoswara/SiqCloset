@@ -2,6 +2,9 @@
     <section class="matter">
         <div class="container-fluid">
             <div>
+                <input type="text" data-ng-model="vm.selected" typeahead="state for state in vm.states | filter:$viewValue | limitTo:8" />
+            </div>
+            <div>
                 <button class ="btn btn-info" 
                         data-ng-click="vm.save()"
                         data-ng-disabled="!vm.canSave">
@@ -20,10 +23,10 @@
             <div class="widget wlightblue">
                 
 
-                <div data-cc-widget-header title="Edit Batch {{vm.batchID || 'New Batch'}}"></div>
+                <div data-cc-widget-header title="{{vm.getTitle()}}"></div>
                 
                 <div class="widget-content user">
-                    <div class="gridStyle" style="width: 925px; font-size: 10pt" data-ng-grid="itemsGridOptions"></div>
+                    <div class="gridStyle" style="width: 945px; font-size: 10pt" data-ng-grid="itemsGridOptions"></div>
                 </div>
             </div>
         </div>

@@ -14,6 +14,7 @@
         vm.title = 'Batches';
         vm.batchPartials = [];
         vm.goToBatch = goToBatch;
+        vm.addNewBatch = addNewBatch;
 
         activate();
 
@@ -35,6 +36,14 @@
             if (batch && batch.batchID) {
                 $location.path('/batch/' + batch.batchID);
             }
+        }
+
+        function addNewBatch() {
+            var newBatchID = 0;
+            if (vm.batchPartials.length > 0) {
+                newBatchID = vm.batchPartials[vm.batchPartials.length - 1].batchID + 1;
+            }
+            $location.path('/batch/new' + newBatchID);
         }
 
     }
