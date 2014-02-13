@@ -70,7 +70,7 @@
                     templateUrl: 'app/customer/customers.html',
                     settings: {
                         nav: 4,
-                        content: '<i class="icon-user"></i> Customer'
+                        content: '<i class="icon-user"></i> Master Customer Address'
                     }
                 }
             }, {
