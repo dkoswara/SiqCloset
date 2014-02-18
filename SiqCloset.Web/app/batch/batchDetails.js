@@ -21,6 +21,8 @@
         vm.save = save;
         vm.cancel = cancel;
 
+        var isCustomerLookupSelected = false;
+
         vm.selected = undefined;
         vm.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
         vm.onSelect = onSelect;
@@ -98,6 +100,7 @@
                 selectedItems: vm.selectedItems,
                 multiSelect: false,
                 enableCellEdit: true,
+                beforeSelectionChange: beforeSelectionChange,
                 columnDefs: [
                     { field: 'notes', displayName: 'Notes', width: 150 },
                     {
@@ -111,6 +114,17 @@
                 ]
             };
         }
+
+        function beforeSelectionChange(row) {
+            if(!isCustomerLookupSelected) {
+                var item = vm.selectedItems[0];
+                if(item && item.customer){
+                    item.custName = item.customer.name;
+                }
+            }
+            isCustomerLookupSelected = false;
+            return true;
+        }
         
 
         function onEndEditCell() {
@@ -121,6 +135,7 @@
 
         function onSelect($item, $model, $label) {
             vm.selectedItems[0].customerID = $item.customerID;
+            isCustomerLookupSelected = true;
         };
 
         function goToBatches() { $location.path('/batch'); }
