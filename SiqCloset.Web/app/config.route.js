@@ -37,7 +37,7 @@
                 url: '/',
                 config: {
                     templateUrl: 'app/dashboard/dashboard.html',
-                    title: 'dashboard',
+                    title: 'Dashboard',
                     settings: {
                         nav: 1,
                         content: '<i class="icon-dashboard"></i> Dashboard'
@@ -46,7 +46,7 @@
             }, {
                 url: '/masterCustomerAddress',
                 config: {
-                    title: 'masterCustomerAddress',
+                    title: 'Upload MCA',
                     templateUrl: 'app/upload/masterCustomerAddress/masterCustomerAddress.html',
                     settings: {
                         nav: 2,
@@ -56,7 +56,7 @@
             }, {
                 url: '/customerItemList',
                 config: {
-                    title: 'customerItemList',
+                    title: 'Upload CIL',
                     templateUrl: 'app/upload/customerItemList/customerItemList.html',
                     settings: {
                         nav: 3,
@@ -66,7 +66,7 @@
             }, {
                 url: '/customer',
                 config: {
-                    title: 'customer',
+                    title: 'Master Customer Address',
                     templateUrl: 'app/customer/customers.html',
                     settings: {
                         nav: 4,
@@ -96,21 +96,21 @@
             }, {
                 url: '/batch/:id',
                 config: {
-                    title: 'batch',
+                    title: 'Batch Detail',
                     templateUrl: 'app/batch/batchDetails.html',
                     settings: { }
                 }
             }, {
                 url: '/customer/:id',
                 config: {
-                    title: 'customer',
+                    title: 'Customer Detail',
                     templateUrl: 'app/customer/customerDetails.html',
                     settings: { }
                 }
             }, {
                 url: '/workInProgress',
                 config: {
-                    title: 'workInProgress',
+                    title: 'Work In Progress',
                     templateUrl: 'app/wip/wip.html',
                     settings: {
                         content: '<i class="icon-asterisk"></i> Work in Progress'

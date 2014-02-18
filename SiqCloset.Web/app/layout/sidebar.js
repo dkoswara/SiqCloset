@@ -34,7 +34,8 @@
                 return '';
             }
             var menuName = route.config.title;
-            return $route.current.title.substr(0, menuName.length) === menuName ? 'current' : '';
+            //return $route.current.title.substr(0, menuName.length) === menuName ? 'current' : '';
+            return $route.current.title === menuName ? 'current' : '';
         }
 
         function clearStorage() {

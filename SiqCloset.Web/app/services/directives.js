@@ -225,7 +225,7 @@
                     $scope.wip = data.wip;
                 });
                 $scope.wipRoute = $scope.routes.filter(function(r) {
-                    return r.config.title === wipRouteName;
+                    return r.url.substr(1) === wipRouteName;
                 })[0];
             }
         }
@@ -239,7 +239,7 @@
                 if (!$route.current || !$route.current.title) {
                     return false;
                 }
-                return $route.current.title.substr(0, wipRouteName.length)
+                return $route.current.originalPath.substr(1, wipRouteName.length)
                     === wipRouteName;
             }
         }
