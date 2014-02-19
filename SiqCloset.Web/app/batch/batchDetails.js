@@ -11,6 +11,7 @@
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
         var logError = getLogFn(controllerId, 'error');
+        var underscore = _;
 
         vm.getTitle = getTitle;
         vm.customerLookups = [];
@@ -20,6 +21,7 @@
         vm.isSaving = false;
         vm.save = save;
         vm.cancel = cancel;
+        vm.boxes = [];
 
         var isCustomerLookupSelected = false;
 
@@ -78,12 +80,20 @@
             function querySucceeded(data) {
                 vm.items = data;
                 setCustName();
+                getBoxes(vm.items);
             }
 
             function queryFailed(error) {
                 logError('Unable to get batch ' + val);
                 goToBatches();
             }
+        }
+
+        function getBoxes(items){
+            var boxes = underscore.countBy(items, function(item){
+                return item.box.boxNo;
+            });
+            vm.boxes = Object.keys(boxes);
         }
 
         function setCustName() {
@@ -109,7 +119,10 @@
                     },
                     { field: 'code', displayName: 'Item Code', width: 100 },
                     { field: 'name', displayName: 'Item Name', width: 300 },
-                    { field: 'box.boxNo', displayName: 'Box No', width: 75 },
+                    { 
+                        field: 'box.boxNo', displayName: 'Box No', width: 75,
+                        cellTemplate: '/app/batch/boxSelTmplDropDown.html', enableCellEdit: false 
+                    },
                     { field: 'price', displayName: 'Price', width: 85 }
                 ]
             };
