@@ -232,9 +232,17 @@
             } else {
                 setCustName();
                 setBoxNo();
+                cleanupDetachedBoxes();
             }
+        }
 
-
+        function cleanupDetachedBoxes() {
+            vm.boxes.forEach(function (box) {
+                var entityAspect = box.entityAspect;
+                if (entityAspect && entityAspect.entityState.isDetached()) {
+                    vm.boxes.pop(box);
+                }
+            });
         }
     }
 })();
