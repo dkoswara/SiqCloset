@@ -2,9 +2,6 @@
     <section class="matter">
         <div class="container-fluid">
             <div>
-                <input type="text" data-ng-model="vm.selected" typeahead="state for state in vm.states | filter:$viewValue | limitTo:8" />
-            </div>
-            <div>
                 <button class ="btn btn-info" 
                         data-ng-click="vm.save()"
                         data-ng-disabled="!vm.canSave">
