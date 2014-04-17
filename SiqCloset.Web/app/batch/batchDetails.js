@@ -38,9 +38,15 @@
             get: canCancel
         });
 
+        Object.defineProperty(vm, 'canAddNewBox', {
+            get: canAddNewBox
+        });
+
         function canSave() { return vm.canCancel; }
 
         function canCancel() { return vm.hasChanges && !vm.isSaving; }
+
+        function canAddNewBox() { return vm.items.length > 0; }
 
         activate();
 

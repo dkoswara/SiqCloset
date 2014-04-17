@@ -13,7 +13,8 @@
                     <i class="icon-undo"></i>Cancel
                 </button>
                 <button class="btn btn-info"
-                        data-ng-click="vm.addNewBox()">
+                        data-ng-click="vm.addNewBox()"
+                        data-ng-disabled="!vm.canAddNewBox">
                     <i class="icon-plus-sign"></i>Add New Box
                 </button>
                 <span data-ng-show="vm.hasChanges" class="dissolve-animation ng-hide">
