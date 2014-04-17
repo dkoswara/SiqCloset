@@ -27,7 +27,8 @@
 
         vm.selected = undefined;
         vm.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
-        vm.onSelect = onSelect;
+        vm.onCustomerSelect = onCustomerSelect;
+        vm.onBoxSelect = onBoxSelect;
 
         Object.defineProperty(vm, 'canSave', {
             get: canSave
@@ -80,6 +81,7 @@
             function querySucceeded(data) {
                 vm.items = data;
                 setCustName();
+                setBoxNo();
                 getBoxes(vm.items);
             }
 
@@ -90,16 +92,35 @@
         }
 
         function getBoxes(items){
-            var boxes = underscore.countBy(items, function(item){
-                return item.box.boxNo;
+            //var boxes = [];
+
+            //underscore.map(items, function (item) {
+            //    boxes[item.box.boxNo] = item.boxID;
+            //});
+
+            var boxes = underscore.map(items, function (item) {
+                return { boxNo: item.box.boxNo, boxID: item.boxID };
             });
-            vm.boxes = Object.keys(boxes);
+
+            var uniqueBoxes = underscore.unique(boxes, function (b) {
+                return b.boxID;
+            });
+
+            vm.boxes = uniqueBoxes;
         }
 
         function setCustName() {
             vm.items.forEach(function (i) {
                 if (i.customer) {
                     i.custName = i.customer.name;
+                }
+            });
+        }
+
+        function setBoxNo() {
+            vm.items.forEach(function (i) {
+                if (i.box) {
+                    i.boxNo = i.box.boxNo;
                 }
             });
         }
@@ -120,7 +141,7 @@
                     { field: 'code', displayName: 'Item Code', width: 100 },
                     { field: 'name', displayName: 'Item Name', width: 300 },
                     { 
-                        field: 'box.boxNo', displayName: 'Box No', width: 75,
+                        field: 'boxNo', displayName: 'Box No', width: 75,
                         cellTemplate: '/app/batch/boxSelTmplDropDown.html', enableCellEdit: false 
                     },
                     { field: 'price', displayName: 'Price', width: 85 }
@@ -146,10 +167,17 @@
             });
         }
 
-        function onSelect($item, $model, $label) {
+        function onCustomerSelect($item, $model, $label) {
             vm.selectedItems[0].customerID = $item.customerID;
             isCustomerLookupSelected = true;
         };
+
+        function onBoxSelect(boxNo) {
+            var selectedBox = underscore.find(vm.boxes, function(box) {
+                return box.boxNo == boxNo;
+            });
+            vm.selectedItems[0].boxID = selectedBox.boxID;
+        }
 
         function goToBatches() { $location.path('/batch'); }
 
@@ -179,6 +207,7 @@
                 goToBatches();
             } else {
                 setCustName();
+                setBoxNo();
             }
 
 

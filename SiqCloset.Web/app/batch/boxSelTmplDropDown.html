@@ -1,7 +1,12 @@
 <div>
-  <select style="width: 75px" data-ng-model="COL_FIELD">
-    <option data-ng-repeat="box in vm.boxes">{{box}}</option>
-  </select>
+    <select style="width: 75px" data-ng-model="COL_FIELD" data-ng-change="vm.onBoxSelect(COL_FIELD)">
+        <option data-ng-repeat="box in vm.boxes">{{box.boxNo}}</option>
+    </select>
+    
+    <!--<select style="width: 75px" data-ng-model="COL_FIELD">
+        <option data-ng-model="COL_FIELD" data-ng-repeat="box in vm.boxes" data-ng-change="vm.selectBox(COL_FIELD)">{{box}}</option>
+    </select>-->
 
-  <!-- <select data-ng-options="box for box in vm.boxes" /> -->
+    <!--<select data-ng-class="'colt' + col.index" data-ng-input="COL_FIELD" data-ng-model="COL_FIELD" data-ng-options="box for box in vm.boxes" />--> 
+    <!--<select data-ng-options="c.name for c in vm.customerLookups" data-ng-model="vm.selectedCustomer" />-->
 </div>

@@ -114,6 +114,7 @@
     <Content Include="app\batch\batches.js" />
     <Content Include="app\batch\batchDetails.html" />
     <Content Include="app\batch\batchDetails.js" />
+    <Content Include="app\batch\boxSelTmplDropDown.html" />
     <Content Include="app\batch\custSelTmplTypeAhead.html" />
     <Content Include="app\batch\custSelTmplDropDown.html" />
     <Content Include="app\services\repository.batch.js" />
