@@ -12,16 +12,17 @@
                         data-ng-disabled="!vm.canCancel">
                     <i class="icon-undo"></i>Cancel
                 </button>
+                <button class="btn btn-info"
+                        data-ng-click="vm.addNewBox()">
+                    <i class="icon-plus-sign"></i>Add New Box
+                </button>
                 <span data-ng-show="vm.hasChanges" class="dissolve-animation ng-hide">
                     <i class="icon-asterisk icon-asterisk-large"></i>
                 </span>
             </div>
 
             <div class="widget wlightblue">
-                
-
                 <div data-cc-widget-header title="{{vm.getTitle()}}"></div>
-                
                 <div class="widget-content user">
                     <div class="gridStyle" style="width: 945px; font-size: 10pt" data-ng-grid="itemsGridOptions"></div>
                 </div>

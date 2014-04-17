@@ -28,6 +28,7 @@
         vm.selected = undefined;
         vm.onCustomerSelect = onCustomerSelect;
         vm.onBoxSelect = onBoxSelect;
+        vm.addNewBox = addNewBox;
 
         Object.defineProperty(vm, 'canSave', {
             get: canSave
@@ -177,6 +178,23 @@
                 return box.boxNo == boxNo;
             });
             vm.selectedItems[0].boxID = selectedBox.boxID;
+        }
+
+        function createNewBox() {
+            var tempBox = underscore.max(vm.boxes, function (box) {
+                return box.boxNo;
+            });
+            var inits = {
+                batchID: vm.batchID,
+                boxID: breeze.core.getUuid(),
+                boxNo: tempBox.boxNo + 1
+            };
+            return datacontext.box.create(inits);
+        }
+
+        function addNewBox() {
+            var newBox = createNewBox();
+            vm.boxes.push(newBox);
         }
 
         function goToBatches() { $location.path('/batch'); }
