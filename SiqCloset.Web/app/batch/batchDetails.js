@@ -127,6 +127,7 @@
         function setItemsGrid() {
             $scope.itemsGridOptions = {
                 data: 'vm.items',
+                sortInfo: { fields: ['boxNo'], directions: ['asc'] },
                 selectedItems: vm.selectedItems,
                 multiSelect: false,
                 enableCellEdit: true,
@@ -192,11 +193,17 @@
 
             vm.isSaving = true;
             return datacontext.save()
-                .then(function (saveResult) {
+                .then(function(saveResult) {
                     vm.isSaving = false;
-                }, function (error) {
+                    sortItems();
+                }, function(error) {
                     vm.isSaving = false;
                 });
+        }
+
+        function sortItems() {
+            $scope.itemsGridOptions.sortInfo.columns[0].sortDirection = 'desc';
+            $scope.itemsGridOptions.sortBy('boxNo');
         }
 
         function cancel() {
