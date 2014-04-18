@@ -29,6 +29,7 @@
         vm.onCustomerSelect = onCustomerSelect;
         vm.onBoxSelect = onBoxSelect;
         vm.addNewBox = addNewBox;
+        vm.addNewItem = addNewItem;
 
         Object.defineProperty(vm, 'canSave', {
             get: canSave
@@ -64,8 +65,8 @@
 
         function getTitle() {
             if (vm.batchID.lastIndexOf('new') != -1) {
-                var newBatchID = vm.batchID.substring(3);
-                return 'Edit New Batch ' + newBatchID;
+                vm.batchID = vm.batchID.substring(3);
+                return 'Edit New Batch ' + vm.batchID;
             }
             return 'Edit Batch ' + vm.batchID;
         }
@@ -187,13 +188,17 @@
         }
 
         function createNewBox() {
-            var tempBox = underscore.max(vm.boxes, function (box) {
-                return box.boxNo;
-            });
+            var nextBoxNo = 1;
+            if (vm.boxes.length > 0) {
+                var tempBox = underscore.max(vm.boxes, function(box) {
+                    return box.boxNo;
+                });
+                nextBoxNo = tempBox.boxNo + 1;
+            }
             var inits = {
                 batchID: vm.batchID,
                 boxID: breeze.core.getUuid(),
-                boxNo: tempBox.boxNo + 1
+                boxNo: nextBoxNo,
             };
             return datacontext.box.create(inits);
         }
@@ -201,6 +206,15 @@
         function addNewBox() {
             var newBox = createNewBox();
             vm.boxes.push(newBox);
+        }
+
+        function addNewItem() {
+            var inits = {
+                itemID: breeze.core.getUuid(),
+                batchID: vm.batchID,
+            };
+            var newItem = datacontext.item.create(inits);
+            vm.items.push(newItem);
         }
 
         function goToBatches() { $location.path('/batch'); }
@@ -239,6 +253,7 @@
                 setCustName();
                 setBoxNo();
                 cleanupDetachedBoxes();
+                cleanupDetachedItems();
             }
         }
 
@@ -247,6 +262,15 @@
                 var entityAspect = box.entityAspect;
                 if (entityAspect && entityAspect.entityState.isDetached()) {
                     vm.boxes.pop(box);
+                }
+            });
+        }
+
+        function cleanupDetachedItems() {
+            vm.items.forEach(function (item) {
+                var entityAspect = item.entityAspect;
+                if (entityAspect && entityAspect.entityState.isDetached()) {
+                    vm.items.pop(item);
                 }
             });
         }

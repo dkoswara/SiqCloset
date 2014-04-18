@@ -19,6 +19,7 @@
             this.zStorage = zStorage;
             this.zStorageWip = zStorageWip;
             // Exposed data access functions
+            this.create = create;
             this.getProjection = getProjection;
             this.getItems = getItems;
         }
@@ -30,6 +31,10 @@
         AbstractRepository.extend(Ctor);
 
         return Ctor;
+
+        function create(inits) {
+            return this.manager.createEntity(entityName, inits);
+        }
 
         function getProjection(batchNumber) {
             var self = this;
