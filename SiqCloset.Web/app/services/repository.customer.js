@@ -84,7 +84,10 @@
             }
         }
 
-        function create() {
+        function create(inits) {
+            if (inits) {
+                return this.manager.createEntity(entityName, inits);
+            }
             return this.manager.createEntity(entityName, { customerID: breeze.core.getUuid() });
         }
         

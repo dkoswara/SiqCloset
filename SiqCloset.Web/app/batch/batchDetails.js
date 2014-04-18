@@ -4,9 +4,9 @@
     var controllerId = 'batchDetails';
 
     angular.module('app').controller(controllerId,
-        ['$location', '$scope', '$routeParams', 'common', 'config', 'datacontext', batchDetails]);
+        ['$location', '$scope', '$routeParams', 'common', 'config', 'datacontext', 'bootstrap.dialog', batchDetails]);
 
-    function batchDetails($location, $scope, $routeParams, common, config, datacontext) {
+    function batchDetails($location, $scope, $routeParams, common, config, datacontext, bsDialog) {
         var vm = this;
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
@@ -30,6 +30,7 @@
         vm.onBoxSelect = onBoxSelect;
         vm.addNewBox = addNewBox;
         vm.addNewItem = addNewItem;
+        vm.addNewCustomer = addNewCustomer;
 
         Object.defineProperty(vm, 'canSave', {
             get: canSave
@@ -160,16 +161,19 @@
         }
 
         function beforeSelectionChange(row) {
-            if(!isCustomerLookupSelected) {
-                var item = vm.selectedItems[0];
-                if(item && item.customer){
-                    item.custName = item.customer.name;
-                }
+            if (!isCustomerLookupSelected) {
+                resetCustomerName();
             }
             isCustomerLookupSelected = false;
             return true;
+
+            function resetCustomerName() {
+                var item = vm.selectedItems[0];
+                if (item && item.customer) {
+                    item.custName = item.customer.name;
+                }
+            }
         }
-        
 
         function onEndEditCell() {
             $scope.$on('ngGridEventEndCellEdit', function (evt) {
@@ -219,6 +223,16 @@
             vm.items.push(newItem);
         }
 
+        function addNewCustomer() {
+            bsDialog.inputDialog("Customer Name: ").then(createNewCustomer);
+
+            function createNewCustomer(newCustomerName) {
+                var inits = { customerID: breeze.core.getUuid(), name: newCustomerName };
+                var newCust = datacontext.customer.create(inits);
+                vm.customerLookups.push(newCust);    
+            }
+        }
+
         function goToBatches() { $location.path('/batch'); }
 
         function onHasChanges() {
@@ -256,23 +270,27 @@
                 setBoxNo();
                 cleanupDetachedBoxes();
                 cleanupDetachedItems();
+                cleanupDetachedCustomers();
             }
         }
 
         function cleanupDetachedBoxes() {
-            vm.boxes.forEach(function (box) {
-                var entityAspect = box.entityAspect;
-                if (entityAspect && entityAspect.entityState.isDetached()) {
-                    vm.boxes.pop(box);
-                }
-            });
+            cleanupDetachedCore(vm.boxes);
         }
 
         function cleanupDetachedItems() {
-            vm.items.forEach(function (item) {
+            cleanupDetachedCore(vm.items);
+        }
+
+        function cleanupDetachedCustomers() {
+            cleanupDetachedCore(vm.customerLookups);
+        }
+
+        function cleanupDetachedCore(arrays) {
+            arrays.forEach(function (item) {
                 var entityAspect = item.entityAspect;
                 if (entityAspect && entityAspect.entityState.isDetached()) {
-                    vm.items.pop(item);
+                    arrays.pop(item);
                 }
             });
         }
