@@ -2,9 +2,6 @@
     <section class="matter">
         <div class="container-fluid">
             <div>
-                <input type="text" data-ng-model="vm.selected" typeahead="state for state in vm.states | filter:$viewValue | limitTo:8" />
-            </div>
-            <div>
                 <button class ="btn btn-info" 
                         data-ng-click="vm.save()"
                         data-ng-disabled="!vm.canSave">
@@ -15,16 +12,22 @@
                         data-ng-disabled="!vm.canCancel">
                     <i class="icon-undo"></i>Cancel
                 </button>
+                <button class="btn btn-info"
+                        data-ng-click="vm.addNewBox()"
+                        data-ng-disabled="!vm.canAddNewBox">
+                    <i class="icon-plus-sign"></i>Add New Box
+                </button>
+                <button class="btn btn-info"
+                        data-ng-click="vm.addNewItem()">
+                    <i class="icon-barcode"></i>Add New Item
+                </button>
                 <span data-ng-show="vm.hasChanges" class="dissolve-animation ng-hide">
                     <i class="icon-asterisk icon-asterisk-large"></i>
                 </span>
             </div>
 
             <div class="widget wlightblue">
-                
-
                 <div data-cc-widget-header title="{{vm.getTitle()}}"></div>
-                
                 <div class="widget-content user">
                     <div class="gridStyle" style="width: 945px; font-size: 10pt" data-ng-grid="itemsGridOptions"></div>
                 </div>

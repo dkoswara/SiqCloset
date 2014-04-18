@@ -26,9 +26,10 @@
         var isCustomerLookupSelected = false;
 
         vm.selected = undefined;
-        vm.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
         vm.onCustomerSelect = onCustomerSelect;
         vm.onBoxSelect = onBoxSelect;
+        vm.addNewBox = addNewBox;
+        vm.addNewItem = addNewItem;
 
         Object.defineProperty(vm, 'canSave', {
             get: canSave
@@ -38,9 +39,15 @@
             get: canCancel
         });
 
+        Object.defineProperty(vm, 'canAddNewBox', {
+            get: canAddNewBox
+        });
+
         function canSave() { return vm.canCancel; }
 
         function canCancel() { return vm.hasChanges && !vm.isSaving; }
+
+        function canAddNewBox() { return vm.items.length > 0; }
 
         activate();
 
@@ -58,8 +65,8 @@
 
         function getTitle() {
             if (vm.batchID.lastIndexOf('new') != -1) {
-                var newBatchID = vm.batchID.substring(3);
-                return 'Edit New Batch ' + newBatchID;
+                vm.batchID = vm.batchID.substring(3);
+                return 'Edit New Batch ' + vm.batchID;
             }
             return 'Edit Batch ' + vm.batchID;
         }
@@ -128,6 +135,7 @@
         function setItemsGrid() {
             $scope.itemsGridOptions = {
                 data: 'vm.items',
+                sortInfo: { fields: ['boxNo'], directions: ['asc'] },
                 selectedItems: vm.selectedItems,
                 multiSelect: false,
                 enableCellEdit: true,
@@ -179,6 +187,36 @@
             vm.selectedItems[0].boxID = selectedBox.boxID;
         }
 
+        function createNewBox() {
+            var nextBoxNo = 1;
+            if (vm.boxes.length > 0) {
+                var tempBox = underscore.max(vm.boxes, function(box) {
+                    return box.boxNo;
+                });
+                nextBoxNo = tempBox.boxNo + 1;
+            }
+            var inits = {
+                batchID: vm.batchID,
+                boxID: breeze.core.getUuid(),
+                boxNo: nextBoxNo,
+            };
+            return datacontext.box.create(inits);
+        }
+
+        function addNewBox() {
+            var newBox = createNewBox();
+            vm.boxes.push(newBox);
+        }
+
+        function addNewItem() {
+            var inits = {
+                itemID: breeze.core.getUuid(),
+                batchID: vm.batchID,
+            };
+            var newItem = datacontext.item.create(inits);
+            vm.items.push(newItem);
+        }
+
         function goToBatches() { $location.path('/batch'); }
 
         function onHasChanges() {
@@ -193,11 +231,17 @@
 
             vm.isSaving = true;
             return datacontext.save()
-                .then(function (saveResult) {
+                .then(function(saveResult) {
                     vm.isSaving = false;
-                }, function (error) {
+                    sortItems();
+                }, function(error) {
                     vm.isSaving = false;
                 });
+        }
+
+        function sortItems() {
+            $scope.itemsGridOptions.sortInfo.columns[0].sortDirection = 'desc';
+            $scope.itemsGridOptions.sortBy('boxNo');
         }
 
         function cancel() {
@@ -208,9 +252,27 @@
             } else {
                 setCustName();
                 setBoxNo();
+                cleanupDetachedBoxes();
+                cleanupDetachedItems();
             }
+        }
 
+        function cleanupDetachedBoxes() {
+            vm.boxes.forEach(function (box) {
+                var entityAspect = box.entityAspect;
+                if (entityAspect && entityAspect.entityState.isDetached()) {
+                    vm.boxes.pop(box);
+                }
+            });
+        }
 
+        function cleanupDetachedItems() {
+            vm.items.forEach(function (item) {
+                var entityAspect = item.entityAspect;
+                if (entityAspect && entityAspect.entityState.isDetached()) {
+                    vm.items.pop(item);
+                }
+            });
         }
     }
 })();

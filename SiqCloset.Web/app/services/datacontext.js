@@ -13,7 +13,7 @@
         var log = getLogFn(serviceId);
         var logError = getLogFn(serviceId, 'error');
         var logSuccess = getLogFn(serviceId, 'success');
-        var repoNames = ['customer', 'item', 'batch'];
+        var repoNames = ['customer', 'item', 'batch', 'box'];
         var events = config.events;
         var primePromise;
 
