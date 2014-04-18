@@ -79,8 +79,16 @@
 
         function getItems(batchNumber) {
             var self = this;
-
+            var results;
+            var storeMetaKey = resourceName + "_" + batchNumber;
             var predicate = Predicate.create('batch.batchID', '==', batchNumber);
+
+            if (self.zStorage.areItemsLoaded(storeMetaKey)) {
+                results = self._getAllLocal(resourceName, orderBy, predicate);
+                self.log('Retrieved [Items Details] from cache', results.length, true);
+                return self.$q.when(results);
+            }
+
             return EntityQuery.from(resourceName)
                 .where(predicate)
                 .orderBy(orderBy)
@@ -90,7 +98,8 @@
                 .to$q(querySucceeded, self._queryFailed);
 
             function querySucceeded(data) {
-                var results = data.results;
+                self.zStorage.areItemsLoaded(storeMetaKey, true);
+                results = data.results;
                 self.log('Retrieved [Items Details] from remote data source', results.length, true);
                 return results;
             }
