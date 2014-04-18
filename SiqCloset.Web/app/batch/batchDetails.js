@@ -138,6 +138,8 @@
                 sortInfo: { fields: ['boxNo'], directions: ['asc'] },
                 selectedItems: vm.selectedItems,
                 multiSelect: false,
+                enableCellSelection: true,
+                enableRowSelection: true,
                 enableCellEdit: true,
                 beforeSelectionChange: beforeSelectionChange,
                 columnDefs: [
