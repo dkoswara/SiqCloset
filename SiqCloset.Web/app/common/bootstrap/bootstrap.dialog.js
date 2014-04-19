@@ -117,7 +117,10 @@
         function ($scope, $modalInstance, options) {
             $scope.title = options.title || 'Title';
             $scope.label = options.label || '';
+
+            //See http://stackoverflow.com/questions/18716113/scope-issue-in-angularjs-using-angularui-bootstrap-modal
             $scope.input = {};
+
             $scope.okText = options.okText || 'OK';
             $scope.cancelText = options.cancelText || 'Cancel';
             $scope.ok = function() { $modalInstance.close($scope.input.text); };
