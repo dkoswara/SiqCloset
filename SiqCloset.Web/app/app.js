@@ -21,7 +21,7 @@
     ]);
     
     // Handle routing errors and success events
-    app.run(['$route', 'routeMediator', function ($route, routeMediator) {
+    app.run(['$route', 'routeMediator', 'breeze', function ($route, routeMediator, breeze) {
         routeMediator.setRoutingHandlers();
         // Include $route to kick start the router.
     }]);
