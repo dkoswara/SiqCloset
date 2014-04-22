@@ -13,7 +13,7 @@
         </thead>
         <tbody>
             <tr data-ng-repeat="item in vm.wip | orderBy: vm.predicate:vm.reverse"
-                data-ng-click="vm.goToWip(item)">
+                data-ng-click="vm.goToWip(item)" tooltip-html-unsafe="{{vm.getDetails(item)}}">
                 <td>{{item.entityName}}</td>
                 <td>{{item.description}}</td>
                 <td>{{item.state}}</td>

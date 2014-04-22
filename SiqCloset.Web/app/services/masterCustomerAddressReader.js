@@ -1,49 +1,96 @@
 ﻿(function () {
     'use strict';
 
-    // Factory name is handy for logging
     var serviceId = 'masterCustomerAddressReader';
+    angular.module('app').factory(serviceId, ['datacontext', masterCustomerAddressReader]);
 
-    // Define the factory on the module.
-    // Inject the dependencies. 
-    // Point to the factory definition function.
-    // TODO: replace app with your module name
-    angular.module('app').factory(serviceId, ['entityManagerFactory', masterCustomerAddressReader]);
-
-    function masterCustomerAddressReader(emFactory) {
-        // Define the functions and properties to reveal.
-        var manager = emFactory.newManager();
-
+    function masterCustomerAddressReader(datacontext) {
         var service = {
             getMasterCustAddress: getMasterCustAddress,
+            updateMasterCustAddress: updateMasterCustAddress,
         };
 
         return service;
 
         function getMasterCustAddress(data) {
-            xlsworker(data, parseWorkbook, manager);
-            return manager;
+            var wb = parseWorkbook(data);
+            createCustFromWorkbook(wb);
         }
 
-        function xlsworker(data, cb) {
+        function updateMasterCustAddress(data) {
+            var wb = parseWorkbook(data);
+            updateCustFromWorkbook(wb);
+        }
+
+        function parseWorkbook(data) {
             var cfb = XLS.CFB.read(data, { type: "binary" });
-            var v = XLS.parse_xlscfb(cfb);
-            cb(v);
+            return XLS.parse_xlscfb(cfb);
         }
 
-        function parseWorkbook(workbook) {
+        function createCustFromWorkbook(workbook) {
             var sheet = workbook.Sheets['Sheet1'];
             var json = XLS.utils.sheet_to_row_object_array(sheet);
-            json.forEach(function(o) {
-                if (o['Address']) {
-                    var id = breeze.core.getUuid();
-                    var name = o['Name'];
-                    var addr = o['Address'];
-                    var phoneNo = o['Phone Number'];
-
-                    var newCust = manager.createEntity('Customer', { customerID: id, name: name, address: addr, phoneNo: phoneNo });
+            json.forEach(function (o) {
+                var name = o['Name'];
+                var addr = o['Address'];
+                var phoneNo = o['Phone Number'];
+                if (name && addr && phoneNo) {
+                    var inits = {
+                        customerID: breeze.core.getUuid(),
+                        name: name,
+                        address: addr,
+                        phoneNo: phoneNo
+                    };
+                    datacontext.customer.create(inits);
                 }
             });
+        }
+
+        function updateCustFromWorkbook(workbook) {
+            var sheet = workbook.Sheets['Sheet1'];
+            var json = XLS.utils.sheet_to_row_object_array(sheet);
+            json.forEach(function (o) {
+                var name = o['Name'];
+                var addr = o['Address'];
+                var phoneNo = o['Phone Number'];
+                if (name && addr && phoneNo) {
+                    var existingCust = datacontext.customer.getCustomerByName(name);
+                    if (!existingCust) {
+                        var inits = {
+                            customerID: breeze.core.getUuid(),
+                            name: name,
+                            address: addr,
+                            phoneNo: phoneNo
+                        };
+                        var newCust = datacontext.customer.create(inits);
+                        storeToWip(newCust);
+                    } else {
+                        updateExistingCust(existingCust, addr, phoneNo);
+                    }
+                }
+            });
+
+            function updateExistingCust(existingCust, newAddr, newPhoneNo) {
+                onlyUpdateIfDiff(existingCust, 'address', newAddr);
+                onlyUpdateIfDiff(existingCust, 'phoneNo', newPhoneNo);
+
+                function onlyUpdateIfDiff(entity, propName, value) {
+                    var currValue = entity.getProperty(propName);
+                    if (currValue != value) {
+                        entity.setProperty(propName, value);
+                        storeToWip(entity);
+                    }
+                }
+            }
+        }
+
+        function storeToWip(customer) {
+            datacontext.zStorageWip.storeWipEntity(
+                customer,
+                customer.customerID,
+                customer.customerID,
+                'Customer',
+                customer.name);
         }
     }
 })();

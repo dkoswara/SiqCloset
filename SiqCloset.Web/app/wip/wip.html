@@ -6,6 +6,11 @@
                     data-ng-disabled="!vm.wip.length">
                 <i class="icon-undo"></i> Cancel all Work in Progress
             </button>
+            <button class="btn btn-info"
+                    data-ng-click="vm.saveAllWip()"
+                    data-ng-disabled="!vm.wip.length">
+                <i class="icon-save"></i> Save all Work in Progress
+            </button>
             <div class="widget wviolet">
                 <div data-cc-widget-header title="{{vm.title}}" 
                     subtitle="{{vm.wip.length}}"></div>

@@ -8,50 +8,74 @@
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
         var logError = getLogFn(controllerId, 'error');
+        var $q = common.$q;
         
         var vm = this;
-        var manager;
+        var excelFile;
 
         vm.title = 'Upload Master Customer Address Here';
         vm.customers = [];
         vm.showData = showData;
+        vm.onFileSelect = onFileSelect;
+        vm.updateMasterCustomerAddress = updateMasterCustomerAddress;
         
-        vm.onFileSelect = function ($files) {
-            var file = $files[0];
-            processMasterCustAddrFile(file, masterCustomerAddressReader.getMasterCustAddress);
+        activate();
+
+        function activate() {
+            common.activateController([getCustomers()], controllerId)
+                .then(function () { log('Activated MCA View'); });
+        }
+
+        function getCustomers() {
+            return datacontext.customer.getAll();
+        }
+
+        function onFileSelect($files) {
+            excelFile = $files[0];
         };
+        
+        var processMasterCustAddrFile = function (file) {
+            var deferred = $q.defer();
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var data = e.target.result;
+                deferred.resolve(data);
+            };
+            reader.readAsBinaryString(file);
+
+            return deferred.promise;
+        }
 
         function showData() {
             vm.customers = datacontext.customer.getLocalFromManager(manager);
         };
 
-        vm.saveAllCustomers = function() {
-            manager.saveChanges()
-                .then(function(saveResult) {
-                    log('Save all customers successful', saveResult.entities.length, true);
-                })
-                .fail(function (error) {
-                    var msg = config.appErrorPrefix + 'Error saving changes.' + error.message;
-                    logError(msg, error);
-                    throw error;
-                });
-        };
-        
-        activate();
+        function updateMasterCustomerAddress() {
+            processMasterCustAddrFile(excelFile).then(function(data) {
+                masterCustomerAddressReader.updateMasterCustAddress(data);
 
-        function activate() {
-            common.activateController([], controllerId)
-                .then(function () { log('Activated MCA View'); });
+                log('Finished processing master customer address');
+
+                var changes = datacontext.customer.getCustomerChangesCount();
+                log('Added customers: ', changes.added, false);
+                log('Modified customers: ', changes.modified, false);
+            });
+
+            //function saveAllCustomersCore() {
+            //    datacontext.save().then(saveSuccess, saveFailed);
+
+            //    function saveSuccess(saveResult) {
+            //        log('Save all customers successful', saveResult.entities.length, true);
+            //    }
+
+            //    function saveFailed(error) {
+            //        var msg = config.appErrorPrefix + 'Error saving changes.' + error.message;
+            //        logError(msg, error);
+            //        throw error;
+            //    }
+            //}
         }
-        
-        function processMasterCustAddrFile(file, fn) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                var data = e.target.result;
-                manager = fn(data);
-                log('Finished grabbing master customer address');
-            };
-            reader.readAsBinaryString(file);
-        }
+
     }
 })();

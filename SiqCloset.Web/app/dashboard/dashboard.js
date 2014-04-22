@@ -51,7 +51,11 @@
         
         function getCustomerCount() {
             return datacontext.customer.getCount().then(function (data) {
-                datacontext.customer.applyCustomerValidation();
+
+                //ToDo: Need some real validation here
+                //This validation is just for testing purposes
+                //datacontext.customer.applyCustomerValidation();
+
                 return vm.customersCount = data;
             });
         }
