@@ -87,7 +87,7 @@
 
         function save(entitiesToSave, saveLocalStorage) {
             return manager.saveChanges(entitiesToSave || null)
-                .to$q(saveSucceeded, saveFailed);
+                .then(saveSucceeded, saveFailed);
 
             function saveSucceeded(saveResult) {
                 saveLocalStorage = saveLocalStorage || true;

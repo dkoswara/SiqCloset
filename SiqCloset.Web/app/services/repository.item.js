@@ -45,7 +45,7 @@
                 .select('box.boxNo, code, name, customer.name, customer.address, customer.phoneNo')
                 .orderBy(orderBy)
                 .using(self.manager).execute()
-                .to$q(querySucceeded, self._queryFailed);
+                .then(querySucceeded, self._queryFailed);
 
             function querySucceeded(data) {
                 var results = data.results;
@@ -95,7 +95,7 @@
                 .expand('customer, box, batch')
                 .toType(entityName)
                 .using(self.manager).execute()
-                .to$q(querySucceeded, self._queryFailed);
+                .then(querySucceeded, self._queryFailed);
 
             function querySucceeded(data) {
                 self.zStorage.areItemsLoaded(storeMetaKey, true);

@@ -80,7 +80,7 @@
 			//Hit the server
 			//It was not found in cache, so let's query for it.
 		    return manager.fetchEntityByKey(entityName, id)
-		        .to$q(querySucceeded, self._queryFailed);
+		        .then(querySucceeded, self._queryFailed);
 		    
 			function querySucceeded(data) {
 				entity = data.entity;

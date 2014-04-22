@@ -115,7 +115,7 @@
                 .orderBy(orderBy)
                 .toType(entityName)
                 .using(self.manager).execute()
-                .to$q(querySucceeded, self._queryFailed);
+                .then(querySucceeded, self._queryFailed);
 
             function querySucceeded(data) {
                 self.zStorage.areItemsLoaded(resourceName, true);
@@ -148,7 +148,7 @@
                 .orderBy(orderBy)
                 .toType(entityName)
                 .using(self.manager).execute()
-                .to$q(querySucceeded, self._queryFailed);
+                .then(querySucceeded, self._queryFailed);
 
             function querySucceeded(data) {
                 self.zStorage.areItemsLoaded(resourceName, true);
@@ -162,7 +162,7 @@
             return EntityQuery.from(resourceName)
                 .take(0).inlineCount(true)
                 .using(this.manager).execute()
-                .to$q(this._getInlineCount);
+                .then(this._getInlineCount);
         }
         
         function getCustomersAndItemsCount() {
@@ -173,7 +173,7 @@
                 .orderBy('items.length')
                 .take(10)
                 .using(self.manager).execute()
-                .to$q(querySucceeded, self._queryFailed);
+                .then(querySucceeded, self._queryFailed);
 
             function querySucceeded(data) {
                 var results = data.results;
@@ -224,7 +224,7 @@
             EntityQuery.from(resourceName)
                 .toType(entityName)
                 .using(self.manager).execute()
-                .to$q(querySucceeded, self._queryFailed);
+                .then(querySucceeded, self._queryFailed);
 
             function querySucceeded(data) {
                 var customers = data.results;
