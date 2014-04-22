@@ -6,6 +6,10 @@
                     <div data-cc-widget-header title="{{vm.title}}"></div>
                     <div class="widget-content user">
                         <input type="file" ng-file-select="vm.onFileSelect($files)" />
+                        <a class="btn btn-info" data-ng-click="vm.updateMasterCustomerAddress()">
+                            <i class="icon-save"></i>
+                            <span>Update Master Customer Address</span>
+                        </a>
                         <a class="btn btn-info" data-ng-click="vm.saveAllCustomers()">
                             <i class="icon-save"></i>
                             <span>Save All Customers</span>

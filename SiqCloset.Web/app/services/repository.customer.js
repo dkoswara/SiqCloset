@@ -7,6 +7,7 @@
 
     function RepositoryCustomer(model, modelValidation, AbstractRepository, zStorage, zStorageWip) {
         var EntityQuery = breeze.EntityQuery;
+        var EntityState = breeze.EntityState;
         var Predicate = breeze.Predicate;
         var underscore = _;
         var entityName = model.modelInfo.Customer.entityName;
@@ -31,6 +32,8 @@
             this.getCount = getCount;
             this.getCustomersAndItemsCount = getCustomersAndItemsCount;
             this.getLocalFromManager = getLocalFromManager;
+            this.getCustomerByName = getCustomerByName;
+            this.getCustomerChangesCount = getCustomerChangesCount;
         }
 
         // Allow this repo to have access to the Abstract Repo
@@ -194,6 +197,25 @@
                 .toType(entityName)
                 .using(em)
                 .executeLocally();
+        }
+
+        function getCustomerByName(custName) {
+            var self = this;
+            var results = EntityQuery.from(resourceName)
+                .where('name', '==', custName)
+                .toType(entityName)
+                .using(self.manager)
+                .executeLocally();
+            return results[0];
+        }
+
+        function getCustomerChangesCount() {
+            var manager = this.manager;
+
+            var addedCustomers = manager.getEntities(entityName, EntityState.Added);
+            var modifiedCustomers = manager.getEntities(entityName, EntityState.Modified);
+
+            return { added: addedCustomers.length, modified: modifiedCustomers.length };
         }
         
         function deleteAllCustomers() {
