@@ -9,8 +9,10 @@
     function wip($scope, $location, bsDialog, config, datacontext, common) {
         var vm = this;
         var log = common.logger.getLogFn(controllerId);
+        var logError = common.logger.getLogFn(controllerId, 'error');
 
         vm.cancelAllWip = cancelAllWip;
+        vm.saveAllWip = saveAllWip;
         vm.predicate = '';
         vm.reverse = false;
         vm.setSort = setSort;
@@ -18,6 +20,8 @@
         vm.wip = [];
         vm.goToWip = goToWip;
         vm.getDetails = getDetails;
+
+        var pendingEntities = [];
 
         activate();
 
@@ -46,6 +50,7 @@
             function wipEntitiesLoaded(results) {
                 var entity = results.entity || results;
                 var desc = entity.entityType + ' loaded with id ' + entity.entityAspect.getKey().values[0];
+                pendingEntities.push(entity);
                 log('wip entity loaded: ', desc, false);
             }
         }
@@ -61,6 +66,24 @@
 
             function confirmDelete() {
                 datacontext.zStorageWip.clearAllWip();
+            }
+        }
+
+        function saveAllWip() {
+            return bsDialog.confirmationDialog('Save all Wip', 'Confirm Save?')
+                .then(confirmSave);
+
+            function confirmSave() {
+                datacontext.save(pendingEntities, false).then(saveSuccess, saveFailed);
+
+                function saveSuccess() {
+                    log('Wip saved', '', true);
+                    datacontext.zStorageWip.clearAllWip();
+                }
+
+                function saveFailed(error) {
+                    logError(error.message, error);
+                }
             }
         }
 
@@ -94,7 +117,6 @@
                 var oldValue = entity.entityAspect.originalValues[prop];
                 var newValue = entity.getProperty(prop);
                 var text = String.format('{0} changed from <b><font color=red>{1}</font></b> to <b><font color=green>{2}</font></b>', prop, oldValue, newValue);
-                //var text = prop + ' changed from ' + '<b>' + oldValue + '</b>' + ' to ' + newValue;
                 details = details + text + '</br>';
             });
             return details;

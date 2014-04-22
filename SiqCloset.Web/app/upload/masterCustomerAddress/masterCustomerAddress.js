@@ -8,6 +8,7 @@
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
         var logError = getLogFn(controllerId, 'error');
+        var $q = common.$q;
         
         var vm = this;
         var excelFile;
@@ -15,7 +16,6 @@
         vm.title = 'Upload Master Customer Address Here';
         vm.customers = [];
         vm.showData = showData;
-        vm.saveAllCustomers = saveAllCustomers;
         vm.onFileSelect = onFileSelect;
         vm.updateMasterCustomerAddress = updateMasterCustomerAddress;
         
@@ -35,7 +35,7 @@
         };
         
         var processMasterCustAddrFile = function (file) {
-            var deferred = Q.defer();
+            var deferred = $q.defer();
 
             var reader = new FileReader();
             reader.onload = function (e) {
@@ -51,26 +51,6 @@
             vm.customers = datacontext.customer.getLocalFromManager(manager);
         };
 
-        function saveAllCustomers() {
-            processMasterCustAddrFile(excelFile).then(function (data) {
-                masterCustomerAddressReader.getMasterCustAddress(data);
-            }).then(saveAllCustomersCore);
-
-            function saveAllCustomersCore() {
-                datacontext.save().then(saveSuccess, saveFailed);
-
-                function saveSuccess(saveResult) {
-                    log('Save all customers successful', saveResult.entities.length, true);
-                }
-
-                function saveFailed(error) {
-                    var msg = config.appErrorPrefix + 'Error saving changes.' + error.message;
-                    logError(msg, error);
-                    throw error;
-                }
-            }
-        };
-
         function updateMasterCustomerAddress() {
             processMasterCustAddrFile(excelFile).then(function(data) {
                 masterCustomerAddressReader.updateMasterCustAddress(data);
@@ -82,17 +62,19 @@
                 log('Modified customers: ', changes.modified, false);
             });
 
-            //datacontext.save().then(saveSuccess, saveFailed);
+            //function saveAllCustomersCore() {
+            //    datacontext.save().then(saveSuccess, saveFailed);
 
-            function saveSuccess(saveResult) {
-                log('Updating customers successful', saveResult.entities.length, true);
-            }
+            //    function saveSuccess(saveResult) {
+            //        log('Save all customers successful', saveResult.entities.length, true);
+            //    }
 
-            function saveFailed(error) {
-                var msg = config.appErrorPrefix + 'Error updating customers.' + error.message;
-                logError(msg, error);
-                throw error;
-            }
+            //    function saveFailed(error) {
+            //        var msg = config.appErrorPrefix + 'Error saving changes.' + error.message;
+            //        logError(msg, error);
+            //        throw error;
+            //    }
+            //}
         }
 
     }

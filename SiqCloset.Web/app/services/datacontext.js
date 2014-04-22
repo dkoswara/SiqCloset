@@ -85,12 +85,13 @@
             return entity.entityAspect.setDeleted();
         }
 
-        function save() {
-            return manager.saveChanges()
+        function save(entitiesToSave, saveLocalStorage) {
+            return manager.saveChanges(entitiesToSave || null)
                 .to$q(saveSucceeded, saveFailed);
 
             function saveSucceeded(saveResult) {
-                zStorage.save();
+                saveLocalStorage = saveLocalStorage || true;
+                if (saveLocalStorage) zStorage.save();
                 logSuccess('Saved data', saveResult, true);
             }
 
