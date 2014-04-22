@@ -21,8 +21,7 @@
     ]);
     
     // Handle routing errors and success events
-    app.run(['$route', '$rootScope', '$q','routeMediator', function ($route, $rootScope, $q, routeMediator) {
-        breeze.core.extendQ($rootScope, $q);
+    app.run(['$route', 'routeMediator', function ($route, routeMediator) {
         routeMediator.setRoutingHandlers();
         // Include $route to kick start the router.
     }]);
