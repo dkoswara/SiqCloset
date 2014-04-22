@@ -15,6 +15,7 @@
         // 3rd Party Modules
         'ui.bootstrap',      // ui-bootstrap (ex: carousel, pagination, dialog)
         'angularFileUpload', //angular file upload
+        'breeze.angular',
         'breeze.directives', //Breeze/AngularJS directives
         'ngzWip',            // angular-breeze local storage feature
     ]);
