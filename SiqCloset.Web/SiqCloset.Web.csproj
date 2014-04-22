@@ -217,7 +217,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\breeze.intellisense.js" />
     <Content Include="Scripts\breeze.debug.js" />
-    <Content Include="Scripts\breeze.directives.validation.js" />
+    <Content Include="Scripts\breeze.directives.js" />
     <Content Include="Scripts\breeze.min.js" />
     <Content Include="Scripts\breeze.saveErrorExtensions.js" />
     <Content Include="Scripts\breeze.to%24q.js" />
