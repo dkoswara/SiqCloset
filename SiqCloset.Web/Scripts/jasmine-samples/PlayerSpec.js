@@ -2,10 +2,26 @@ describe("Player", function() {
   var player;
   var song;
 
+  var $controllerConstructor;
+  var scope;
+
+  beforeEach(module('app'));
+
+  beforeEach(inject(function ($controller, $rootScope) {
+      $controllerConstructor = $controller;
+      scope = $rootScope.$new();
+  }));
+
   beforeEach(function() {
     player = new Player();
     song = new Song();
   });
+
+  it('should have customers', function () {
+      var ctrl = $controllerConstructor('customers',
+          { $scope: scope });
+      expect(ctrl.customers.length).toBeGreaterThan(0);
+  })
 
   it("should be able to play a Song", function() {
     player.play(song);
