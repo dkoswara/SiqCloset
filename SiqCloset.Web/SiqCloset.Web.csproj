@@ -176,6 +176,8 @@
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\images\icon.png" />
+    <Content Include="Content\jasmine\jasmine.css" />
+    <Content Include="Content\jasmine\jasmine_favicon.png" />
     <Content Include="Content\ng-grid.css" />
     <Content Include="Content\ng-grid.min.css" />
     <Content Include="Content\styles.css" />
@@ -508,6 +510,14 @@
     <Content Include="Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
+    <Content Include="Scripts\jasmine-samples\Player.js" />
+    <Content Include="Scripts\jasmine-samples\PlayerSpec.js" />
+    <Content Include="Scripts\jasmine-samples\Song.js" />
+    <Content Include="Scripts\jasmine-samples\SpecHelper.js" />
+    <Content Include="Scripts\jasmine\boot.js" />
+    <Content Include="Scripts\jasmine\console.js" />
+    <Content Include="Scripts\jasmine\jasmine-html.js" />
+    <Content Include="Scripts\jasmine\jasmine.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\moment.js" />
@@ -534,6 +544,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BreezeWebApiConfig.cs" />
     <Compile Include="Controllers\BreezeController.cs" />
+    <Compile Include="Controllers\JasmineController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -543,6 +554,7 @@
     <Content Include="Content\font\FontAwesome.otf" />
     <Content Include="packages.config" />
     <Content Include="Scripts\underscore.min.map" />
+    <Content Include="Views\Jasmine\SpecRunner.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
