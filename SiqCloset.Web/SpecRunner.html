@@ -8,11 +8,19 @@
     <script type="text/javascript" src="/Scripts/jasmine/jasmine.js"></script>
     <script type="text/javascript" src="/Scripts/jasmine/jasmine-html.js"></script>
     <script type="text/javascript" src="/Scripts/jasmine/boot.js"></script>
-    
+
     <!-- Vendor Scripts -->
     <script src="scripts/jquery-2.0.3.js"></script>
     <script src="scripts/angular.js"></script>
-    <script src="scripts/angular-mocks.js"></script>
+    
+    <!-- angular mocks doesn't provide real $http service for ajax call -->
+    <!-- use only if you want to mock -->
+    <!--<script src="scripts/angular-mocks.js"></script>-->
+    
+    <!-- angular-specs by https://github.com/ThomasBurleson/bower-angular-specs -->
+    <!-- use only if you want to do real ajax call. don't use mocks and specs at the same time -->
+    <script src="scripts/angular-specs.js"></script>
+
     <script src="scripts/angular-animate.js"></script>
     <script src="scripts/angular-route.js"></script>
     <script src="scripts/angular-sanitize.js"></script>
@@ -62,13 +70,14 @@
     <script src="app/services/repository.item.js"></script>
     <script src="app/services/repository.batch.js"></script>
     <script src="app/services/repository.box.js"></script>
-    
+
     <!-- controllers to be tested -->
     <script src="app/customer/customers.js"></script>
-    
+
     <!-- include source files here... -->
     <script type="text/javascript" src="/Scripts/jasmine-samples/SpecHelper.js"></script>
-    <script type="text/javascript" src="/Scripts/jasmine-samples/PlayerSpec.js"></script>
+    <!--<script type="text/javascript" src="/Scripts/jasmine-samples/PlayerSpec.js"></script>-->
+    <script type="text/javascript" src="/tests/tests.js"></script>
 
     <!-- include spec files here... -->
     <script type="text/javascript" src="/Scripts/jasmine-samples/Player.js"></script>

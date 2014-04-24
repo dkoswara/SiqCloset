@@ -203,6 +203,7 @@
     <Content Include="Scripts\angular-sanitize.js" />
     <Content Include="Scripts\angular-sanitize.min.js" />
     <Content Include="Scripts\angular-scenario.js" />
+    <Content Include="Scripts\angular-specs.js" />
     <Content Include="Scripts\angular.breeze.storagewip.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
@@ -541,6 +542,7 @@
     <Content Include="Scripts\underscore.min.js" />
     <Content Include="Scripts\xls.js" />
     <Content Include="SpecRunner.html" />
+    <Content Include="tests\tests.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Scripts\toastr.min.js.map" />
