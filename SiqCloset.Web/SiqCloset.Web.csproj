@@ -542,6 +542,7 @@
     <Content Include="Scripts\underscore.min.js" />
     <Content Include="Scripts\xls.js" />
     <Content Include="SpecRunner.html" />
+    <Content Include="tests\breezeTests.js" />
     <Content Include="tests\tests.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />

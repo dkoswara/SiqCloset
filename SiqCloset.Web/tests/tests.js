@@ -1,4 +1,4 @@
-﻿jasmine.DEFAULT_TIMEOUT_INTERVAL = 5 * 1000;
+﻿//jasmine.DEFAULT_TIMEOUT_INTERVAL = 5 * 1000;
 
 describe("a test for JasmineTest", function () {
 
@@ -19,7 +19,7 @@ describe("a test for JasmineTest", function () {
 
             setTimeout(function () {
                 defer.resolve(3);
-            }, 2000);
+            }, 500);
 
             return defer.promise;
         }
@@ -49,7 +49,21 @@ describe("a test for JasmineTest", function () {
             });
     });
 
-
+    it('should call Google currency exchange', function (jasmineDone) {
+        $.ajax({
+            url: 'http://rate-exchange.appspot.com/currency?from=USD&to=SGD',
+            dataType: 'jsonp',
+            })
+            .done(function (data) {
+                expect(data).toBeTruthy();
+                console.log(data);
+                jasmineDone();
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR.responseText);
+                expect(true).toBe(false);
+                jasmineDone();
+            });
+    });
 });
 
 //var $controllerConstructor;
