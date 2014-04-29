@@ -88,7 +88,11 @@
         }
 
         function goToWip(wipData) {
-            $location.path('/' + wipData.routeState + '/' + wipData.id);
+            if (wipData.routeState.indexOf('/') > -1) {
+                $location.path('/' + wipData.routeState);
+            } else {
+                $location.path('/' + wipData.routeState + '/' + wipData.id);
+            }
         }
 
         function setSort(prop) {

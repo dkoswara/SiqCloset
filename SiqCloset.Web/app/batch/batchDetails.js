@@ -4,9 +4,9 @@
     var controllerId = 'batchDetails';
 
     angular.module('app').controller(controllerId,
-        ['$location', '$scope', '$routeParams', 'common', 'config', 'datacontext', 'bootstrap.dialog', batchDetails]);
+        ['$location', '$scope', '$routeParams', 'common', 'config', 'datacontext', 'bootstrap.dialog', 'model', batchDetails]);
 
-    function batchDetails($location, $scope, $routeParams, common, config, datacontext, bsDialog) {
+    function batchDetails($location, $scope, $routeParams, common, config, datacontext, bsDialog, model) {
         var vm = this;
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
@@ -24,8 +24,8 @@
         vm.boxes = [];
 
         var isCustomerLookupSelected = false;
+        var wipEntityKey = undefined;
 
-        vm.selected = undefined;
         vm.onCustomerSelect = onCustomerSelect;
         vm.onBoxSelect = onBoxSelect;
         vm.addNewBox = addNewBox;
@@ -55,11 +55,13 @@
         function activate() {
             getCustomerLookups();
             onHasChanges();
+            onDestroy();
             setItemsGrid();
             onEndEditCell();
             vm.batchID = $routeParams.id;
             common.activateController([getRequestedBatch()], controllerId)
                .then(function () {
+                    onEveryChange();
                    log('Activated Customer Item List View');
                });
         }
@@ -262,6 +264,7 @@
 
         function cancel() {
             datacontext.cancel();
+            removeWipEntity();
 
             if (vm.newBatch && vm.newBatch.entityAspect.entityState.isDetached()) {
                 goToBatches();
@@ -293,6 +296,41 @@
                     arrays.pop(item);
                 }
             });
+        }
+
+        function storeWipEntity() {
+            var selectedItem = vm.selectedItems[0];
+            if (!selectedItem) return;
+            var description = selectedItem.code || '[New Item]' + selectedItem.itemID;
+
+            wipEntityKey = datacontext.zStorageWip.storeWipEntity(
+                selectedItem,
+                selectedItem.itemID,
+                wipEntityKey,
+                model.modelInfo.Item.entityName,
+                description,
+                model.modelInfo.Batch.entityName.toLowerCase() + '/' + selectedItem.batchID);
+        }
+
+        function autoStoreWip(immediate) {
+            common.debouncedThrottle(controllerId, storeWipEntity, 1000, immediate);
+        }
+
+        function onEveryChange() {
+            $scope.$on(config.events.entitiesChanged, function (event, data) {
+                autoStoreWip();
+            });
+        }
+
+        function onDestroy() {
+            $scope.$on('$destroy', function () {
+                autoStoreWip(true);
+                datacontext.cancel();
+            });
+        }
+
+        function removeWipEntity() {
+            datacontext.zStorageWip.removeWipEntity(wipEntityKey);
         }
     }
 })();
