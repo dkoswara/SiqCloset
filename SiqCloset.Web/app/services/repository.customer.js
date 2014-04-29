@@ -61,13 +61,13 @@
                 underscore.forEach(boxes[boxNo], function (box) {
                     manager.createEntity('Item', {
                         itemID: breeze.core.getUuid(),
-                        code: box['ItemCode'],
-                        name: box['ItemName'],
-                        price: box['Price'],
-                        notes: box['Notes'],
+                        code: box.ItemCode,
+                        name: box.ItemName,
+                        price: box.Price,
+                        notes: box.Notes,
                         boxID: newBox.boxID,
                         batchID: newBatch.batchID,
-                        customerID: getCustomerId(box['CustomerName']),
+                        customerID: getCustomerId(box.CustomerName),
                     });
                 });
             }
