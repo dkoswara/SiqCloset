@@ -8,10 +8,12 @@
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
         var logError = getLogFn(controllerId, 'error');
+        var $q = common.$q;
         var underscore = _;
 
         var vm = this;
         var customerItemLists = [];
+        var excelFile;
         
         vm.title = 'Upload Customer Item List Here';
         vm.customers = [];
@@ -19,14 +21,16 @@
         vm.saveCustomerItemList = saveCustomerItemList;
         
         vm.onFileSelect = function ($files) {
-            var file = $files[0];
-            processCustItemListFile(file, customerItemListReader.getCustItemList);
+            excelFile = $files[0];
         };
 
         function saveCustomerItemList() {
-            var batch = datacontext.customer.createBatchBoxItem(vm.batchNumber, customerItemLists);
-            var missingCustomers = underscore.where(batch.items, { customerID: null });
-            return datacontext.save();
+            processCustItemListFile(excelFile).then(function(data) {
+                customerItemLists = customerItemListReader.getCustItemList(data, vm.batchNumber);
+                //var batch = datacontext.customer.createBatchBoxItem(vm.batchNumber, customerItemLists);
+                //var missingCustomers = underscore.where(batch.items, { customerID: null });
+                //return datacontext.save();
+            });
         }
 
         activate();
@@ -35,15 +39,19 @@
             common.activateController([], controllerId)
                 .then(function () { log('Activated CIL View'); });
         }
-        
-        function processCustItemListFile(file, fn) {
+
+        var processCustItemListFile = function (file) {
+            var deferred = $q.defer();
+
             var reader = new FileReader();
             reader.onload = function (e) {
                 var data = e.target.result;
-                customerItemLists = fn(data, vm.batchNumber);
+                deferred.resolve(data);
                 log('Finished reading CIL');
             };
             reader.readAsBinaryString(file);
+
+            return deferred.promise;
         }
     }
 })();
