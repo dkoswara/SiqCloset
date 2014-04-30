@@ -48,7 +48,7 @@
             metadataStore.registerEntityTypeCtor(modelInfo.Item.entityName, Item);
 
             function Item() {
-                
+                this.custName = '';
             }
 
         }

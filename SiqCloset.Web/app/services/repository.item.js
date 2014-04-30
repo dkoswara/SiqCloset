@@ -105,6 +105,9 @@
                         boxID: newBox.boxID,
                         batchID: newBatch.batchID,
                         customerID: getCustomerId(box.CustomerName),
+
+                        //unmapped property
+                        custName: box.CustomerName,
                     });
                 });
             }
