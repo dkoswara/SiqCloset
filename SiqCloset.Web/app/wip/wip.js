@@ -66,6 +66,7 @@
 
             function confirmDelete() {
                 datacontext.zStorageWip.clearAllWip();
+                datacontext.cancel();
             }
         }
 

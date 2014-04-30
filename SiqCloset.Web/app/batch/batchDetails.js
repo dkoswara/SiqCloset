@@ -24,7 +24,7 @@
         vm.boxes = [];
 
         var isCustomerLookupSelected = false;
-        var wipEntityKey = undefined;
+        var wipEntityKeys = [];
 
         vm.onCustomerSelect = onCustomerSelect;
         vm.onBoxSelect = onBoxSelect;
@@ -63,7 +63,14 @@
                .then(function () {
                     onEveryChange();
                    log('Activated Customer Item List View');
-               });
+               })
+                .then(function () {
+                   //one can navigate from WIP view to here
+                   //which means hasChanges must be updated
+                    vm.hasChanges = datacontext.hasChanges();
+
+                    wipEntityKeys = datacontext.item.getItemsWipKeys(vm.items);
+            });;
         }
 
         function getTitle() {
@@ -252,7 +259,8 @@
                 .then(function(saveResult) {
                     vm.isSaving = false;
                     sortItems();
-                }, function(error) {
+                    removeWipEntities();
+            }, function(error) {
                     vm.isSaving = false;
                 });
         }
@@ -264,7 +272,7 @@
 
         function cancel() {
             datacontext.cancel();
-            removeWipEntity();
+            removeWipEntities();
 
             if (vm.newBatch && vm.newBatch.entityAspect.entityState.isDetached()) {
                 goToBatches();
@@ -301,15 +309,29 @@
         function storeWipEntity() {
             var selectedItem = vm.selectedItems[0];
             if (!selectedItem) return;
-            var description = selectedItem.code || '[New Item]' + selectedItem.itemID;
 
-            wipEntityKey = datacontext.zStorageWip.storeWipEntity(
+            var itemID = selectedItem.itemID;
+            var description = selectedItem.code || '[New Item]' + itemID;
+
+            var tempKey = findExistingKey(wipEntityKeys, itemID) || {};
+            if (underscore.isEmpty(tempKey)) {
+                wipEntityKeys.push(tempKey);
+            }
+
+            tempKey[itemID] = datacontext.zStorageWip.storeWipEntity(
                 selectedItem,
-                selectedItem.itemID,
-                wipEntityKey,
+                itemID,
+                tempKey[itemID],
                 model.modelInfo.Item.entityName,
                 description,
                 model.modelInfo.Batch.entityName.toLowerCase() + '/' + selectedItem.batchID);
+
+            function findExistingKey(weks, id) {
+                return underscore.find(weks, function(x) {
+                    var key = Object.keys(x)[0];
+                    return key == id;
+                });
+            }
         }
 
         function autoStoreWip(immediate) {
@@ -329,8 +351,12 @@
             });
         }
 
-        function removeWipEntity() {
-            datacontext.zStorageWip.removeWipEntity(wipEntityKey);
+        function removeWipEntities() {
+            wipEntityKeys.forEach(function (wipEntityKey) {
+                var key = Object.keys(wipEntityKey)[0];
+                var wipKey = wipEntityKey[key];
+                datacontext.zStorageWip.removeWipEntity(wipKey);
+            });
         }
     }
 })();

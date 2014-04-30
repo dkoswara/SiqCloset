@@ -22,6 +22,7 @@
             this.create = create;
             this.getProjection = getProjection;
             this.getItems = getItems;
+            this.getItemsWipKeys = getItemsWipKeys;
         }
 
         // Allow this repo to have access to the Abstract Repo
@@ -103,6 +104,23 @@
                 self.log('Retrieved [Items Details] from remote data source', results.length, true);
                 return results;
             }
+        }
+
+        function getItemsWipKeys(items) {
+            var self = this;
+
+            var wipEntityKeys = [];
+            items.forEach(function (item) {
+                var itemID = item.itemID;
+                var wipEntityKey = {};
+                var wipKey = self.zStorageWip.findWipKeyByEntityId(self.entityName, itemID);
+                if (wipKey) {
+                    wipEntityKey[itemID] = wipKey;
+                    wipEntityKeys.push(wipEntityKey);
+                }
+            });
+
+            return wipEntityKeys;
         }
     }
 })();
