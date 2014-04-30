@@ -8,8 +8,10 @@
     function RepositoryItem(model, AbstractRepository, zStorage, zStorageWip) {
         var EntityQuery = breeze.EntityQuery;
         var Predicate = breeze.Predicate;
+        var underscore = _;
         var entityName = model.modelInfo.Item.entityName;
         var resourceName = model.modelInfo.Item.resourceName;
+        var customerResourceName = model.modelInfo.Customer.resourceName;
         var orderBy = 'box.boxNo';
         
         function Ctor(mgr) {
@@ -20,6 +22,7 @@
             this.zStorageWip = zStorageWip;
             // Exposed data access functions
             this.create = create;
+            this.createBatchBoxItem = createBatchBoxItem;
             this.getProjection = getProjection;
             this.getItems = getItems;
             this.getItemsWipKeys = getItemsWipKeys;
@@ -75,6 +78,51 @@
                     itemsMap.push(item);
                 });
                 return itemsMap;
+            }
+        }
+
+        function createBatchBoxItem(batchNumber, custItemLists) {
+            var self = this;
+            var manager = self.manager;
+
+            var newBatch = manager.createEntity('Batch', { batchID: batchNumber });
+
+            var boxes = underscore.groupBy(custItemLists, 'BoxNo');
+
+            for (var boxNo in boxes) {
+                var newBox = manager.createEntity('Box', {
+                    boxID: breeze.core.getUuid(),
+                    boxNo: boxNo,
+                    batchID: newBatch.batchID,
+                });
+                underscore.forEach(boxes[boxNo], function (box) {
+                    manager.createEntity(entityName, {
+                        itemID: breeze.core.getUuid(),
+                        code: box.ItemCode,
+                        name: box.ItemName,
+                        price: box.Price,
+                        notes: box.Notes,
+                        boxID: newBox.boxID,
+                        batchID: newBatch.batchID,
+                        customerID: getCustomerId(box.CustomerName),
+                    });
+                });
+            }
+
+            var storeMetaKey = resourceName + "_" + batchNumber;
+            self.zStorage.areItemsLoaded(storeMetaKey, true);
+            return newBatch;
+
+            function getCustomerId(custName) {
+                var query = EntityQuery.from(customerResourceName)
+                    .where('name', '==', custName)
+                    .select('customerID');
+
+                var ids = manager.executeQueryLocally(query); // query the cache (synchronous)
+                if (ids.length == 0) {
+                    return null;
+                }
+                return ids[0].customerID;    //should only have one match
             }
         }
 

@@ -3,9 +3,9 @@
 
     var serviceId = 'customerItemListReader';
 
-    angular.module('app').factory(serviceId, [customerItemListReader]);
+    angular.module('app').factory(serviceId, ['datacontext', 'model', customerItemListReader]);
 
-    function customerItemListReader() {
+    function customerItemListReader(datacontext, model) {
         var underscore = _;
 
         var service = {
@@ -16,8 +16,32 @@
 
         function getCustItemList(data, batchNo) {
             var workbook = convertRawDataToWorkbook(data);
-            return convertSheetToObject(workbook, batchNo);
+            var custItemList = convertSheetToObject(workbook, batchNo);
+            var newBatch = datacontext.item.createBatchBoxItem(batchNo, custItemList);
+            storeWipEntity(newBatch);
         }
+
+        function storeWipEntity(batch) {
+
+            batch.items.forEach(function(item) {
+                storeWipEntityCore(item);
+            });
+
+            function storeWipEntityCore(item) {
+                var itemID = item.itemID;
+                var description = item.code || '[New Item]' + itemID;
+
+                datacontext.zStorageWip.storeWipEntity(
+                    item,
+                    itemID,
+                    itemID,
+                    model.modelInfo.Item.entityName,
+                    description,
+                    model.modelInfo.Batch.entityName.toLowerCase() + '/' + item.batchID);
+            }
+        }
+
+        
 
         function convertRawDataToWorkbook(data) {
             var cfb = XLS.CFB.read(data, { type: 'binary' });
@@ -84,7 +108,7 @@
             return custItemList;
 
             function getCellValue(s, letter, row, defaultValue) {
-                defaultValue = defaultValue || '';
+                defaultValue = defaultValue !== undefined ? defaultValue  : '';
                 var cellPos = letter + '' + row;
                 return s[cellPos] ? JSON.parse(s[cellPos].v) : defaultValue;
             }
