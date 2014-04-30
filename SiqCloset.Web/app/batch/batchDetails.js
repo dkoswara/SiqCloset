@@ -171,15 +171,23 @@
 
         function beforeSelectionChange(row) {
             if (!isCustomerLookupSelected) {
-                resetCustomerName();
+                resetCustomerName(row.entity);
             }
             isCustomerLookupSelected = false;
+
+            setItemCodeToUppercase(row.entity);
+
             return true;
 
-            function resetCustomerName() {
-                var item = vm.selectedItems[0];
+            function resetCustomerName(item) {
                 if (item && item.customer) {
                     item.custName = item.customer.name;
+                }
+            }
+
+            function setItemCodeToUppercase(item) {
+                if (item && item.code) {
+                    item.code = item.code.toUpperCase();
                 }
             }
         }
