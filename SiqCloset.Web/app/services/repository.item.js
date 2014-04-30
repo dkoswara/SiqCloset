@@ -90,11 +90,16 @@
             var boxes = underscore.groupBy(custItemLists, 'BoxNo');
 
             for (var boxNo in boxes) {
-                var newBox = manager.createEntity('Box', {
-                    boxID: breeze.core.getUuid(),
-                    boxNo: boxNo,
-                    batchID: newBatch.batchID,
-                });
+                var newBox = undefined;
+                if (boxNo != 0) {
+                    newBox = manager.createEntity('Box', {
+                        boxID: breeze.core.getUuid(),
+                        boxNo: boxNo,
+                        batchID: newBatch.batchID,
+                    });
+                }
+                var newBoxID = newBox ? newBox.boxID : null;
+
                 underscore.forEach(boxes[boxNo], function (box) {
                     manager.createEntity(entityName, {
                         itemID: breeze.core.getUuid(),
@@ -102,7 +107,7 @@
                         name: box.ItemName,
                         price: box.Price,
                         notes: box.Notes,
-                        boxID: newBox.boxID,
+                        boxID: newBoxID,
                         batchID: newBatch.batchID,
                         customerID: getCustomerId(box.CustomerName),
 

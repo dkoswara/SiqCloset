@@ -116,14 +116,19 @@
             //});
 
             var boxes = underscore.map(items, function (item) {
-                return { boxNo: item.box.boxNo, boxID: item.boxID };
+                return {
+                    boxNo: item.box ? item.box.boxNo : null,
+                    boxID: item.boxID
+                };
             });
 
             var uniqueBoxes = underscore.unique(boxes, function (b) {
                 return b.boxID;
             });
 
-            vm.boxes = uniqueBoxes;
+            vm.boxes = underscore.filter(uniqueBoxes, function(b) {
+                return b.boxID != null;
+            });
         }
 
         function setCustName() {
