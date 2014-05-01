@@ -75,7 +75,8 @@
                 .then(confirmSave);
 
             function confirmSave() {
-                datacontext.save(pendingEntities, false).then(saveSuccess, saveFailed);
+                //datacontext.save(pendingEntities, false).then(saveSuccess, saveFailed);
+                datacontext.save(null, false).then(saveSuccess, saveFailed);
 
                 function saveSuccess() {
                     log('Wip saved', '', true);

@@ -25,12 +25,13 @@
     	// Shared by repository classes
         Ctor.prototype._getAllLocal = _getAllLocal;
         Ctor.prototype._getById = _getById;
-        Ctor.prototype.getEntityByIdLocal = getEntityByIdLocal;
-        Ctor.prototype.getEntityByIdOrFromWip = getEntityByIdOrFromWip;
         Ctor.prototype._setIsPartialTrue = _setIsPartialTrue;
         Ctor.prototype._getInlineCount = _getInlineCount;
         Ctor.prototype._getLocalEntityCount = _getLocalEntityCount;
         Ctor.prototype._queryFailed = _queryFailed;
+
+        Ctor.prototype.getEntityByIdLocal = getEntityByIdLocal;
+        Ctor.prototype.getEntityByIdOrFromWip = getEntityByIdOrFromWip;
         
     	// Convenience functions for the Repos
         Ctor.prototype.log = common.logger.getLogFn(this.serviceId);
