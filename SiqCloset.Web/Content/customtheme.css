@@ -922,6 +922,12 @@ form {
         color: #fff;
     }
 
+    .widget.wtiffanyblue .widget-head {
+        background-color: #60DFE5;
+        border: 1px solid #60DFE5;
+        color: #fff;
+    }
+
     .widget.wblue .widget-head {
         background-color: #1171a3;
         border: 1px solid #1171a3;
