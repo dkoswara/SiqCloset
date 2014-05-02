@@ -17,6 +17,9 @@ namespace SiqCloset.Web.App_Start {
           name: "BreezeApi",
           routeTemplate: "breeze/{controller}/{action}"
       );
+
+      GlobalConfiguration.Configuration.MessageHandlers.Add(new Breeze.WebApi.BreezeSimpleCorsHandler());
+
     }
   }
 }

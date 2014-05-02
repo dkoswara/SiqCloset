@@ -43,11 +43,8 @@ describe('true', function(){
              });
      });
 
-    it('should call jQuery $.ajaxss', function(jasmineDone) {
-        $.ajax({
-            url: 'http://localhost:3958/breeze/Breeze/Batches',
-            //dataType: 'jsonp',
-            })
+    it('should call jQuery $.ajax', function(jasmineDone) {
+        $.ajax('http://localhost:3958/breeze/Breeze/Batches')
             .done(function (data) {
                 console.log('successs');
                 expect(data).toBeTruthy();
@@ -60,5 +57,21 @@ describe('true', function(){
                 expect(true).toBe(false);
                 jasmineDone();
         });
+    });
+
+    it('should return pong', function (jasmineDone) {
+        $.ajax('http://localhost:3958/breeze/Breeze/Ping')
+            .done(function (data) {
+                console.log('successs');
+                expect(data).toBe('pong');
+                jasmineDone();
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.log('failed again!!');
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
+                expect(true).toBe(false);
+                jasmineDone();
+            });
     });
 });
