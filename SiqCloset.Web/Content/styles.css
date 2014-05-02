@@ -551,4 +551,9 @@ a {
 .ngCell {
     overflow: visible;
 }
+
+.red {
+  background-color: red;
+	color: white;
+}
 /*#endregion */

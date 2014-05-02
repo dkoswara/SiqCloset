@@ -1,11 +1,12 @@
 ﻿<div>
-    <!-- <input type="text" 
-           data-ng-model="COL_FIELD" 
+    <!-- <input type="text"
+           data-ng-model="COL_FIELD"
            typeahead="customer.name for customer in vm.customerLookups | filter:{name: $viewValue}:startsWith | limitTo:8"
            typeahead-on-select="vm.onSelect($item, $model, $label)" /> -->
 
     <input type="text"
            data-ng-model="COL_FIELD"
            typeahead="customer.name for customer in vm.customerLookups | orderCustomerLookupsBy:$viewValue | orderBy:'relevance' | limitTo:8"
-           typeahead-on-select="vm.onCustomerSelect($item, $model, $label)" />
+           typeahead-on-select="vm.onCustomerSelect($item, $model, $label)"
+           data-ng-class="{red: row.getProperty('customerID') == null}" />
 </div>

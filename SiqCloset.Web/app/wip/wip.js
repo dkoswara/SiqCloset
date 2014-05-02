@@ -66,6 +66,7 @@
 
             function confirmDelete() {
                 datacontext.zStorageWip.clearAllWip();
+                datacontext.cancel();
             }
         }
 
@@ -74,7 +75,8 @@
                 .then(confirmSave);
 
             function confirmSave() {
-                datacontext.save(pendingEntities, false).then(saveSuccess, saveFailed);
+                //datacontext.save(pendingEntities, false).then(saveSuccess, saveFailed);
+                datacontext.save(null, false).then(saveSuccess, saveFailed);
 
                 function saveSuccess() {
                     log('Wip saved', '', true);
@@ -88,7 +90,11 @@
         }
 
         function goToWip(wipData) {
-            $location.path('/' + wipData.routeState + '/' + wipData.id);
+            if (wipData.routeState.indexOf('/') > -1) {
+                $location.path('/' + wipData.routeState);
+            } else {
+                $location.path('/' + wipData.routeState + '/' + wipData.id);
+            }
         }
 
         function setSort(prop) {

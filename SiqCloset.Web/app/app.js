@@ -15,13 +15,13 @@
         // 3rd Party Modules
         'ui.bootstrap',      // ui-bootstrap (ex: carousel, pagination, dialog)
         'angularFileUpload', //angular file upload
+        'breeze.angular',
         'breeze.directives', //Breeze/AngularJS directives
         'ngzWip',            // angular-breeze local storage feature
     ]);
     
     // Handle routing errors and success events
-    app.run(['$route', '$rootScope', '$q','routeMediator', function ($route, $rootScope, $q, routeMediator) {
-        breeze.core.extendQ($rootScope, $q);
+    app.run(['$route', 'routeMediator', 'breeze', function ($route, routeMediator, breeze) {
         routeMediator.setRoutingHandlers();
         // Include $route to kick start the router.
     }]);

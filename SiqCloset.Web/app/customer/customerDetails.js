@@ -39,7 +39,9 @@
 
         function canSave() { return vm.canCancel && !vm.customer.entityAspect.getValidationErrors().length > 0; }
 
-        function canCancel() { return vm.hasChanges && !vm.isSaving; }
+        function canCancel() {
+             return vm.hasChanges && !vm.isSaving;
+        }
 
         activate();
 
@@ -47,7 +49,13 @@
             initLookups();
             onDestroy();
             onHasChanges();
-            common.activateController([getRequestedCustomer()], controllerId).then(onEveryChange);
+            common.activateController([getRequestedCustomer()], controllerId)
+                .then(onEveryChange)
+                .then(function () {
+                    //one can navigate from WIP view to here
+                    //which means hasChanges must be updated
+                    vm.hasChanges = datacontext.hasChanges();
+                });
         }
 
         function initLookups() {

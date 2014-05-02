@@ -4,9 +4,9 @@
     var serviceId = 'repository.batch';
 
     
-    angular.module('app').factory(serviceId, ['model', 'repository.abstract', 'zStorage', RepositoryBatch]);
+    angular.module('app').factory(serviceId, ['model', 'repository.abstract', 'zStorage', 'zStorageWip', RepositoryBatch]);
 
-    function RepositoryBatch(model, AbstractRepository, zStorage) {
+    function RepositoryBatch(model, AbstractRepository, zStorage, zStorageWip) {
         var EntityQuery = breeze.EntityQuery;
         var Predicate = breeze.Predicate;
         var entityName = model.modelInfo.Batch.entityName;
@@ -18,7 +18,7 @@
             this.entityName = entityName;
             this.manager = mgr;
             this.zStorage = zStorage;
-
+            this.zStorageWip = zStorageWip;
             // Exposed data access functions
             this.create = create;
             this.getPartials = getPartials;
@@ -51,7 +51,7 @@
                 .orderBy(orderBy)
                 .toType(entityName)
                 .using(self.manager).execute()
-                .to$q(querySucceeded, self._queryFailed);
+                .then(querySucceeded, self._queryFailed);
 
             function querySucceeded(data) {
                 self.zStorage.areItemsLoaded(resourceName, true);
@@ -65,7 +65,7 @@
             return EntityQuery.from(resourceName)
                 .take(0).inlineCount(true)
                 .using(this.manager).execute()
-                .to$q(this._getInlineCount);
+                .then(this._getInlineCount);
         }
 
        

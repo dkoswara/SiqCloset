@@ -21,6 +21,7 @@
             prime: prime,
             save: save,
             cancel: cancel,
+            hasChanges: hasChanges,
             markDeleted: markDeleted,
             zStorage: zStorage,
             zStorageWip: zStorageWip,
@@ -75,10 +76,14 @@
         }
 
         function cancel() {
-            if (manager.hasChanges()) {
+            if (this.hasChanges()) {
                 manager.rejectChanges();
                 logSuccess('Cancelled changes', null, true);
             }
+        }
+
+        function hasChanges() {
+            return manager.hasChanges();
         }
 
         function markDeleted(entity) {
@@ -87,7 +92,7 @@
 
         function save(entitiesToSave, saveLocalStorage) {
             return manager.saveChanges(entitiesToSave || null)
-                .to$q(saveSucceeded, saveFailed);
+                .then(saveSucceeded, saveFailed);
 
             function saveSucceeded(saveResult) {
                 saveLocalStorage = saveLocalStorage || true;

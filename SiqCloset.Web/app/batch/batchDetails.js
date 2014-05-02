@@ -4,9 +4,9 @@
     var controllerId = 'batchDetails';
 
     angular.module('app').controller(controllerId,
-        ['$location', '$scope', '$routeParams', 'common', 'config', 'datacontext', 'bootstrap.dialog', batchDetails]);
+        ['$location', '$scope', '$routeParams', 'common', 'config', 'datacontext', 'bootstrap.dialog', 'model', batchDetails]);
 
-    function batchDetails($location, $scope, $routeParams, common, config, datacontext, bsDialog) {
+    function batchDetails($location, $scope, $routeParams, common, config, datacontext, bsDialog, model) {
         var vm = this;
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
@@ -24,8 +24,8 @@
         vm.boxes = [];
 
         var isCustomerLookupSelected = false;
+        var wipEntityKeys = [];
 
-        vm.selected = undefined;
         vm.onCustomerSelect = onCustomerSelect;
         vm.onBoxSelect = onBoxSelect;
         vm.addNewBox = addNewBox;
@@ -55,13 +55,22 @@
         function activate() {
             getCustomerLookups();
             onHasChanges();
+            onDestroy();
             setItemsGrid();
             onEndEditCell();
             vm.batchID = $routeParams.id;
             common.activateController([getRequestedBatch()], controllerId)
                .then(function () {
+                    onEveryChange();
                    log('Activated Customer Item List View');
-               });
+               })
+                .then(function () {
+                   //one can navigate from WIP view to here
+                   //which means hasChanges must be updated
+                    vm.hasChanges = datacontext.hasChanges();
+
+                    wipEntityKeys = datacontext.item.getItemsWipKeys(vm.items);
+            });;
         }
 
         function getTitle() {
@@ -107,14 +116,19 @@
             //});
 
             var boxes = underscore.map(items, function (item) {
-                return { boxNo: item.box.boxNo, boxID: item.boxID };
+                return {
+                    boxNo: item.box ? item.box.boxNo : null,
+                    boxID: item.boxID
+                };
             });
 
             var uniqueBoxes = underscore.unique(boxes, function (b) {
                 return b.boxID;
             });
 
-            vm.boxes = uniqueBoxes;
+            vm.boxes = underscore.filter(uniqueBoxes, function(b) {
+                return b.boxID != null;
+            });
         }
 
         function setCustName() {
@@ -162,15 +176,23 @@
 
         function beforeSelectionChange(row) {
             if (!isCustomerLookupSelected) {
-                resetCustomerName();
+                resetCustomerName(row.entity);
             }
             isCustomerLookupSelected = false;
+
+            setItemCodeToUppercase(row.entity);
+
             return true;
 
-            function resetCustomerName() {
-                var item = vm.selectedItems[0];
+            function resetCustomerName(item) {
                 if (item && item.customer) {
                     item.custName = item.customer.name;
+                }
+            }
+
+            function setItemCodeToUppercase(item) {
+                if (item && item.code) {
+                    item.code = item.code.toUpperCase();
                 }
             }
         }
@@ -250,7 +272,8 @@
                 .then(function(saveResult) {
                     vm.isSaving = false;
                     sortItems();
-                }, function(error) {
+                    removeWipEntities();
+            }, function(error) {
                     vm.isSaving = false;
                 });
         }
@@ -262,6 +285,7 @@
 
         function cancel() {
             datacontext.cancel();
+            removeWipEntities();
 
             if (vm.newBatch && vm.newBatch.entityAspect.entityState.isDetached()) {
                 goToBatches();
@@ -292,6 +316,59 @@
                 if (entityAspect && entityAspect.entityState.isDetached()) {
                     arrays.pop(item);
                 }
+            });
+        }
+
+        function storeWipEntity() {
+            var selectedItem = vm.selectedItems[0];
+            if (!selectedItem) return;
+
+            var itemID = selectedItem.itemID;
+            var description = selectedItem.code || '[New Item]' + itemID;
+
+            var tempKey = findExistingKey(wipEntityKeys, itemID) || {};
+            if (underscore.isEmpty(tempKey)) {
+                wipEntityKeys.push(tempKey);
+            }
+
+            tempKey[itemID] = datacontext.zStorageWip.storeWipEntity(
+                selectedItem,
+                itemID,
+                tempKey[itemID],
+                model.modelInfo.Item.entityName,
+                description,
+                model.modelInfo.Batch.entityName.toLowerCase() + '/' + selectedItem.batchID);
+
+            function findExistingKey(weks, id) {
+                return underscore.find(weks, function(x) {
+                    var key = Object.keys(x)[0];
+                    return key == id;
+                });
+            }
+        }
+
+        function autoStoreWip(immediate) {
+            common.debouncedThrottle(controllerId, storeWipEntity, 1000, immediate);
+        }
+
+        function onEveryChange() {
+            $scope.$on(config.events.entitiesChanged, function (event, data) {
+                autoStoreWip();
+            });
+        }
+
+        function onDestroy() {
+            $scope.$on('$destroy', function () {
+                autoStoreWip(true);
+                datacontext.cancel();
+            });
+        }
+
+        function removeWipEntities() {
+            wipEntityKeys.forEach(function (wipEntityKey) {
+                var key = Object.keys(wipEntityKey)[0];
+                var wipKey = wipEntityKey[key];
+                datacontext.zStorageWip.removeWipEntity(wipKey);
             });
         }
     }

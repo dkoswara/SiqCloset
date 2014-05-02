@@ -176,6 +176,8 @@
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\images\icon.png" />
+    <Content Include="Content\jasmine\jasmine.css" />
+    <Content Include="Content\jasmine\jasmine_favicon.png" />
     <Content Include="Content\ng-grid.css" />
     <Content Include="Content\ng-grid.min.css" />
     <Content Include="Content\styles.css" />
@@ -201,6 +203,7 @@
     <Content Include="Scripts\angular-sanitize.js" />
     <Content Include="Scripts\angular-sanitize.min.js" />
     <Content Include="Scripts\angular-scenario.js" />
+    <Content Include="Scripts\angular-specs.js" />
     <Content Include="Scripts\angular.breeze.storagewip.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
@@ -215,12 +218,14 @@
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\breeze.intellisense.js" />
+    <Content Include="Scripts\breeze.angular.js" />
     <Content Include="Scripts\breeze.debug.js" />
-    <Content Include="Scripts\breeze.directives.validation.js" />
+    <Content Include="Scripts\breeze.directives.js" />
+    <None Include="Scripts\breeze.intellisense.js" />
+    <Content Include="Scripts\breeze.metadata-helper.js" />
     <Content Include="Scripts\breeze.min.js" />
     <Content Include="Scripts\breeze.saveErrorExtensions.js" />
-    <Content Include="Scripts\breeze.to%24q.js" />
+    <Content Include="Scripts\datajs-1.1.2.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />
     <Content Include="Scripts\i18n\angular-locale_af.js" />
@@ -508,6 +513,14 @@
     <Content Include="Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
+    <Content Include="Scripts\jasmine-samples\Player.js" />
+    <Content Include="Scripts\jasmine-samples\PlayerSpec.js" />
+    <Content Include="Scripts\jasmine-samples\Song.js" />
+    <Content Include="Scripts\jasmine-samples\SpecHelper.js" />
+    <Content Include="Scripts\jasmine\boot.js" />
+    <Content Include="Scripts\jasmine\console.js" />
+    <Content Include="Scripts\jasmine\jasmine-html.js" />
+    <Content Include="Scripts\jasmine\jasmine.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\moment.js" />
@@ -518,6 +531,9 @@
     <Content Include="Scripts\q.min.js" />
     <Content Include="Scripts\spin.js" />
     <Content Include="Scripts\spin.min.js" />
+    <Content Include="Scripts\stringformat-1.09.js" />
+    <Content Include="Scripts\stringformat-1.09.min.js" />
+    <Content Include="Scripts\stringformat.readme.txt" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\ui-bootstrap-0.7.0.js" />
@@ -527,6 +543,10 @@
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore.min.js" />
     <Content Include="Scripts\xls.js" />
+    <Content Include="SpecRunner.html" />
+    <Content Include="tests\breezeTests.js" />
+    <Content Include="tests\excelTests.js" />
+    <Content Include="tests\tests.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Scripts\toastr.min.js.map" />
@@ -543,6 +563,7 @@
     <Content Include="Content\font\FontAwesome.otf" />
     <Content Include="packages.config" />
     <Content Include="Scripts\underscore.min.map" />
+    <Content Include="tests\CustomerItemList.xls" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -21,7 +21,6 @@
             this.zStorage = zStorage;
             this.zStorageWip = zStorageWip;
             // Exposed data access functions
-            this.createBatchBoxItem = createBatchBoxItem;
             this.create = create;
             this.createNullo = createNullo;
             this.applyCustomerValidation = applyCustomerValidation;
@@ -43,49 +42,6 @@
         AbstractRepository.extend(Ctor);
 
         return Ctor;
-
-        function createBatchBoxItem(batchNumber, custItemLists) {
-            var self = this;
-            var manager = self.manager;
-
-            var newBatch = manager.createEntity('Batch', { batchID: batchNumber });
-
-            var boxes = underscore.groupBy(custItemLists, 'BoxNo');
-
-            for (var boxNo in boxes) {
-                var newBox = manager.createEntity('Box', {
-                    boxID: breeze.core.getUuid(),
-                    boxNo: boxNo,
-                    batchID: newBatch.batchID,
-                });
-                underscore.forEach(boxes[boxNo], function (box) {
-                    manager.createEntity('Item', {
-                        itemID: breeze.core.getUuid(),
-                        code: box['ItemCode'],
-                        name: box['ItemName'],
-                        price: box['Price'],
-                        notes: box['Notes'],
-                        boxID: newBox.boxID,
-                        batchID: newBatch.batchID,
-                        customerID: getCustomerId(box['CustomerName']),
-                    });
-                });
-            }
-
-            return newBatch;
-
-            function getCustomerId(custName) {
-                var query = EntityQuery.from(resourceName)
-                    .where('name', '==', custName)
-                    .select('customerID');
-
-                var ids = manager.executeQueryLocally(query); // query the cache (synchronous)
-                if (ids.length == 0) {
-                    return null;
-                }
-                return ids[0].customerID;    //should only have one match
-            }
-        }
 
         function create(inits) {
             if (inits) {
@@ -115,7 +71,7 @@
                 .orderBy(orderBy)
                 .toType(entityName)
                 .using(self.manager).execute()
-                .to$q(querySucceeded, self._queryFailed);
+                .then(querySucceeded, self._queryFailed);
 
             function querySucceeded(data) {
                 self.zStorage.areItemsLoaded(resourceName, true);
@@ -148,7 +104,7 @@
                 .orderBy(orderBy)
                 .toType(entityName)
                 .using(self.manager).execute()
-                .to$q(querySucceeded, self._queryFailed);
+                .then(querySucceeded, self._queryFailed);
 
             function querySucceeded(data) {
                 self.zStorage.areItemsLoaded(resourceName, true);
@@ -162,7 +118,7 @@
             return EntityQuery.from(resourceName)
                 .take(0).inlineCount(true)
                 .using(this.manager).execute()
-                .to$q(this._getInlineCount);
+                .then(this._getInlineCount);
         }
         
         function getCustomersAndItemsCount() {
@@ -173,7 +129,7 @@
                 .orderBy('items.length')
                 .take(10)
                 .using(self.manager).execute()
-                .to$q(querySucceeded, self._queryFailed);
+                .then(querySucceeded, self._queryFailed);
 
             function querySucceeded(data) {
                 var results = data.results;
@@ -224,7 +180,7 @@
             EntityQuery.from(resourceName)
                 .toType(entityName)
                 .using(self.manager).execute()
-                .to$q(querySucceeded, self._queryFailed);
+                .then(querySucceeded, self._queryFailed);
 
             function querySucceeded(data) {
                 var customers = data.results;
