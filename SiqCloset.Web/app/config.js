@@ -25,7 +25,10 @@
     toastr.options.positionClass = 'toast-bottom-right';
 
     // For use with the HotTowel-Angular-Breeze add-on that uses Breeze
-    var remoteServiceName = 'breeze/Breeze';
+    var siqClosetRemoteServiceName = 'breeze/Breeze';
+
+    // For use to query currency exchange rate
+    var rateExchangeRemoteServiceName = 'http://rate-exchange.appspot.com/';
 
     var events = {
         controllerActivateSuccess: 'controller.activateSuccess',
@@ -43,7 +46,8 @@
         appErrorPrefix: '[SiqCloset Error] ', //Configure the exceptionHandler decorator
         docTitle: 'SiqCloset: ',
         events: events,
-        remoteServiceName: remoteServiceName,
+        siqClosetRemoteServiceName: siqClosetRemoteServiceName,
+        rateExchangeRemoteServiceName: rateExchangeRemoteServiceName,
         keyCodes: keyCodes,
         version: '2.0.0'
     };

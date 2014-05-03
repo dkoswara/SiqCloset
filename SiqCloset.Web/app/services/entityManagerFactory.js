@@ -12,7 +12,7 @@
         // We could also set this per entityManager
         new breeze.ValidationOptions({ validateOnAttach: false }).setAsDefault();
         
-        var serviceName = config.remoteServiceName;
+        var serviceName = config.siqClosetRemoteServiceName;
         var metadataStore = createMetadataStore();
 
         var provider = {
@@ -22,7 +22,12 @@
         
         return provider;
 
-        function newManager() {
+        function newManager(val) {
+            if (val) {
+                //if val is defined, assume it's a breeze.DataService object
+                return new breeze.EntityManager({ dataService: val });
+            }
+            
             var mgr = new breeze.EntityManager({
                 serviceName: serviceName,
                 metadataStore: metadataStore

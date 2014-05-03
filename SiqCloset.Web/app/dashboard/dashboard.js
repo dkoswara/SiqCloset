@@ -1,9 +1,9 @@
 ﻿(function () {
     'use strict';
     var controllerId = 'dashboard';
-    angular.module('app').controller(controllerId, ['common', 'datacontext', dashboard]);
+    angular.module('app').controller(controllerId, ['common', 'datacontext', 'currencyExchange', dashboard]);
 
-    function dashboard(common, datacontext) {
+    function dashboard(common, datacontext, currencyExchange) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
 
@@ -14,6 +14,7 @@
         };
         vm.messageCount = 0;
         vm.customersCount = 0;
+        vm.exchangeRateText = '';
         vm.people = [];
         vm.title = 'Dashboard';
         vm.customerSummary = {
@@ -29,11 +30,12 @@
             var promises = [
                 //getAllCustomers(),
                 getCustomerCount(),
+                getExchangeRate(),
                //getCustomersAndItemsCount()
             ];
             common.activateController(promises, controllerId)
                 .then(function() {
-                 log('Activated Dashboard View');
+                    log('Activated Dashboard View');
             });
         }
 
@@ -57,6 +59,13 @@
                 //datacontext.customer.applyCustomerValidation();
 
                 return vm.customersCount = data;
+            });
+        }
+
+        function getExchangeRate() {
+            //vm.exchangeRateText = String.format('$1 = {0}rp', 11530.7);
+            return currencyExchange.getData().then(function(results) {
+                return vm.exchangeRateText = String.format('$1 = Rp. {0}', results.data.rate);
             });
         }
 
