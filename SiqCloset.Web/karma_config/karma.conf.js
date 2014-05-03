@@ -4,10 +4,14 @@ module.exports = function(config){
 
     files : [
       'Scripts/angular.js',
-      'Scripts/angular-mocks.js',
+      'Scripts/angular-specs.js',
+      //'Scripts/angular-mocks.js',
       'Scripts/jquery-2.0.3.js',
       'Scripts/q.js',
+      'Scripts/underscore.js',
+      'Scripts/breeze.debug.js',
       'tests/simpleTests.js',
+      //'tests/breezeTests.js'
     ],
 
     exclude : [
@@ -20,12 +24,13 @@ module.exports = function(config){
 
     frameworks: ['jasmine'],
 
-    browsers : ['Chrome'],
+    browsers : ['PhantomJS'],
 
     plugins : [
             'karma-junit-reporter',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
+            'karma-phantomjs-launcher',
             'karma-jasmine'    //npm install karma-jasmine@2_0 (use 2.0 for better async support)
             ],
 

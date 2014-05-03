@@ -2,10 +2,12 @@
 
 describe("Breeze tests", function () {
 
+    var siqClosetRemoteServiceName = 'http://localhost:3958/breeze/Breeze';
+
     it('should query using Breeze', function(done) {
 
         var mgr = new breeze.EntityManager({
-            serviceName: 'breeze/Breeze',
+            serviceName: siqClosetRemoteServiceName,
         });
         var query = breeze.EntityQuery.from('Batches');
 
@@ -26,7 +28,7 @@ describe("Breeze tests", function () {
         //breeze.NamingConvention.camelCase.setAsDefault();
 
         var mgr = new breeze.EntityManager({
-            serviceName: 'breeze/Breeze',
+            serviceName: siqClosetRemoteServiceName,
         });
         var query = breeze.EntityQuery.from('Items')
             .where('BatchID', '==', 130)
@@ -46,7 +48,41 @@ describe("Breeze tests", function () {
     });
 
     it('should query Google currency exchange using Breeze', function (done) {
+        var serviceName = 'http://rate-exchange.appspot.com/';
 
+        var mgr = getConfiguredManager(serviceName);
+
+        //http://rate-exchange.appspot.com/currency?from=USD&to=IDR
+        var query = breeze.EntityQuery
+            .from('currency')
+            .withParameters({
+                from: 'USD',
+                to: 'IDR',
+            });
+
+        mgr.executeQuery(query)
+            .then(function (data) {
+                expect(data.results.length == 1).toBe(true);
+                done();
+            })
+            .fail(function (error) {
+                console.log(error);
+                expect(true).toBe(false);
+                done();
+            });
+
+        function getConfiguredManager(remoteServiceName) {
+            var ds = new breeze.DataService({
+                serviceName: remoteServiceName,
+                hasServerMetadata: false,
+                useJsonp: true,
+            });
+
+            return new breeze.EntityManager({ dataService: ds });
+        }
+    });
+
+    it('should query Google currency exchange using Breeze by specifying a DataService to EntityQuery.using', function (done) {
         var serviceName = 'http://rate-exchange.appspot.com/';
 
         var ds = new breeze.DataService({
@@ -55,15 +91,15 @@ describe("Breeze tests", function () {
             useJsonp: true,
         });
 
-        var mgr = new breeze.EntityManager({ dataService: ds });
+        var mgr = new breeze.EntityManager();
 
-        //http://rate-exchange.appspot.com/currency?from=USD&to=EUR
+        //http://rate-exchange.appspot.com/currency?from=USD&to=IDR
         var query = breeze.EntityQuery
             .from('currency')
             .withParameters({
                 from: 'USD',
-                to: 'EUR',
-            });
+                to: 'IDR',
+            }).using(ds);
 
         mgr.executeQuery(query)
             .then(function (data) {

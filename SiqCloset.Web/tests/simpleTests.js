@@ -1,6 +1,6 @@
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 1000;
 
-describe('true', function(){
+describe('a bunch of simple tests for my learning', function(){
 
 	it('should be true', function(){
 		expect(true).toBeTruthy();
@@ -29,7 +29,7 @@ describe('true', function(){
 
      it('should call Google currency exchange', function (jasmineDone) {
          $.ajax({
-             url: 'http://rate-exchange.appspot.com/currency?from=USD&to=SGD',
+             url: 'http://rate-exchange.appspot.com/currency?from=USD&to=IDR',
              dataType: 'jsonp',
              })
              .done(function (data) {
@@ -73,5 +73,33 @@ describe('true', function(){
                 expect(true).toBe(false);
                 jasmineDone();
             });
+    });
+    
+
+    describe('AngularJS $http test', function() {
+        var angularHttp;
+
+        beforeEach(inject(function ($http) {
+            angularHttp = $http;
+        }));
+
+        it('should call AngularJS $http', function (jasmineDone) {
+            angularHttp({
+                method: 'JSONP',
+                url: 'http://rate-exchange.appspot.com/currency?callback=JSON_CALLBACK&from=USD&to=JPY'
+            }).success(function (data, status) {
+                console.log('AngularJS $http successs');
+                console.log(data);
+                console.log(status);
+                expect(data).toBeTruthy();
+                jasmineDone();
+            }).error(function (data, status) {
+                console.log('AngularJS $http failed!!');
+                console.log(data);
+                console.log(status);
+                expect(true).toBe(false);
+                jasmineDone();
+            });
+        });
     });
 });
