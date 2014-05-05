@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections;
+using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Http;
 using Breeze.ContextProvider;
 using Breeze.WebApi2;
@@ -33,6 +32,20 @@ namespace SiqCloset.Web.Controllers
         public IQueryable<Customer> Customers()
         {
             return _repository.Customers;
+        }
+
+        [HttpGet]
+        public IEnumerable TopTenCustomers()
+        {
+            return _repository.Customers
+                .OrderByDescending(c => c.Items.Count)
+                .Take(10)
+                .Select(c => new
+                {
+                    Name = c.Name, 
+                    ItemsCount = c.Items.Count
+                })
+                .ToList();
         }
 
         [HttpGet]

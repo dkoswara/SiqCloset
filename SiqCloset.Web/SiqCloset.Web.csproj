@@ -2129,7 +2129,7 @@
     <Content Include="Scripts\underscore.min.js" />
     <Content Include="Scripts\xls.js" />
     <Content Include="SpecRunner.html" />
-    <Content Include="tests\breezeTests.js" />
+    <Content Include="tests\breeze.async.specs.js" />
     <Content Include="tests\excelTests.js" />
     <Content Include="tests\simpleTests.js" />
     <Content Include="tests\tests.js" />

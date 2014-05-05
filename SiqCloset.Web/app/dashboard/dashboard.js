@@ -8,14 +8,14 @@
         var log = getLogFn(controllerId);
 
         var vm = this;
+
         vm.news = {
             title: 'SiqCloset',
             description: 'SiqCloset is a SPA to manage my wife\'s hobby of shopping',
         };
-        vm.messageCount = 0;
+
         vm.customersCount = 0;
         vm.exchangeRateText = '';
-        vm.people = [];
         vm.title = 'Dashboard';
         vm.customerSummary = {
             title: 'Customer',
@@ -28,25 +28,18 @@
 
         function activate() {
             var promises = [
-                //getAllCustomers(),
                 getCustomerCount(),
                 getExchangeRate(),
-               //getCustomersAndItemsCount()
+               getTopTenCustomers()
             ];
             common.activateController(promises, controllerId)
                 .then(function() {
                     log('Activated Dashboard View');
             });
         }
-
-        function getAllCustomers() {
-            return datacontext.customer.getAll().then(function (data) {
-                log('Retrieved [All Customers] from data source', data.length, true);
-            });
-        }
         
-        function getCustomersAndItemsCount() {
-            return datacontext.customer.getCustomersAndItemsCount().then(function (data) {
+        function getTopTenCustomers() {
+            return datacontext.customer.getTopTenCustomers().then(function (data) {
                 return vm.customerSummary.summaries = data;
             });
         }

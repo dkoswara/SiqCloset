@@ -11,8 +11,7 @@ describe('a bunch of simple tests for my learning', function(){
 	});
 
     
-
-	ddescribe('learn spies', function () {
+    describe('learn spies', function () {
 	    var bar = {
 	        foo: function(name) {
 	            return 'my name is ' + name;
@@ -28,7 +27,7 @@ describe('a bunch of simple tests for my learning', function(){
 
         });
 
-        iit('real bar.foo is a spy', function () {
+        it('real bar.foo is a spy', function () {
             bar.foo.and.callThrough();
             var ret = bar.foo('denis');
             console.log('Return value is ' + ret);
@@ -69,7 +68,7 @@ describe('a bunch of simple tests for my learning', function(){
         }
     });
 
-     it('should call Google currency exchange', function (jasmineDone) {
+     it('should call Google currency exchange', function (done) {
          $.ajax({
              url: 'http://rate-exchange.appspot.com/currency?from=USD&to=IDR',
              dataType: 'jsonp',
@@ -77,43 +76,43 @@ describe('a bunch of simple tests for my learning', function(){
              .done(function (data) {
                  expect(data).toBeTruthy();
                  console.log(data);
-                 jasmineDone();
+                 done();
              }).fail(function (jqXHR, textStatus, errorThrown) {
                  console.log(jqXHR.responseText);
                  expect(true).toBe(false);
-                 jasmineDone();
+                 done();
              });
      });
 
-    it('should call jQuery $.ajax', function(jasmineDone) {
+    it('should call jQuery $.ajax', function(done) {
         $.ajax('http://localhost:3958/breeze/Breeze/Batches')
             .done(function (data) {
                 console.log('successs');
                 expect(data).toBeTruthy();
-                jasmineDone();
+                done();
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 console.log('failed again!!');
                 console.log(jqXHR);
                 console.log(textStatus);
                 console.log(errorThrown);
                 expect(true).toBe(false);
-                jasmineDone();
+                done();
         });
     });
 
-    it('should return pong', function (jasmineDone) {
+    it('should return pong', function (done) {
         $.ajax('http://localhost:3958/breeze/Breeze/Ping')
             .done(function (data) {
                 console.log('successs');
                 expect(data).toBe('pong');
-                jasmineDone();
+                done();
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 console.log('failed again!!');
                 console.log(jqXHR);
                 console.log(textStatus);
                 console.log(errorThrown);
                 expect(true).toBe(false);
-                jasmineDone();
+                done();
             });
     });
     
@@ -125,7 +124,7 @@ describe('a bunch of simple tests for my learning', function(){
             angularHttp = $http;
         }));
 
-        it('should call AngularJS $http', function (jasmineDone) {
+        it('should call AngularJS $http', function (done) {
             angularHttp({
                 method: 'JSONP',
                 url: 'http://rate-exchange.appspot.com/currency?callback=JSON_CALLBACK&from=USD&to=JPY'
@@ -134,13 +133,13 @@ describe('a bunch of simple tests for my learning', function(){
                 console.log(data);
                 console.log(status);
                 expect(data).toBeTruthy();
-                jasmineDone();
+                done();
             }).error(function (data, status) {
                 console.log('AngularJS $http failed!!');
                 console.log(data);
                 console.log(status);
                 expect(true).toBe(false);
-                jasmineDone();
+                done();
             });
         });
     });

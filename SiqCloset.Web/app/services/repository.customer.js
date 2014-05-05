@@ -29,7 +29,7 @@
             this.getById = getById;
             this.getPartials = getPartials;
             this.getCount = getCount;
-            this.getCustomersAndItemsCount = getCustomersAndItemsCount;
+            this.getTopTenCustomers = getTopTenCustomers;
             this.getLocalFromManager = getLocalFromManager;
             this.getCustomerByName = getCustomerByName;
             this.getCustomerChangesCount = getCustomerChangesCount;
@@ -121,13 +121,10 @@
                 .then(this._getInlineCount);
         }
         
-        function getCustomersAndItemsCount() {
+        function getTopTenCustomers() {
             var self = this;
             
-            return EntityQuery.from(resourceName)
-                .select("name, items")
-                .orderBy('items.length')
-                .take(10)
+            return EntityQuery.from('TopTenCustomers')
                 .using(self.manager).execute()
                 .then(querySucceeded, self._queryFailed);
 
@@ -138,7 +135,7 @@
                 results.forEach(function (d) {
                     var customer = { name: '', itemsCount: 0 };
                     customer.name = d.name;
-                    customer.itemsCount = d.items.length;
+                    customer.itemsCount = d.itemsCount;
                     customersMap.push(customer);
                 });
                 return customersMap;
@@ -173,36 +170,5 @@
 
             return { added: addedCustomers.length, modified: modifiedCustomers.length };
         }
-        
-        function deleteAllCustomers() {
-            var self = this;
-            
-            EntityQuery.from(resourceName)
-                .toType(entityName)
-                .using(self.manager).execute()
-                .then(querySucceeded, self._queryFailed);
-
-            function querySucceeded(data) {
-                var customers = data.results;
-                customers.forEach(function (c) {
-                    c.entityAspect.setDeleted();
-                });
-
-                self.manager.saveChanges()
-                    .then(saveSucceeded)
-                    .fail(saveFailed);
-            }
-
-            function saveSucceeded(saveResult) {
-                self.log('Delete all customers successful', saveResult.entities.length, true);
-            }
-            
-            function saveFailed(error) {
-                var msg = config.appErrorPrefix + 'Error saving changes.' + error.message;
-                self.logError(msg, error);
-                throw error;
-            }
-        }
-        
     }
 })();
