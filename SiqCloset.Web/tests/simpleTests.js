@@ -2,13 +2,55 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 1000;
 
 describe('a bunch of simple tests for my learning', function(){
 
-	it('should be true', function(){
+	xit('should be true', function(){
 		expect(true).toBeTruthy();
 	});
 
 	it('should be false', function(){
 		expect(false).toBeFalsy();
 	});
+
+    
+
+	ddescribe('learn spies', function () {
+	    var bar = {
+	        foo: function(name) {
+	            return 'my name is ' + name;
+	        },
+	        bas: function(age) {
+	            return age;
+	        }
+	    };
+
+        beforeEach(function() {
+            this.foo = jasmine.createSpy('foo');
+            spyOn(bar, 'foo').and.returnValue('I am a spy');
+
+        });
+
+        iit('real bar.foo is a spy', function () {
+            bar.foo.and.callThrough();
+            var ret = bar.foo('denis');
+            console.log('Return value is ' + ret);
+            expect(bar.foo).toHaveBeenCalledWith('denis');
+            expect(ret).toMatch(/denis/);
+        });
+
+        it('faked bar.foo is a spy', function () {
+            var ret = bar.foo('denis');
+            console.log('Return value is ' + ret);
+            expect(bar.foo).toHaveBeenCalledWith('denis');
+            expect(ret).toMatch(/spy/);
+        });
+
+        it('foo should be called', function () {
+            this.foo(1, 'w');
+
+            expect(this.foo).toHaveBeenCalled();
+            console.log('foo should be called');
+        });
+    });
+    
 
 	it('should be true again', function (done) {
         someAsyncPromise().then(function(result) {

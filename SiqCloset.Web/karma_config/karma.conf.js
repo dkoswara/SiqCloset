@@ -11,7 +11,7 @@ module.exports = function(config){
       'Scripts/underscore.js',
       'Scripts/breeze.debug.js',
       'tests/simpleTests.js',
-      //'tests/breezeTests.js'
+      //'tests/breeze.async.specs.js'
     ],
 
     exclude : [
