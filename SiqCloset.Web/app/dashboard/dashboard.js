@@ -30,7 +30,7 @@
             var promises = [
                 getCustomerCount(),
                 getExchangeRate(),
-               getTopTenCustomers()
+                getTopTenCustomers()
             ];
             common.activateController(promises, controllerId)
                 .then(function() {
