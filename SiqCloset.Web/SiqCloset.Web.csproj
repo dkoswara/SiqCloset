@@ -186,7 +186,7 @@
     <Content Include="Content\toastr.less" />
     <Content Include="favicon.ico" />
     <Content Include="index.html" />
-    <Content Include="karma_config\karma.conf.js" />
+    <Content Include="tests\karma_config\karma.conf.js" />
     <Content Include="node_modules\karma-chrome-launcher\index.js" />
     <Content Include="node_modules\karma-jasmine\lib\adapter.js" />
     <Content Include="node_modules\karma-jasmine\lib\boot.js" />
@@ -1201,7 +1201,7 @@
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="app\services\repository.box.js" />
-    <Content Include="karma_config\test.sh" />
+    <Content Include="tests\karma_config\test.sh" />
     <Content Include="node_modules\karma-chrome-launcher\LICENSE" />
     <Content Include="node_modules\karma-chrome-launcher\package.json" />
     <Content Include="node_modules\karma-jasmine\LICENSE" />
@@ -2130,9 +2130,8 @@
     <Content Include="Scripts\xls.js" />
     <Content Include="SpecRunner.html" />
     <Content Include="tests\breeze.async.specs.js" />
-    <Content Include="tests\excelTests.js" />
-    <Content Include="tests\simpleTests.js" />
-    <Content Include="tests\tests.js" />
+    <Content Include="tests\excel.specs.js" />
+    <Content Include="tests\learning.specs.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Scripts\toastr.min.js.map" />
@@ -2168,6 +2167,7 @@
       <Name>SiqCloset.Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
