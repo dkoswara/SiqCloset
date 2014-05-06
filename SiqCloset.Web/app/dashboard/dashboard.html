@@ -5,10 +5,9 @@
                 <div class="span12">
                     <ul class="today-datas">
                         <li class="bblue">
-                            <div class="pull-left"><i class="icon-plane"></i></div>
+                            <div class="pull-left"><i class="icon-time"></i></div>
                             <div class="datas-text pull-right">
-                                <span class="bold">May 18 - 19, 2015</span> Castle
-                                Resort, Neverland
+                                <span class="bold">{{vm.currentDateTime}}</span>
                             </div>
                             <div class="clearfix"></div>
                         </li>
@@ -80,11 +79,11 @@
             <div class="row-fluid">
                 <div class="span12">
                     <div class="widget wblue">
-                        <div data-cc-widget-header title="{{vm.news.title}}"
+                        <div data-cc-widget-header title="{{vm.intro.title}}"
                              allow-collapse="true">
                         </div>
                         <div class="widget-content text-center text-info">
-                            <small>{{vm.news.description}}</small>
+                            <small>{{vm.intro.description}}</small>
                         </div>
                         <div class="widget-foot">
                             <div class="clearfix"></div>

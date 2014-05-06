@@ -1,15 +1,14 @@
 ﻿(function () {
     'use strict';
     var controllerId = 'dashboard';
-    angular.module('app').controller(controllerId, ['common', 'datacontext', 'currencyExchange', dashboard]);
+    angular.module('app').controller(controllerId, ['$timeout', 'common', 'datacontext', 'currencyExchange', dashboard]);
 
-    function dashboard(common, datacontext, currencyExchange) {
+    function dashboard($timeout, common, datacontext, currencyExchange) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
-
         var vm = this;
 
-        vm.news = {
+        vm.intro = {
             title: 'SiqCloset',
             description: 'SiqCloset is a SPA to manage my wife\'s hobby of shopping',
         };
@@ -24,9 +23,16 @@
             setSort: setContentSort,
             summaries: [],
         };
+
+        var refreshTime = function () {
+            vm.currentDateTime = moment().format('MMMM Do YYYY, h:mm:ss a');
+            $timeout(refreshTime, 1000);
+        };
+
         activate();
 
         function activate() {
+            refreshTime();
             var promises = [
                 getCustomerCount(),
                 getExchangeRate(),
