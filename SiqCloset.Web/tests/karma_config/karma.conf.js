@@ -33,9 +33,7 @@ module.exports = function(config){
       //include all app files
       '../app/**/*.js',
 
-      '../tests/dashboard.specs.js'
-      //'../tests/learning.specs.js',
-      //'../tests/breeze.async.specs.js'
+      '../tests/*.specs.js'
     ],
 
     exclude : [
