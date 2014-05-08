@@ -1,35 +1,46 @@
-﻿ddescribe('The Dashboard', function () {
+﻿'use strict';
 
-	var ctrl, $timeout;
+describe('the dashboard', function () {
+
+	var ctrl, $timeout, $rootScope;
 	var commonMock;
 	var datacontextMock;
 	var currencyExchangeMock;
 
 	beforeEach(function () {
 
-		// load the module you're testing.
-		module('app');
+	    // load the module you're testing.
+	    module('app');
 
-	    //by loading the module app above and injecting services below
+        //by loading the module app above and injecting services below
 	    //$routeProvider will be called which does a bunch of $http calls
 	    //I'm using $httpBackend to mock the GET responses here
         //TODO: Figure out how to mock the $routeProvider so it doesn't do anything
 		inject(function($httpBackend) {
 			$httpBackend.when('GET', 'breeze/Breeze/Metadata').respond(200);
 			$httpBackend.when('GET', 'app/dashboard/dashboard.html').respond(200);
-		});	
+		});
+
+	    // we can also spy on the prime method to avoid the datacontext.prime call
+		//inject(function (datacontext) {
+		//    spyOn(datacontext, 'prime');
+		//});
 
 		// INJECT! This part is critical
-		// $rootScope - injected to create a new $scope instance.
+		// _$rootScope_ - injected to create a new $scope instance.
 		// $controller - injected to create an instance of our controller.
 		// $q - injected so we can create promises for our mocks.
 		// _$timeout_ - injected to we can flush unresolved promises.
-		inject(function ($rootScope, $controller, $q, _$timeout_) {
+		inject(function (_$rootScope_, $controller, $q, _$timeout_) {
 
 		    // assign $timeout to a scoped variable so we can use
 			// $timeout.flush() later. Notice the _underscore_ trick
 			// so we can keep our names clean in the tests.
-			$timeout = _$timeout_;
+		    $timeout = _$timeout_;
+
+		    // assign $rootScope so we can use $rootScope.$digest
+            // this also resolves all the promises
+		    $rootScope = _$rootScope_;
 
 		    (function setupCommonMock() {
 		        commonMock = jasmine.createSpyObj('common', ['activateController']);
@@ -120,17 +131,17 @@
 	});
 
 	it('should have customers count', function() {
-	    $timeout.flush();
+	    $rootScope.$digest();   //can also call $timeout.flush to resolve promises
 	    expect(ctrl.customersCount).toBe(10);
 	});
 
     it('should have current currency exchange rate', function() {
-    	$timeout.flush();
+        $rootScope.$digest();
         expect(ctrl.exchangeRateText).toContain('10000');
     });
 
 	it('should have the top ten customers', function() {
-	    $timeout.flush();
+	    $rootScope.$digest();
 	    expect(ctrl.customerSummary.summaries.length).toBe(10);
 	});
 

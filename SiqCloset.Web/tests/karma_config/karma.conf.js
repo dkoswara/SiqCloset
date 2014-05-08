@@ -33,6 +33,10 @@ module.exports = function(config){
       //include all app files
       '../app/**/*.js',
 
+      //include support files
+      '../tests/support/testFns.js',
+      '../tests/support/**/*.js',
+
       '../tests/*.specs.js'
     ],
 

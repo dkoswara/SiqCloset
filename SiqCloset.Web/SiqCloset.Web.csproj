@@ -117,6 +117,7 @@
     <Content Include="app\batch\boxSelTmplDropDown.html" />
     <Content Include="app\batch\custSelTmplTypeAhead.html" />
     <Content Include="app\batch\custSelTmplDropDown.html" />
+    <Content Include="app\metadata.js" />
     <Content Include="app\services\currencyExchange.js" />
     <Content Include="app\services\repository.batch.js" />
     <Content Include="app\upload\customerItemList\customerItemList.html" />
@@ -186,6 +187,7 @@
     <Content Include="Content\toastr.less" />
     <Content Include="favicon.ico" />
     <Content Include="index.html" />
+    <Content Include="tests\entityManagerFactoryMock.specs.js" />
     <Content Include="tests\karma_config\karma.conf.js" />
     <Content Include="node_modules\karma-chrome-launcher\index.js" />
     <Content Include="node_modules\karma-jasmine\lib\adapter.js" />
@@ -2133,6 +2135,7 @@
     <Content Include="tests\excel.specs.js" />
     <Content Include="tests\learning.specs.js" />
     <Content Include="tests\support\customerTestData.js" />
+    <Content Include="tests\support\testFns.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Scripts\toastr.min.js.map" />
@@ -2140,6 +2143,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BreezeSimpleCorsHandler.cs" />
     <Compile Include="App_Start\BreezeWebApiConfig.cs" />
+    <Compile Include="App_Start\MetadataScriptWriter.cs" />
     <Compile Include="Controllers\BreezeController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -2152,6 +2156,7 @@
     <Content Include="Scripts\underscore.min.map" />
     <Content Include="tests\CustomerItemList.xls" />
     <Content Include="tests\dashboard.specs.js" />
+    <Content Include="tests\datacontext.specs.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
