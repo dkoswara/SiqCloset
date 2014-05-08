@@ -84,6 +84,16 @@
 		});
 	});
 
+    //HotTowel app flow
+
+    //1. call common.activateController with promises returned by various services
+
+    //2. the various services do their job
+
+	//3. promises gets resolved, controller is activated
+
+	//4. vm bindings should have data
+
 	it('should have called common.activateController', function() {
 	    expect(commonMock.activateController).toHaveBeenCalled();
 	});
