@@ -15,7 +15,7 @@ namespace SiqCloset.Web.App_Start
             var filename = HostingEnvironment.MapPath("~/app/metadata.js");
 
             // the same pre- and post-fix strings we used earlier
-            const string prefix = "window.app = window.app || {}; windows.app.metadata = JSON.stringify(";
+            const string prefix = "window.app = window.app || {}; window.app.metadata = JSON.stringify(";
 
             const string postfix = ");";
 
