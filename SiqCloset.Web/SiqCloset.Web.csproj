@@ -2132,6 +2132,7 @@
     <Content Include="tests\breeze.async.specs.js" />
     <Content Include="tests\excel.specs.js" />
     <Content Include="tests\learning.specs.js" />
+    <Content Include="tests\support\customerTestData.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Scripts\toastr.min.js.map" />
