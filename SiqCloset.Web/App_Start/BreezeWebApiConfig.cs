@@ -19,6 +19,8 @@ namespace SiqCloset.Web.App_Start {
       );
 
       GlobalConfiguration.Configuration.MessageHandlers.Add(new Breeze.WebApi.BreezeSimpleCorsHandler());
+      
+      MetadataScriptWriter.Write();
 
     }
   }
