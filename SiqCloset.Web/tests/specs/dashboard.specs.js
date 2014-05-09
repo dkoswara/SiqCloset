@@ -16,10 +16,7 @@ describe('the dashboard', function () {
 	    //$routeProvider will be called which does a bunch of $http calls
 	    //I'm using $httpBackend to mock the GET responses here
         //TODO: Figure out how to mock the $routeProvider so it doesn't do anything
-		inject(function($httpBackend) {
-			$httpBackend.when('GET', 'breeze/Breeze/Metadata').respond(200);
-			$httpBackend.when('GET', 'app/dashboard/dashboard.html').respond(200);
-		});
+		testFns.mockHttpReq();
 
 	    // we can also spy on the prime method to avoid the datacontext.prime call
 		//inject(function (datacontext) {

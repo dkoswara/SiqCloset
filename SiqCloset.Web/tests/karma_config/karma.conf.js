@@ -37,7 +37,7 @@ module.exports = function(config){
       '../tests/support/testFns.js',
       '../tests/support/**/*.js',
 
-      '../tests/*.specs.js'
+      '../tests/specs/*.specs.js'
     ],
 
     exclude : [
