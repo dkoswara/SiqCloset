@@ -22,6 +22,13 @@ namespace SiqCloset.DataAccess
             // Disable proxy creation and lazy loading; not wanted in this service context.
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;
+
+            /*For testing and answering SO post
+             * http://stackoverflow.com/questions/23567327/using-breezejs-with-entity-framework-mapped-procedures
+             */
+            //modelBuilder
+            //    .Entity<Customer>()
+            //    .MapToStoredProcedures();
         }
 
         public DbSet<Customer> Customers { get; set; }
