@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-ddescribe('the customerDetails controller', function() {
+describe('the customerDetails controller', function() {
 
     var ctrl;
     var $rootScope;
@@ -76,7 +76,7 @@ ddescribe('the customerDetails controller', function() {
         
     });
 
-    iit('should remove wip entity and call datacontext.cancel when cancelling customer edit', function() {
+    it('should remove wip entity and call datacontext.cancel when cancelling customer edit', function() {
         //Force resolve all $q promises
         $rootScope.$digest();
         var origName = ctrl.customer.name;

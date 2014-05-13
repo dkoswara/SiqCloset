@@ -1,4 +1,4 @@
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 1000;
+//jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 1000;
 
 describe('a bunch of learning tests', function() {
 
@@ -160,7 +160,7 @@ describe('a bunch of learning tests', function() {
 
 
     //For SO post - http://stackoverflow.com/questions/23597535/breeze-not-populating-entities-from-navigationproperties
-    ddescribe('client side metadata by hand', function() {
+    describe('client side metadata by hand', function() {
 
         var mgr;
         var addType, DATE, DT, helper, ID;
@@ -255,7 +255,7 @@ describe('a bunch of learning tests', function() {
 
         });
 
-        iit('should defined the following properly', function () {
+        it('should define the following properly', function () {
             var query = breeze.EntityQuery.from('Patients').toType('Patient');
 
             var results = mgr.executeQueryLocally(query);
@@ -268,5 +268,59 @@ describe('a bunch of learning tests', function() {
             expect(priorStudy.patient.firstName).toEqual('Denis');
 
         });
+    });
+
+    //To learn the difference between Factory vs Service vs Provider
+    ddescribe('understanding factory vs service vs provider', function() {
+        
+        (function () {
+            function Coffee(sugarType) {
+                this.sugar = sugarType;
+            }
+
+            var theCoffee = angular.module('theCoffee', []);
+
+            theCoffee.value('sugar', 'white');
+            theCoffee.value('brownSugar', 'brown');
+            theCoffee.value('caneSugar', 'cane');
+
+            //Factory recipe
+            theCoffee.factory('coffeeFactory', ['sugar', coffeeFactoryFunc]);
+            function coffeeFactoryFunc(sugarType) {
+                return new Coffee(sugarType);
+            }
+
+            //Service recipe
+            theCoffee.service('coffeeService', ['brownSugar', Coffee]);
+
+            //Provider recipe
+            theCoffee.provider('coffeeProvider', coffeeProviderFunc);
+            function coffeeProviderFunc() {
+                this.$get = ['caneSugar', getter];
+
+                function getter(sugar) {
+                    return new Coffee(sugar);
+                }
+            }
+
+
+        })(angular);
+
+        beforeEach(function() {
+            angular.mock.module('theCoffee');
+        });
+
+        it('should create Coffee using factory', inject(function(coffeeFactory) {
+            expect(coffeeFactory.sugar).toEqual('white');
+        }));
+
+        it('should create Coffee using service', inject(function (coffeeService) {
+            expect(coffeeService.sugar).toEqual('brown');
+        }));
+
+        it('should create Coffee using provider', inject(function (coffeeProvider) {
+            expect(coffeeProvider.sugar).toEqual('cane');
+        }));
+
     });
 });
