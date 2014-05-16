@@ -271,7 +271,7 @@ describe('a bunch of learning tests', function() {
     });
 
     //For SO post - http://stackoverflow.com/questions/23656602/fetch-entities-with-0-junction-tables
-    ddescribe('client side metadata by hand 2', function () {
+    describe('client side metadata by hand 2', function () {
 
         var mgr;
         var addType;

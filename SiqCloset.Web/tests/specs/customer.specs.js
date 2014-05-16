@@ -11,7 +11,7 @@ ddescribe('the customer controller', function () {
     beforeEach(function () {
         testFns.prepareAppModuleForTest();
 
-        inject(function (_$injector_, $controller, _$rootScope_, _$location_, _$timeout_, _common_, _datacontext_) {
+        inject(function (_$injector_, $controller, _$rootScope_, _$location_, _$timeout_, _common_, _config_, _datacontext_) {
             $injector = _$injector_;
             $rootScope = _$rootScope_;
             $timeout = _$timeout_;
@@ -19,6 +19,7 @@ ddescribe('the customer controller', function () {
             vm = $controller('customers', {
                 $location: _$location_,
                 common: _common_,
+                config: _config_,
                 datacontext: _datacontext_,
             });
         });
@@ -37,9 +38,24 @@ ddescribe('the customer controller', function () {
         console.log($location.path());
     });
 
-    it('should be able to search', function() {
-        pending();
-        expect(vm.search).toBeDefined();
+    iit('should be able to search', function() {
+        $rootScope.$digest();
+        var originalCount = vm.filteredCustomerPartials.length;
+
+        //search for 'naomi'
+        vm.searchText = 'naomi';
+        vm.search({ keyCode: '' });
+        //expect less array length from filtered results
+        var newCount = vm.filteredCustomerPartials.length;
+        expect(newCount).toBeLessThan(originalCount);
+        console.log(newCount + ' < ' + originalCount);
+
+        //simulate esc key being pressed
+        vm.search({ keyCode: 27 });
+        //expect same array length as original as results are no longer filtered
+        newCount = vm.filteredCustomerPartials.length;
+        expect(newCount).toEqual(originalCount);
+        console.log(newCount + ' == ' + originalCount);
     });
 
 
