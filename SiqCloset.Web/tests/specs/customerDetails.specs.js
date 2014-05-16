@@ -3,31 +3,24 @@
 describe('the customerDetails controller', function() {
 
     var ctrl;
+    var $injector;
     var $rootScope;
     var $timeout;
     var $loc;
     var testCustId = '809930f8-3c1e-4943-b5e9-9f6d258f730d';
     var zStorageWip;
+    var bsDialog;
 
     beforeEach(function () {
-        //testFns.prepareAppModuleForTest();
-        module('app');
+        testFns.prepareAppModuleForTest();
 
-        testFns.prepareMockedEntityManager();
-
-        //module(function($provide) {
-        //    $provide.decorator('$routeParams', function($delegate) {
-        //        $delegate.id = '809930f8-3c1e-4943-b5e9-9f6d258f730d';
-        //    });
-        //});
-
-        testFns.mockHttpReq();
-
-        inject(function ($injector, $controller, _$rootScope_, _$location_, _$window_, _$timeout_, _common_, _config_, _datacontext_, _model_, _zStorageWip_) {
+        inject(function (_$injector_, $controller, _$rootScope_, _$location_, _$window_, _$timeout_, _common_, _config_, _datacontext_, _model_, _zStorageWip_) {
+            $injector = _$injector_;
             $rootScope = _$rootScope_;
             $timeout = _$timeout_;
             $loc = _$location_;
             zStorageWip = _zStorageWip_;
+            bsDialog = $injector.get('bootstrap.dialog');
             ctrl = $controller('customerDetails', {
                 $location: _$location_,
                 $routeParams: {
@@ -37,7 +30,7 @@ describe('the customerDetails controller', function() {
                 $scope: $rootScope.$new(),
 
                 //amazingly this works. have to use quotes since name has 'dot'
-                'bootstrap.dialog': $injector.get('bootstrap.dialog'),
+                'bootstrap.dialog': bsDialog,
 
                 common: _common_,
                 config: _config_,
@@ -97,8 +90,15 @@ describe('the customerDetails controller', function() {
         }
     });
 
-    it('should have bootstrap.dialog injected', function () {
-        pending();
+    it('should have bootstrap.dialog injected and called', function () {
+        var $q = $injector.get('$q');
+        ctrl.customer = {};
+        ctrl.customer.name = 'someName';
+        spyOn(bsDialog, 'deleteDialog').and.callFake(function() {
+            var deferred = $q.defer();
+            return deferred.promise;
+        });
         ctrl.deleteCustomer();
+        expect(bsDialog.deleteDialog).toHaveBeenCalled();
     });
 });
