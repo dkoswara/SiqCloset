@@ -187,6 +187,7 @@
     <Content Include="Content\toastr.less" />
     <Content Include="favicon.ico" />
     <Content Include="index.html" />
+    <Content Include="tests\specs\customer.specs.js" />
     <Content Include="tests\specs\customerDetails.specs.js" />
     <Content Include="tests\specs\entityManagerFactoryMock.specs.js" />
     <Content Include="tests\karma_config\karma.conf.js" />
