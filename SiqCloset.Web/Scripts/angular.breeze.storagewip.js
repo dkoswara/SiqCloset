@@ -39,7 +39,6 @@
             },
             wipKey: '',
             appErrorPrefix: '[ngzWip] ',
-            newGuid: breeze.core.getUuid,
             version: ''
         };
 
@@ -280,7 +279,7 @@
             var entityState = entity.entityAspect.entityState;
             var theseAreTheDroidsYoureLookingFor = entityState.isAdded() || entityState.isModified();
             if (!theseAreTheDroidsYoureLookingFor) { return key; }
-            if (!key) { key = storeConfig.newGuid(); }
+            if (!key) { key = breeze.core.getUuid(); }
             var exportData = manager.exportEntities([entity], false);
             saveToWipLocalStorage(key, exportData);
             storeWipSummary(entity, entityKey, key, entityName, description, routeState);
