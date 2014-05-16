@@ -83,7 +83,6 @@
             events: events.storage,
             wipKey: 'SiqCloset.wip',
             appErrorPrefix: config.appErrorPrefix,
-            newGuid: breeze.core.getUuid,
             version: config.version,
         };
     }]);
