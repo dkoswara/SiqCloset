@@ -12,7 +12,6 @@
         var log = getLogFn(controllerId);
         
         vm.title = 'Customers';
-        vm.customers = [];
         vm.customerPartials = [];
         vm.goToCustomer = goToCustomer;
 
@@ -22,13 +21,6 @@
             common.activateController([getCustomerPartials()], controllerId)
                 .then(function () {
                     log('Activated Customers View');
-                });
-        }
-        
-        function getCustomers() {
-            return datacontext.customer.getAll()
-                .then(function (data) {
-                    return vm.customers = data;
                 });
         }
         
