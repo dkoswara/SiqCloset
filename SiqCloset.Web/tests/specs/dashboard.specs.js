@@ -2,7 +2,7 @@
 
 describe('the dashboard', function () {
 
-	var ctrl, $timeout, $rootScope;
+	var vm, $timeout, $rootScope;
 	var commonMock;
 	var datacontextMock;
 	var currencyExchangeMock;
@@ -82,7 +82,7 @@ describe('the dashboard', function () {
 			// **NOTE**: this is the only time the controller function
 			// will be run, so anything that occurs inside of that
 			// will already be done before the first spec.
-			ctrl = $controller('dashboard', {
+			vm = $controller('dashboard', {
 				$timeout: $timeout,
 				common: commonMock,
 				datacontext: datacontextMock,
@@ -119,27 +119,27 @@ describe('the dashboard', function () {
 	});
 
 	it('should have introduction text', function() {
-	    expect(ctrl.intro.title).toBeTruthy();
+	    expect(vm.intro.title).toBeTruthy();
 	});
 	
 	it('should have current date and time', function() {
 	    var currDateTime = moment().format('MMMM Do YYYY, h:mm:ss a');
-	    expect(ctrl.currentDateTime).toEqual(currDateTime);
+	    expect(vm.currentDateTime).toEqual(currDateTime);
 	});
 
 	it('should have customers count', function() {
 	    $rootScope.$digest();   //can also call $timeout.flush to resolve promises
-	    expect(ctrl.customersCount).toBe(10);
+	    expect(vm.customersCount).toBe(10);
 	});
 
     it('should have current currency exchange rate', function() {
         $rootScope.$digest();
-        expect(ctrl.exchangeRateText).toContain('10000');
+        expect(vm.exchangeRateText).toContain('10000');
     });
 
 	it('should have the top ten customers', function() {
 	    $rootScope.$digest();
-	    expect(ctrl.customerSummary.summaries.length).toBe(10);
+	    expect(vm.customerSummary.summaries.length).toBe(10);
 	});
 
 });

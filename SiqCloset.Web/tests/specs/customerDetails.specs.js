@@ -2,7 +2,7 @@
 
 describe('the customerDetails controller', function() {
 
-    var ctrl;
+    var vm;
     var $injector;
     var $rootScope;
     var $timeout;
@@ -21,7 +21,7 @@ describe('the customerDetails controller', function() {
             $loc = _$location_;
             zStorageWip = _zStorageWip_;
             bsDialog = $injector.get('bootstrap.dialog');
-            ctrl = $controller('customerDetails', {
+            vm = $controller('customerDetails', {
                 $location: _$location_,
                 $routeParams: {
                     id: testCustId,
@@ -43,13 +43,13 @@ describe('the customerDetails controller', function() {
     it('should have customer upon activate', function () {
         //pending();
         $rootScope.$digest();
-        expect(ctrl.customer.customerID).toEqual(testCustId);
+        expect(vm.customer.customerID).toEqual(testCustId);
     });
 
     it('should save to wip when customer is modified', function () {
         //Force resolve all $q promises
         $rootScope.$digest();
-        ctrl.customer.name = 'yhwh';
+        vm.customer.name = 'yhwh';
 
         //Flush $timeout queue to force the calling of storeWipEntity in the controller
         $timeout.flush();
@@ -60,7 +60,7 @@ describe('the customerDetails controller', function() {
         zStorageWip.clearAllWip();
 
         function checkWip() {
-            var wipEntityKey = zStorageWip.findWipKeyByEntityId('Customer', ctrl.customer.customerID);
+            var wipEntityKey = zStorageWip.findWipKeyByEntityId('Customer', vm.customer.customerID);
             expect(wipEntityKey).toBeTruthy();
             var importedEntity = zStorageWip.loadWipEntity(wipEntityKey);
             expect(importedEntity).toBeDefined();
@@ -72,33 +72,33 @@ describe('the customerDetails controller', function() {
     it('should remove wip entity and call datacontext.cancel when cancelling customer edit', function() {
         //Force resolve all $q promises
         $rootScope.$digest();
-        var origName = ctrl.customer.name;
-        ctrl.customer.name = 'yhwh';
+        var origName = vm.customer.name;
+        vm.customer.name = 'yhwh';
 
         //Flush $timeout queue to force the calling of storeWipEntity in the controller
         $timeout.flush();
 
-        ctrl.cancel();
+        vm.cancel();
 
         checkWip();
 
-        expect(ctrl.customer.name).toEqual(origName);
+        expect(vm.customer.name).toEqual(origName);
 
         function checkWip() {
-            var wipEntityKey = zStorageWip.findWipKeyByEntityId('Customer', ctrl.customer.customerID);
+            var wipEntityKey = zStorageWip.findWipKeyByEntityId('Customer', vm.customer.customerID);
             expect(wipEntityKey).toBe(null);
         }
     });
 
     it('should have bootstrap.dialog injected and called', function () {
         var $q = $injector.get('$q');
-        ctrl.customer = {};
-        ctrl.customer.name = 'someName';
+        vm.customer = {};
+        vm.customer.name = 'someName';
         spyOn(bsDialog, 'deleteDialog').and.callFake(function() {
             var deferred = $q.defer();
             return deferred.promise;
         });
-        ctrl.deleteCustomer();
+        vm.deleteCustomer();
         expect(bsDialog.deleteDialog).toHaveBeenCalled();
     });
 });

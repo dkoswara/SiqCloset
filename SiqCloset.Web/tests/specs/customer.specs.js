@@ -25,13 +25,11 @@ ddescribe('the customer controller', function () {
     });
 
     it('should load all customers', function() {
-        //pending();
         $rootScope.$digest();
         expect(vm.customerPartials.length).toBeGreaterThan(0);
     });
 
     it('should go to customer detail page when a customer is clicked', function() {
-        //pending();
         $rootScope.$digest();
         var cust = vm.customerPartials[0];
         vm.goToCustomer(cust);
