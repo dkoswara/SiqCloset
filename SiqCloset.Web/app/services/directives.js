@@ -251,4 +251,161 @@
         }
     }]);
 
+    app.directive('scCustomerInfo', function () {
+        /*
+         * Simple directives to show customer info for learning sake
+         * usage: <data-sc-customer-info customer="custEntity" /> 
+         */
+        var directive = {
+            controller: ['$scope', scCustomerInfoController],
+            restrict: 'E',
+            templateUrl: '/app/layout/scCustomerTemplate.html',
+            scope: true,
+            //scope: {
+            //    customer: '=',
+            //},
+            //link: function(scope, element, attrs) {
+            //    scope.customer = scope.$eval(attrs.scCustomerInfo);
+            //}
+        };
+
+        return directive;
+
+        function scCustomerInfoController($scope) {
+            var a = $scope;
+            $scope.customer = $scope.$parent.c;
+        }
+    });
+
+    app.directive('scShowTooltip', function ($compile) {
+        var directive = {
+            controller: ['$location','$scope', 'datacontext', scShowTooltipController],
+            restrict: 'A',
+            //templateUrl: '/app/layout/scShowTooltipTemplate.html',
+            //template: '<tr tooltip-html-unsafe="{{text}}"></tr>',
+            //template: '<tr tooltip-html-unsafe="{{text}}"><div ng-transclude></div></tr>',
+            //template: '<b>title="title"</b>',
+            //replace: true,
+            //transclude: true,
+            //scope: {
+            //    entity: '=',
+            //},
+            scope: true,
+            link: function (scope, element, attrs) {
+                var entity = scope.$eval(attrs.scShowTooltip);
+                var val = scope.getDetails(entity);
+                if (!element.attr('tooltip-html-unsafe')) {
+                    element.attr("tooltip-html-unsafe", val);
+                    $compile(element[0])(scope);
+                }
+            }
+        };
+
+        return directive;
+
+        function scShowTooltipController($location, $scope, datacontext) {
+            //var entity = $scope.$parent.item;
+            //$scope.text = getDetails(entity);
+            //$scope.moreDetails = getDetails;
+            //$scope.goToWip = goToWip;
+            $scope.getDetails = getDetails;
+
+            function goToWip(wipData) {
+                if (wipData.routeState.indexOf('/') > -1) {
+                    $location.path('/' + wipData.routeState);
+                } else {
+                    $location.path('/' + wipData.routeState + '/' + wipData.id);
+                }
+            }
+
+            function getDetails(item) {
+                if (item.state == breeze.EntityState.Modified) {
+                    return getOriginalValues(item);
+                }
+                return '';
+            }
+
+            function getOriginalValues(data) {
+                var details = '';
+                var repoName = data.entityName.toLowerCase();
+                var result = datacontext[repoName].getEntityByIdLocal(data.id);
+
+                //getEntityByIdOrFromWip may return imported entity from wipStorage
+                //thus, the result.entity call
+                var entity = result.entity || result;
+
+                var props = Object.keys(entity.entityAspect.originalValues);
+                props.forEach(function (prop) {
+                    var oldValue = entity.entityAspect.originalValues[prop];
+                    var newValue = entity.getProperty(prop);
+                    var text = String.format('{0} changed from <b><font color=red>{1}</font></b> to <b><font color=green>{2}</font></b>', prop, oldValue, newValue);
+                    details = details + text + '</br>';
+                });
+                return details;
+            }
+        }
+    });
+
+    app.directive('scWipPeek', function ($compile) {
+        var directive = {
+            controller: ['$scope', 'datacontext', scWipPeekController],
+            restrict: 'A',
+            //scope: true,
+            link: function (scope, element, attrs) {
+                var item = scope.$eval(attrs.scWipPeek);
+                var val = scope.getDetails(item);
+                //ToDo: either use vanilla html or js or check if angular.ui.bootstrap exists
+                //before applying this attribute to the element
+                if (!element.attr('tooltip-html-unsafe')) {
+                    element.attr("tooltip-html-unsafe", val);
+                    $compile(element[0])(scope);
+                }
+            }
+        };
+
+        return directive;
+
+        function scWipPeekController($scope, datacontext) {
+            $scope.getDetails = getDetails;
+
+            function getDetails(wipItem) {
+                var state = wipItem.state || wipItem.entityAspect.entityState;
+                if (state == breeze.EntityState.Modified) {
+                    return getOriginalValues(wipItem);
+                }
+                return 'something';
+            }
+
+            function getOriginalValues(_wipItem) {
+                var details = '';
+
+                //If already an entity, don't bother going to repo
+                if (_wipItem.entityAspect) {
+                    return getOriginalValuesCore(_wipItem);
+                }
+
+                
+                var repoName = _wipItem.entityName.toLowerCase();
+                var result = datacontext[repoName].getEntityByIdLocal(_wipItem.id);
+
+                //getEntityByIdOrFromWip may return imported entity from wipStorage
+                //thus, the result.entity call
+                var entity = result.entity || result;
+
+                return getOriginalValuesCore(entity);
+
+                function getOriginalValuesCore(entity) {
+                    var props = Object.keys(entity.entityAspect.originalValues);
+                    props.forEach(function (prop) {
+                        var oldValue = entity.entityAspect.originalValues[prop];
+                        var newValue = entity.getProperty(prop);
+                        var text = String.format('{0} changed from <b><font color=red>{1}</font></b> to <b><font color=green>{2}</font></b>', prop, oldValue, newValue);
+                        details = details + text + '</br>';
+                    });
+                    return details;
+                }
+            }
+        }
+    });
+
 })();

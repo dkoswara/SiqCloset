@@ -118,6 +118,8 @@
     <Content Include="app\batch\custSelTmplTypeAhead.html" />
     <Content Include="app\batch\custSelTmplDropDown.html" />
     <Content Include="app\batch\orderCustomerLookupsBy.js" />
+    <Content Include="app\layout\scCustomerTemplate.html" />
+    <Content Include="app\layout\scShowTooltipTemplate.html" />
     <Content Include="app\metadata.js" />
     <Content Include="app\services\currencyExchange.js" />
     <Content Include="app\services\repository.batch.js" />
@@ -188,6 +190,8 @@
     <Content Include="Content\toastr.less" />
     <Content Include="favicon.ico" />
     <Content Include="index.html" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="tests\specs\customer.specs.js" />
     <Content Include="tests\specs\customerDetails.specs.js" />
     <Content Include="tests\specs\entityManagerFactoryMock.specs.js" />
@@ -1198,12 +1202,9 @@
     <Content Include="Scripts\angular-scenario.js" />
     <Content Include="Scripts\angular-specs.js" />
     <Content Include="Scripts\angular.breeze.storagewip.js" />
-    <Content Include="Scripts\angular.js" />
-    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\angular-route.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
     <Content Include="app\services\repository.abstract.js" />
-    <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="app\services\repository.box.js" />
     <Content Include="tests\karma_config\test.sh" />
@@ -1803,6 +1804,7 @@
     <Content Include="node_modules\karma\package.json" />
     <Content Include="node_modules\karma\README.md" />
     <Content Include="node_modules\karma\requirejs.config.tpl.coffee" />
+    <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="Scripts\angular-mocks.js" />

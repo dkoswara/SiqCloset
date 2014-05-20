@@ -19,7 +19,6 @@
         vm.title = 'Work in Progress';
         vm.wip = [];
         vm.goToWip = goToWip;
-        vm.getDetails = getDetails;
 
         var pendingEntities = [];
 
@@ -100,32 +99,6 @@
         function setSort(prop) {
             vm.predicate = prop;
             vm.reverse = !vm.reverse;
-        }
-
-        function getDetails(item) {
-            if (item.state == breeze.EntityState.Modified) {
-                return getOriginalValues(item);
-            }
-            return '';
-        }
-
-        function getOriginalValues(data) {
-            var details = '';
-            var repoName = data.entityName.toLowerCase();
-            var result = datacontext[repoName].getEntityByIdLocal(data.id);
-
-            //getEntityByIdOrFromWip may return imported entity from wipStorage
-            //thus, the result.entity call
-            var entity = result.entity || result;
-
-            var props = Object.keys(entity.entityAspect.originalValues);
-            props.forEach(function(prop) {
-                var oldValue = entity.entityAspect.originalValues[prop];
-                var newValue = entity.getProperty(prop);
-                var text = String.format('{0} changed from <b><font color=red>{1}</font></b> to <b><font color=green>{2}</font></b>', prop, oldValue, newValue);
-                details = details + text + '</br>';
-            });
-            return details;
         }
     }
 })();
