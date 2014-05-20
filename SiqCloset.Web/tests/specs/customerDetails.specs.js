@@ -1,6 +1,5 @@
-﻿'use strict';
-
-describe('the customerDetails controller', function() {
+﻿describe('the customerDetails controller', function () {
+    'use strict';
 
     var vm;
     var $injector;

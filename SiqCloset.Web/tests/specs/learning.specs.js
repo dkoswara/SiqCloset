@@ -1,6 +1,7 @@
 //jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 1000;
 
-describe('a bunch of learning tests', function() {
+describe('a bunch of learning tests', function () {
+    'use strict';
 
     describe('simple tests', function() {
         it('should be true', function () {

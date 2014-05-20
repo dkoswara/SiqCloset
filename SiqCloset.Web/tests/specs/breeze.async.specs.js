@@ -1,6 +1,6 @@
 ﻿//jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 1000;
 
-describe("Breeze tests", function () {
+ddescribe("Breeze tests", function () {
 
     var siqClosetRemoteServiceName = 'http://localhost:3958/breeze/Breeze';
 
@@ -15,6 +15,27 @@ describe("Breeze tests", function () {
         mgr.executeQuery(query)
             .then(function (data) {
                 expect(data.results.length > 0).toBe(true);
+                done();
+            })
+            .fail(function (error) {
+                console.log(error);
+                expect(true).toBe(false);
+                done();
+            });
+    });
+
+    iit('should query using Breeze with inlineCount', function (done) {
+
+        var mgr = new breeze.EntityManager({
+            serviceName: siqClosetRemoteServiceName,
+        });
+        var query = breeze.EntityQuery.from('Batches').inlineCount();
+
+
+        mgr.executeQuery(query)
+            .then(function (data) {
+                expect(data.inlineCount > 0).toBe(true);
+                console.log(data.inlineCount);
                 done();
             })
             .fail(function (error) {

@@ -1,6 +1,5 @@
-﻿'use strict';
-
-ddescribe('the customer controller', function () {
+﻿describe('the customer controller', function () {
+    'use strict';
 
     var vm;
     var $injector;
@@ -38,7 +37,7 @@ ddescribe('the customer controller', function () {
         console.log($location.path());
     });
 
-    iit('should be able to search', function() {
+    it('should be able to search', function () {
         $rootScope.$digest();
         var originalCount = vm.filteredCustomerPartials.length;
 
