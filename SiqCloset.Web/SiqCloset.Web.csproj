@@ -188,6 +188,7 @@
     <Content Include="Content\toastr.less" />
     <Content Include="favicon.ico" />
     <Content Include="index.html" />
+    <Content Include="karma.unit.conf.js" />
     <Content Include="tests\specs\customer.specs.js" />
     <Content Include="tests\specs\customerDetails.specs.js" />
     <Content Include="tests\specs\entityManagerFactoryMock.specs.js" />
@@ -1803,6 +1804,7 @@
     <Content Include="node_modules\karma\package.json" />
     <Content Include="node_modules\karma\README.md" />
     <Content Include="node_modules\karma\requirejs.config.tpl.coffee" />
+    <Content Include="RunIISExpress.bat" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="Scripts\angular-mocks.js" />
@@ -2135,9 +2137,11 @@
     <Content Include="Scripts\xls.js" />
     <Content Include="SpecRunner.html" />
     <Content Include="tests\specs\breeze.async.specs.js" />
-    <Content Include="tests\specs\excel.specs.js" />
+    <Content Include="tests\specs\excel.async.specs.js" />
+    <Content Include="tests\specs\learning.async.specs.js" />
     <Content Include="tests\specs\learning.specs.js" />
     <Content Include="tests\support\customerTestData.js" />
+    <Content Include="tests\support\functionBindPolyfill.js" />
     <Content Include="tests\support\testFns.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
@@ -2160,6 +2164,7 @@
     <Content Include="tests\support\CustomerItemList.xls" />
     <Content Include="tests\specs\dashboard.specs.js" />
     <Content Include="tests\specs\datacontext.specs.js" />
+    <Content Include="tests\chutzpah.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2177,7 +2182,9 @@
       <Name>SiqCloset.Model</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
