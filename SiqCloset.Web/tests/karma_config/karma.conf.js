@@ -31,6 +31,7 @@ module.exports = function(config){
       '../scripts/stringformat-1.09.js',
 
       //include all app files
+      '../app/app.js',  //ensure app.js runs first
       '../app/**/*.js',
 
       //include support files
