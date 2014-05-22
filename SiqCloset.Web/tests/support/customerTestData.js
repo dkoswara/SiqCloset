@@ -13,6 +13,8 @@
  */
 
 (function (testFns) {
+    'use strict';
+
     var customerTestData = {
         "tempKeys": [],
         "entityGroupMap": {

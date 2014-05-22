@@ -1,6 +1,5 @@
-﻿'use strict';
-
-describe('the mocked entityManagerFactory', function() {
+﻿describe('the mocked entityManagerFactory', function() {
+    'use strict';
 
     var $rootScope;
     var mgr;

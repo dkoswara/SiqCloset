@@ -1,6 +1,5 @@
-﻿'use strict';
-
-describe('the datacontext', function () {
+﻿describe('the datacontext', function () {
+    'use strict';
 
     var datacontext;
     var $rootScope;

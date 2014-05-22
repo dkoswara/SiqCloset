@@ -1,6 +1,5 @@
-﻿'use strict';
-
-describe('the dashboard', function () {
+﻿describe('the dashboard', function () {
+    'use strict';
 
 	var vm, $timeout, $rootScope;
 	var commonMock;

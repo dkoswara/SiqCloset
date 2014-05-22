@@ -1,6 +1,7 @@
 ﻿jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 1000;
 
 describe("Excel related tests", function() {
+    'use strict';
 
     var customerItemListReader;
     var filename = 'http://localhost:3958/tests/CustomerItemList.xls';

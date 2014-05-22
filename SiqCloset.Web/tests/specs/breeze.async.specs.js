@@ -1,6 +1,7 @@
-﻿//jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 1000;
+﻿jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 1000;
 
-ddescribe("Breeze tests", function () {
+describe("Breeze tests", function () {
+    'use strict';
 
     var siqClosetRemoteServiceName = 'http://localhost:3958/breeze/Breeze';
 
@@ -24,7 +25,7 @@ ddescribe("Breeze tests", function () {
             });
     });
 
-    iit('should query using Breeze with inlineCount', function (done) {
+    it('should query using Breeze with inlineCount', function (done) {
 
         var mgr = new breeze.EntityManager({
             serviceName: siqClosetRemoteServiceName,
@@ -59,6 +60,31 @@ ddescribe("Breeze tests", function () {
             .then(function (data) {
                 var underscore = _;
                 var custs = underscore.pluck(data.results, 'Customer');
+                done();
+            })
+            .fail(function (error) {
+                console.log(error);
+                expect(true).toBe(false);
+                done();
+            });
+    });
+
+    it('should query Batches and Expand Items', function (done) {
+        var mgr = new breeze.EntityManager({
+            serviceName: siqClosetRemoteServiceName,
+        });
+        var query = breeze.EntityQuery.from('Batches')
+            .where('Items', breeze.FilterQueryOp.Any, 'Price', breeze.FilterQueryOp.GreaterThan, 0);
+            //.expand('Items');
+
+        mgr.executeQuery(query)
+            .then(function (data) {
+                expect(data.results.length).toBeGreaterThan(0);
+                console.log(data.results.length);
+
+                //var batch = data.results[0];
+                //expect(batch.Items.length).toBeGreaterThan(0);
+
                 done();
             })
             .fail(function (error) {
