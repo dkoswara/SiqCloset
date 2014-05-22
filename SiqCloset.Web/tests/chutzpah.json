@@ -1,0 +1,38 @@
+﻿{
+   "Framework": "jasmine",
+
+   "FrameworkVersion": "2",
+
+   "References" : [
+   	   {"Path" : "../scripts/jquery-2.0.3.js" }, 
+       {"Path" : "../scripts/angular.js" }, 
+       {"Path" : "../scripts/angular-mocks.js" },
+       {"Path" : "../scripts/angular-animate.js" }, 
+       {"Path" : "../scripts/angular-route.js" },
+       {"Path" : "../scripts/angular-sanitize.js" },
+       {"Path" : "../scripts/bootstrap.js" },
+       {"Path" : "../scripts/toastr.js" },
+       {"Path" : "../scripts/moment.js" },
+       {"Path" : "../scripts/ui-bootstrap-tpls-0.7.0.js" },
+       {"Path" : "../scripts/spin.js" },
+       {"Path" : "../scripts/q.js" },
+       {"Path" : "../scripts/datajs-1.1.2.js" },
+       {"Path" : "../scripts/breeze.debug.js" },
+       {"Path" : "../scripts/breeze.angular.js" },
+       {"Path" : "../scripts/breeze.directives.js" },
+       {"Path" : "../scripts/breeze.saveErrorExtensions.js" },
+       {"Path" : "../scripts/breeze.metadata-helper.js" },
+       {"Path" : "../scripts/angular-file-upload.js" },
+       {"Path" : "../scripts/angular.breeze.storagewip.js" },
+       {"Path" : "../scripts/underscore.js" },
+       {"Path" : "../scripts/ng-grid-2.0.7.js" },
+       {"Path" : "../scripts/stringformat-1.09.js" },
+
+       {"Path" : "../app/app.js" },
+       {"Path" : "../app", "Include": "**/*.js" },
+
+       {"Path" : "support/testFns.js" },
+       {"Path" : "support", "Include": "*.js" },
+
+   ],   
+}
