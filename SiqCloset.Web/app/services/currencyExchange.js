@@ -20,13 +20,12 @@
         //var manager = new breeze.EntityManager();
 
         var service = {
-            getData: getDataWithRawAjax
-            //getData: getData
+            getData: getData
         };
 
         return service;
 
-        function getDataWithRawAjax() {
+        function getData() {
             var url = config.rateExchangeRemoteServiceName + 'currency?callback=JSON_CALLBACK&from=USD&to=IDR';
             return $http({
                 method: 'JSONP',
@@ -34,48 +33,47 @@
             }).success(function (data) {
                 logSuccess('Successfully retrieved currency exchange rate', data, true);
                 return data;
-            }).error(function (data) {
-                logError('Failed to retrieve currency exchange rate', error);
-                throw data;
+            }).error(function (data, status) {
+                logError('Failed to retrieve currency exchange rate', data, false);
             });
         }
 
-        function getData() {
-            var ds = new breeze.DataService({
-                serviceName: config.rateExchangeRemoteServiceName,
-                hasServerMetadata: false,
-                useJsonp: true,
-            });
+        //function getData() {
+        //    var ds = new breeze.DataService({
+        //        serviceName: config.rateExchangeRemoteServiceName,
+        //        hasServerMetadata: false,
+        //        useJsonp: true,
+        //    });
 
-            //http://rate-exchange.appspot.com/currency?from=USD&to=IDR
-            var query = breeze.EntityQuery
-                .from('currency')
-                .withParameters({
-                    from: 'USD',
-                    to: 'IDR',
-                }).using(ds);
+        //    //http://rate-exchange.appspot.com/currency?from=USD&to=IDR
+        //    var query = breeze.EntityQuery
+        //        .from('currency')
+        //        .withParameters({
+        //            from: 'USD',
+        //            to: 'IDR',
+        //        }).using(ds);
 
-            return manager.executeQuery(query)
-                .then(function(data) {
-                    logSuccess('Successfully retrieved currency exchange rate', data, true);
-                    return data;
-                })
-                .fail(function(error) {
-                    logError('Failed to retrieve currency exchange rate', error);
-                    throw error;
-                });
-        }
+        //    return manager.executeQuery(query)
+        //        .then(function(data) {
+        //            logSuccess('Successfully retrieved currency exchange rate', data, true);
+        //            return data;
+        //        })
+        //        .fail(function(error) {
+        //            logError('Failed to retrieve currency exchange rate', error);
+        //            throw error;
+        //        });
+        //}
 
-        function configureManager(serviceName) {
+        //function configureManager(serviceName) {
             
-            var ds = new breeze.DataService({
-                serviceName: serviceName,
-                hasServerMetadata: false,
-                useJsonp: true,
-            });
+        //    var ds = new breeze.DataService({
+        //        serviceName: serviceName,
+        //        hasServerMetadata: false,
+        //        useJsonp: true,
+        //    });
 
-            return emFactory.newManager(ds);
-        }
+        //    return emFactory.newManager(ds);
+        //}
 
         
     }

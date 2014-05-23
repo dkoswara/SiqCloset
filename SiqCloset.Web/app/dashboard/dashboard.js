@@ -62,9 +62,15 @@
         }
 
         function getExchangeRate() {
-            return currencyExchange.getData().then(function(results) {
-                return vm.exchangeRateText = String.format('$1 = Rp. {0}', results.data.rate);
-            });
+            return currencyExchange.getData().then(success, fail);
+
+            function success(results) {
+                vm.exchangeRateText = String.format('$1 = Rp. {0}', results.data.rate);
+            }
+
+            function fail() {
+                vm.exchangeRateText = String.format('$1 = Rp. {0}', '???');
+            }
         }
 
         function setContentSort(prop) {
