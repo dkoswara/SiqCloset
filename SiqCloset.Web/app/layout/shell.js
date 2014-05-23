@@ -26,7 +26,10 @@
 
         function activate() {
             logSuccess('Hot Towel Angular loaded!', null, true);
-            common.activateController([], controllerId);
+            common.activateController([], controllerId).then(function () {
+                //Toggle back the spinner as this is just the shell that has been loaded
+                toggleSpinner(true);
+            });
         }
 
         function toggleSpinner(on) { vm.isBusy = on; }
