@@ -1802,7 +1802,6 @@
     <Content Include="node_modules\karma\package.json" />
     <Content Include="node_modules\karma\README.md" />
     <Content Include="node_modules\karma\requirejs.config.tpl.coffee" />
-    <Content Include="launch-webapi.bat" />
     <Content Include="run-karma.sh" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Content\toastr.min.css" />
@@ -2163,6 +2162,7 @@
     <Content Include="tests\specs\dashboard.specs.js" />
     <Content Include="tests\specs\datacontext.specs.js" />
     <Content Include="tests\chutzpah.json" />
+    <Content Include="run-iisexpress.ps1" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
