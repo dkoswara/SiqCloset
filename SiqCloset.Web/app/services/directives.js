@@ -251,4 +251,72 @@
         }
     }]);
 
+    app.directive('scWipPeek', function ($compile) {
+        //Usage:
+        //<div data-sc-wip-peek="entity"></div>
+        var directive = {
+            controller: ['$scope', 'datacontext', scWipPeekController],
+            restrict: 'A',
+            //scope: true,
+            link: function(scope, element, attrs) {
+                var item = scope.$eval(attrs.scWipPeek);
+                var val = scope.getDetails(item);
+
+                //ToDo: either use vanilla html or js or check if angular.ui.bootstrap exists
+                //before applying this attribute to the element
+                if (val && !element.attr('tooltip-html-unsafe')) {
+                    element.attr('tooltip-html-unsafe', val);
+                    $compile(element[0])(scope);
+                }
+            }
+        };
+
+        return directive;
+
+        function scWipPeekController($scope, datacontext) {
+            $scope.getDetails = getDetails;
+
+            function getDetails(wipItem) {
+                var state = wipItem.state || wipItem.entityAspect.entityState;
+                if (state == breeze.EntityState.Modified) {
+                    return getOriginalValues(wipItem);
+                }
+                return '';
+            }
+
+            function getOriginalValues(_wipItem) {
+                //If already an entity, don't bother going to repo
+                if (_wipItem.entityAspect) {
+                    return getOriginalValuesCore(_wipItem);
+                }
+
+                //else get entity first
+                var entity = getEntity(_wipItem);
+                return getOriginalValuesCore(entity);
+
+                function getEntity(_wipItem) {
+                    var repoName = _wipItem.entityName.toLowerCase();
+                    var result = datacontext[repoName].getEntityByIdLocal(_wipItem.id);
+
+                    //getEntityByIdOrFromWip may return imported entity from wipStorage
+                    //thus, the result.entity call
+                    var entity = result.entity || result;
+                    return entity;
+                }
+
+                function getOriginalValuesCore(entity) {
+                    var details = '';
+                    var props = Object.keys(entity.entityAspect.originalValues);
+                    props.forEach(function (prop) {
+                        var oldValue = entity.entityAspect.originalValues[prop];
+                        var newValue = entity.getProperty(prop);
+                        var text = String.format('{0} changed from <b><font color=red>{1}</font></b> to <b><font color=green>{2}</font></b>', prop, oldValue, newValue);
+                        details = details + text + '</br>';
+                    });
+                    return details;
+                }
+            }
+        }
+    });
+
 })();

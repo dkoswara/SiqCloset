@@ -19,7 +19,7 @@
                     <div data-cc-widget-header title="{{vm.title}}" subtitle="{{vm.filteredCustomerPartials.length}} / {{vm.customerPartials.length}}"></div>
                     <div class="widget-content user">
                         <div class="padd" data-ng-repeat="c in vm.filteredCustomerPartials" data-ng-click="vm.goToCustomer(c)">
-                            <div class="user" title="Go to customer details">
+                            <div class="user" title="Go to customer details" data-sc-wip-peek="c">
                                 <h6>{{c.name}}</h6>
                                 <!--<h6>{{c.address}}</h6>
                                     <h6>{{c.phoneNo}}</h6>-->
