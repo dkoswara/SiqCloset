@@ -310,10 +310,17 @@
                     props.forEach(function (prop) {
                         var oldValue = entity.entityAspect.originalValues[prop];
                         var newValue = entity.getProperty(prop);
-                        var text = String.format('{0} changed from <b><font color=red>{1}</font></b> to <b><font color=green>{2}</font></b>', prop, oldValue, newValue);
+                        var displayName = getPropDisplayName(entity, prop);
+                        var text = String.format('{0} changed from <b><font color=red>{1}</font></b> to <b><font color=green>{2}</font></b>', displayName, oldValue, newValue);
                         details = details + text + '</br>';
                     });
                     return details;
+                }
+
+                function getPropDisplayName(entity, propName) {
+                    var entityType = entity.entityType;
+                    var dp = entityType.getDataProperty(propName);
+                    return dp.displayName || propName;
                 }
             }
         }

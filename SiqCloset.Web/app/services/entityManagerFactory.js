@@ -15,8 +15,6 @@
         var serviceName = config.siqClosetRemoteServiceName;
         var metadataStore = createMetadataStore();
 
-        metadataStore.importMetadata(window.app.metadata);
-
         var provider = {
             metadataStore: metadataStore,
             newManager: newManager
@@ -46,7 +44,24 @@
         function createMetadataStore() {
             var store = new breeze.MetadataStore();
             model.configureMetadataStore(store);
+
+            store.importMetadata(window.app.metadata);
+            extendMetadataWithDisplayName(store);
+
             return store;
+
+            function extendMetadataWithDisplayName(md) {
+                var md = JSON.parse(window.app.metadata);
+                md.schema.entityType.forEach(function (et) {
+                    var etype = store.getEntityType(et.name);
+                    et.property.forEach(function (p) {
+                        var prop = etype.dataProperties.filter(function (dp) {
+                            return dp.name.toLowerCase() == p.name.toLowerCase();
+                        })[0];
+                        prop.displayName = p.displayName;
+                    });
+                });
+            }
         }
     }
 })();
