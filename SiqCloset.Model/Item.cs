@@ -1,11 +1,14 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace SiqCloset.Model
 {
     public class Item
     {
         public Guid ItemID { get; set; }
+        [DisplayName("Item Code")]
         public string Code { get; set; }
+        [DisplayName("Item Name")]
         public string Name { get; set; }
         public int? Size { get; set; }
         public string Type { get; set; }

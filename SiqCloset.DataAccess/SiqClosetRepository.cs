@@ -15,7 +15,15 @@ namespace SiqCloset.DataAccess
 
         public string Metadata
         {
-            get { return _contextProvider.Metadata(); }
+            get
+            {
+                var metadata = JObject.Parse(_contextProvider.Metadata());
+                //ToDo: Instead of passing in model namespace, detect it from metadata
+                metadata = Helper.IncludeDisplayNameAttributeInMetadata(metadata, "SiqCloset.Model");
+                return metadata.ToString();
+                
+                //return _contextProvider.Metadata();
+            }
         }
 
         public SaveResult SaveChanges(JObject saveBundle)
