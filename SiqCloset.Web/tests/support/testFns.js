@@ -27,8 +27,8 @@
                 $delegate.newManager = newManager;
                 return $delegate;
                 //////////////////
-                function newManager() {
-                    var dataService = new breeze.DataService({
+                function newManager(ds) {
+                    var dataService = ds || new breeze.DataService({
                         hasServerMetadata: false,
                         serviceName: '/mocked/'
                     });

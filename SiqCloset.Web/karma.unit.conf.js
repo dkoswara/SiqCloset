@@ -59,7 +59,7 @@ module.exports = function(config){
 
     frameworks: ['jasmine'],
 
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
 
     reporters: ['progress'],
 
