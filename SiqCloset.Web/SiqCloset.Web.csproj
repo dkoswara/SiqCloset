@@ -2133,9 +2133,9 @@
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore.min.js" />
     <Content Include="Scripts\xls.js" />
-    <Content Include="tests\specs\breeze.async.specs.js" />
-    <Content Include="tests\specs\excel.async.specs.js" />
-    <Content Include="tests\specs\learning.async.specs.js" />
+    <Content Include="tests\specs.async\breeze.async.specs.js" />
+    <Content Include="tests\specs.async\excel.async.specs.js" />
+    <Content Include="tests\specs.async\learning.async.specs.js" />
     <Content Include="tests\specs\learning.specs.js" />
     <Content Include="tests\support\customerTestData.js" />
     <Content Include="tests\support\functionBindPolyfill.js" />
