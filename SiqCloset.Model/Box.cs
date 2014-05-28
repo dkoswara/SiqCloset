@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace SiqCloset.Model
 {
@@ -7,6 +8,7 @@ namespace SiqCloset.Model
     {
         public Guid BoxID { get; set; }
         public string TrackingNo { get; set; }
+        [DisplayName("Box No")]
         public int? BoxNo { get; set; }
         public decimal Weight { get; set; }
         public DateTime? LatestEstDeliveryDate { get; set; }

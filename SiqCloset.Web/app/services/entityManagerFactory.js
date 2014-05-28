@@ -43,18 +43,20 @@
 
         function createMetadataStore() {
             var store = new breeze.MetadataStore();
-            model.configureMetadataStore(store);
-
             store.importMetadata(window.app.metadata);
-            extendMetadataWithDisplayName(store);
+
+            model.configureMetadataStore(store);
+            extendMetadataWithDisplayName();
 
             return store;
 
-            function extendMetadataWithDisplayName(md) {
+            function extendMetadataWithDisplayName() {
                 var md = JSON.parse(window.app.metadata);
                 md.schema.entityType.forEach(function (et) {
                     var etype = store.getEntityType(et.name);
                     et.property.forEach(function (p) {
+                        //Have to filter this way because at this point,
+                        //prop name from original metadata is not camel-cased
                         var prop = etype.dataProperties.filter(function (dp) {
                             return dp.name.toLowerCase() == p.name.toLowerCase();
                         })[0];

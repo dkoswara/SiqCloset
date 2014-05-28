@@ -63,7 +63,8 @@ window.app = window.app || {}; window.app.metadata = JSON.stringify({
           },
           {
             "name": "BoxNo",
-            "type": "Edm.Int32"
+            "type": "Edm.Int32",
+            "displayName": "Box No"
           },
           {
             "name": "Weight",
