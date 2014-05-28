@@ -355,7 +355,11 @@
 
                     function getPropDisplayName(entityType, propName) {
                         var dp = entityType.getDataProperty(propName);
-                        return dp.displayName || propName;
+                        return dp.displayName || upperCaseFirstLetter(propName);
+
+                        function upperCaseFirstLetter(str) {
+                            return str.substr(0, 1).toUpperCase() + str.substr(1).toLowerCase();
+                        }
                     }
                 }
             }
