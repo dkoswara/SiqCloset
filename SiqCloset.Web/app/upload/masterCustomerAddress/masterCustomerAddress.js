@@ -13,7 +13,7 @@
         var vm = this;
         var excelFile;
 
-        vm.title = 'Upload Master Customer Address Here';
+        vm.title = 'Upload Master Customer Address';
         vm.customers = [];
         vm.showData = showData;
         vm.onFileSelect = onFileSelect;

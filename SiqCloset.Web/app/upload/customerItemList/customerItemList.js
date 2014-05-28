@@ -15,7 +15,7 @@
         var customerItemLists = [];
         var excelFile;
         
-        vm.title = 'Upload Customer Item List Here';
+        vm.title = 'Upload Customer Item List';
         vm.customers = [];
         vm.batchNumber = '';
         vm.saveCustomerItemList = saveCustomerItemList;

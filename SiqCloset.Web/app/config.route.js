@@ -44,12 +44,32 @@
                     }
                 }
             }, {
+                url: '/customer',
+                config: {
+                    title: 'Master Customer Address',
+                    templateUrl: 'app/customer/customers.html',
+                    settings: {
+                        nav: 2,
+                        content: '<i class="icon-user"></i> Master Customer Address'
+                    }
+                }
+            }, {
+                url: '/batch',
+                config: {
+                    title: 'Customer Item List',
+                    templateUrl: 'app/batch/batches.html',
+                    settings: {
+                        nav: 3,
+                        content: '<i class="icon-briefcase"></i> Customer Item List'
+                    }
+                }
+            }, {
                 url: '/masterCustomerAddress',
                 config: {
                     title: 'Upload MCA',
                     templateUrl: 'app/upload/masterCustomerAddress/masterCustomerAddress.html',
                     settings: {
-                        nav: 2,
+                        nav: 4,
                         content: '<i class="icon-lock"></i> Upload MCA'
                     }
                 }
@@ -59,18 +79,8 @@
                     title: 'Upload CIL',
                     templateUrl: 'app/upload/customerItemList/customerItemList.html',
                     settings: {
-                        nav: 3,
+                        nav: 5,
                         content: '<i class="icon-lock"></i> Upload CIL'
-                    }
-                }
-            }, {
-                url: '/customer',
-                config: {
-                    title: 'Master Customer Address',
-                    templateUrl: 'app/customer/customers.html',
-                    settings: {
-                        nav: 4,
-                        content: '<i class="icon-user"></i> Master Customer Address'
                     }
                 }
             }, {
@@ -79,18 +89,8 @@
                     title: 'Shipping Address',
                     templateUrl: 'app/forms/shippingAddress.html',
                     settings: {
-                        nav: 5,
-                        content: '<i class="icon-home"></i> Shipping Address'
-                    }
-                }
-            }, {
-                url: '/batch',
-                config: {
-                    title: 'Customer Item List',
-                    templateUrl: 'app/batch/batches.html',
-                    settings: {
                         nav: 6,
-                        content: '<i class="icon-briefcase"></i> Customer Item List'
+                        content: '<i class="icon-home"></i> Shipping Address'
                     }
                 }
             }, {
