@@ -149,7 +149,7 @@
         function prime() {
             if (primePromise) return primePromise;
 
-            primePromise = $q.all([service.customer.getAll()])
+            primePromise = $q.all([service.customer.getAll(), service.box.getAll()])
                 .then(extendMetadata)
                 .then(success);
 
