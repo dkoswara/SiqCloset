@@ -36,7 +36,9 @@
         return service;
 
         function configureMetadataStore(metadataStore) {
-            registerItem(metadataStore);
+            extendItemEntityType(metadataStore);
+            //registerItem(metadataStore);
+            
         }
         
         function Customer() {
@@ -48,9 +50,22 @@
             metadataStore.registerEntityTypeCtor(modelInfo.Item.entityName, Item);
 
             function Item() {
-                this.custName = '';
+                //this.custName = '';
             }
 
+        }
+
+        function extendItemEntityType(metadataStore) {
+            var itemType = metadataStore.getEntityType('Item');
+            var custIdProp = itemType.getDataProperty('customerID');
+            custIdProp.custom = {
+                navPropDesc: 'name',
+            };
+
+            var boxIdProp = itemType.getDataProperty('boxID');
+            boxIdProp.custom = {
+                navPropDesc: 'boxNo',
+            };
         }
 
         function createNullos(manager) {

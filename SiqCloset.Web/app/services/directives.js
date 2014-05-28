@@ -282,47 +282,85 @@
                     return getOriginalValues(wipItem);
                 }
                 return '';
-            }
 
-            function getOriginalValues(_wipItem) {
-                //If already an entity, don't bother going to repo
-                if (_wipItem.entityAspect) {
-                    return getOriginalValuesCore(_wipItem);
-                }
+                function getOriginalValues(_wipItem) {
+                    //If already an entity, don't bother going to repo
+                    if (_wipItem.entityAspect) {
+                        return getOriginalValuesCore(_wipItem);
+                    }
 
-                //else get entity first
-                var entity = getEntity(_wipItem);
-                return getOriginalValuesCore(entity);
+                    //else get entity first
+                    var entity = getEntity(_wipItem);
+                    return getOriginalValuesCore(entity);
 
-                function getEntity(_wipItem) {
-                    var repoName = _wipItem.entityName.toLowerCase();
-                    var result = datacontext[repoName].getEntityByIdLocal(_wipItem.id);
+                    function getEntity(_wipItem) {
+                        var repoName = _wipItem.entityName.toLowerCase();
+                        var result = datacontext[repoName].getEntityByIdLocal(_wipItem.id);
 
-                    //getEntityByIdOrFromWip may return imported entity from wipStorage
-                    //thus, the result.entity call
-                    var entity = result.entity || result;
-                    return entity;
-                }
+                        //getEntityByIdOrFromWip may return imported entity from wipStorage
+                        //thus, the result.entity call
+                        var entity = result.entity || result;
+                        return entity;
+                    }
 
-                function getOriginalValuesCore(entity) {
-                    var details = '';
-                    var props = Object.keys(entity.entityAspect.originalValues);
-                    props.forEach(function (prop) {
-                        var oldValue = entity.entityAspect.originalValues[prop];
-                        var newValue = entity.getProperty(prop);
-                        var displayName = getPropDisplayName(entity, prop);
+                    function getOriginalValuesCore(entity) {
+                        var details = '';
+                        var props = Object.keys(entity.entityAspect.originalValues);
+                        props.forEach(function (prop) {
+                            if (!isPropForeignKey(entity.entityType, prop)) {
+                                var text = getDetailsFromProp(entity, prop);
+                                details = details + text + '</br>';
+                            } else {
+                                var text = getDetailsFromNavProp(entity, prop);
+                                details = details + text + '</br>';
+                            }
+                        });
+                        return details;
+                    }
+
+                    function getDetailsFromProp(entity, propName) {
+                        var oldValue = entity.entityAspect.originalValues[propName];
+                        var newValue = entity.getProperty(propName);
+                        var displayName = getPropDisplayName(entity.entityType, propName);
                         var text = String.format('{0} changed from <b><font color=red>{1}</font></b> to <b><font color=green>{2}</font></b>', displayName, oldValue, newValue);
-                        details = details + text + '</br>';
-                    });
-                    return details;
-                }
+                        return text;
+                    }
 
-                function getPropDisplayName(entity, propName) {
-                    var entityType = entity.entityType;
-                    var dp = entityType.getDataProperty(propName);
-                    return dp.displayName || propName;
+                    function getDetailsFromNavProp(entity, propName) {
+                        //get the DataProperty
+                        var dp = entity.entityType.getDataProperty(propName);
+                        //get the repository name from the relatedNavigationProperty entityType
+                        var repoName = dp.relatedNavigationProperty.entityType.shortName.toLowerCase();
+                        //get old and new fk id
+                        var oldId = entity.entityAspect.originalValues[propName];
+                        var newId = entity.getProperty(propName);
+                        //get old and new related entity
+                        var oldEntity = datacontext[repoName].getEntityByIdLocal(oldId);
+                        var newEntity = datacontext[repoName].getEntityByIdLocal(newId);
+                        //get the property descriptor from the DataProperty custom object
+                        var description = dp.custom.navPropDesc;
+                        //get the descriptor's old and new value from the related entity
+                        var oldValue = oldEntity.getProperty(description);
+                        var newValue = newEntity.getProperty(description);
+
+                        //now compose the tooltip text
+                        var displayName = getPropDisplayName(dp.relatedNavigationProperty.entityType, description);
+                        var text = String.format('{0} changed from <b><font color=red>{1}</font></b> to <b><font color=green>{2}</font></b>', displayName, oldValue, newValue);
+                        return text;
+                    }
+
+                    function isPropForeignKey(entityType, propName) {
+                        return entityType.getDataProperty(propName).relatedNavigationProperty;
+                    }
+
+                    function getPropDisplayName(entityType, propName) {
+                        var dp = entityType.getDataProperty(propName);
+                        return dp.displayName || propName;
+                    }
                 }
             }
+
+            
         }
     });
 
