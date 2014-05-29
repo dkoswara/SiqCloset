@@ -189,6 +189,7 @@
     <Content Include="favicon.ico" />
     <Content Include="index.html" />
     <Content Include="karma.unit.conf.js" />
+    <Content Include="tests\specs\breeze.angular.specs.js" />
     <Content Include="tests\specs\customer.specs.js" />
     <Content Include="tests\specs\customerDetails.specs.js" />
     <Content Include="tests\specs\entityManagerFactoryMock.specs.js" />
