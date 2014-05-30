@@ -189,6 +189,8 @@
     <Content Include="favicon.ico" />
     <Content Include="index.html" />
     <Content Include="karma.unit.conf.js" />
+    <Content Include="Scripts\angular-ui-router.js" />
+    <Content Include="Scripts\angular-ui-router.min.js" />
     <Content Include="tests\specs\customer.specs.js" />
     <Content Include="tests\specs\customerDetails.specs.js" />
     <Content Include="tests\specs\entityManagerFactoryMock.specs.js" />
