@@ -6,14 +6,14 @@
         </div>
 
         <ul class="navi">
-            <li class="nlightblue fade-selection-animation" data-ng-class="vm.isCurrent(r)"
-                data-ng-repeat="r in vm.navRoutes">
-                <a href="#{{r.url}}" data-ng-bind-html="r.config.settings.content"></a>
+            <li class="nlightblue fade-selection-animation" data-ng-class="vm.isCurrent(s)"
+                data-ng-repeat="s in vm.navStates">
+                <a ui-sref="{{s.name}}" data-ng-bind-html="s.config.settings.content"></a>
             </li>
             
             <li data-cc-wip
                 wip="vm.wip"
-                routes="vm.routes"
+                states="vm.states"
                 changed-event="{{vm.wipChangedEvent}}"
                 class="nlightblue"></li>
             

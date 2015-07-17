@@ -26,20 +26,21 @@
         }
 
         function handleRoutingErrors() {
-            $rootScope.$on('$routeChangeError', function (event, current, previous, rejection) {
+            $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
                 if (handleRouteChangeError) return;
                 handleRouteChangeError = true;
-                var msg = 'Error routing: ' + (current && current.name) + '. ' + (rejection.msg || ' ');
-                logger.logWarning(msg, current, serviceId, true);
+                //var msg = 'Error routing: ' + (current && current.name) + '. ' + (rejection.msg || ' ');
+                var msg = 'Error routing: ' + (toState && toState.name) + '. ' + (error || ' ');
+                logger.logWarning(msg, fromState, serviceId, true);
                 $location.path('/');
             });
         }
 
         function updateDocTitle() {
-            $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+            $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
                 handleRouteChangeError = false;
-                var title = config.docTitle + ' ' + (current.title || ' ');
-                $rootScope.title = title;
+                //var title = config.docTitle + ' ' + (current.title || ' ');
+                $rootScope.title = toState.title;
             });
 
         }

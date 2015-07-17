@@ -4,9 +4,9 @@
     var controllerId = 'batches';
 
     angular.module('app').controller(controllerId,
-        ['$location', 'common', 'datacontext', batches]);
+        ['$state', 'common', 'datacontext', batches]);
 
-    function batches($location, common, datacontext) {
+    function batches($state, common, datacontext) {
         var vm = this;
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
@@ -34,7 +34,7 @@
 
         function goToBatch(batch) {
             if (batch && batch.batchID) {
-                $location.path('/batch/' + batch.batchID);
+                $state.go('batchDetail', { id: batch.batchID });
             }
         }
 
@@ -43,7 +43,8 @@
             if (vm.batchPartials.length > 0) {
                 newBatchID = vm.batchPartials[vm.batchPartials.length - 1].batchID + 1;
             }
-            $location.path('/batch/new' + newBatchID);
+            //$state.path('/batch/new' + newBatchID);
+            $state.go('batchDetail', { id: 'new' + newBatchID });
         }
 
     }

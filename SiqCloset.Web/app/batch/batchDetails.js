@@ -4,9 +4,9 @@
     var controllerId = 'batchDetails';
 
     angular.module('app').controller(controllerId,
-        ['$location', '$scope', '$routeParams', 'common', 'config', 'datacontext', 'bootstrap.dialog', 'model', batchDetails]);
+        ['$state', '$scope', '$stateParams', 'common', 'config', 'datacontext', 'bootstrap.dialog', 'model', batchDetails]);
 
-    function batchDetails($location, $scope, $routeParams, common, config, datacontext, bsDialog, model) {
+    function batchDetails($state, $scope, $stateParams, common, config, datacontext, bsDialog, model) {
         var vm = this;
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
@@ -58,7 +58,7 @@
             onDestroy();
             setItemsGrid();
             onEndEditCell();
-            vm.batchID = $routeParams.id;
+            vm.batchID = $stateParams.id;
             common.activateController([getRequestedBatch()], controllerId)
                .then(function () {
                     onEveryChange();
@@ -255,7 +255,7 @@
             }
         }
 
-        function goToBatches() { $location.path('/batch'); }
+        function goToBatches() { $state.go('batch'); }
 
         function onHasChanges() {
             $scope.$on(config.events.hasChangesChanged,

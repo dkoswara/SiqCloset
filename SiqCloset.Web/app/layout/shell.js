@@ -34,8 +34,10 @@
 
         function toggleSpinner(on) { vm.isBusy = on; }
 
-        $rootScope.$on('$routeChangeStart',
-            function (event, next, current) { toggleSpinner(true); }
+        $rootScope.$on('$stateChangeStart',
+            function(event, toState, toParams, fromState, fromParams) {
+                 toggleSpinner(true);
+            }
         );
         
         $rootScope.$on(events.controllerActivateSuccess,

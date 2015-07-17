@@ -4,9 +4,9 @@
     var controllerId = 'customerDetails';
 
     angular.module('app').controller(controllerId,
-        ['$location', '$routeParams', '$window', '$scope', 'bootstrap.dialog', 'common', 'config', 'datacontext', 'model', customerDetails]);
+        ['$location', '$stateParams', '$window', '$scope', 'bootstrap.dialog', 'common', 'config', 'datacontext', 'model', customerDetails]);
 
-    function customerDetails($location, $routeParams, $window, $scope, bsDialog, common, config, datacontext, model) {
+    function customerDetails($location, $stateParams, $window, $scope, bsDialog, common, config, datacontext, model) {
         // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
         var vm = this;
 
@@ -129,7 +129,7 @@
         function goBack() { $window.history.back(); }
         
         function getRequestedCustomer() {
-            var val = $routeParams.id;
+            var val = $stateParams.id;
             if (val === 'new') {
                 vm.customer = datacontext.customer.create();
                 return vm.customer;

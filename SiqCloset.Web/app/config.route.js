@@ -3,25 +3,25 @@
 
     var app = angular.module('app');
 
-    // Collect the routes
-    app.constant('routes', getRoutes());
-    
-    // Configure the routes and route resolvers
-    app.config(['$routeProvider', 'routes', routeConfigurator]);
-    function routeConfigurator($routeProvider, routes) {
+    // Collect the states
+    app.constant('states', getStates());
 
-        routes.forEach(function (r) {
-            //$routeProvider.when(r.url, r.config);
-            setRoute(r.url, r.config);
+    // Configure the states and state resolvers
+    app.config(['$stateProvider', '$urlRouterProvider', 'states', stateConfigurator]);
+    function stateConfigurator($stateProvider, $urlRouterProvider, states) {
+
+        states.forEach(function (s) {
+            setState(s.name, s.config);
         });
-        $routeProvider.otherwise({ redirectTo: '/' });
+        
+        $urlRouterProvider.otherwise('/');
 
-        function setRoute(url, definition) {
+        function setState(name, definition) {
             definition.resolve = angular.extend(definition.resolve || {}, {
                 prime: prime,
             });
-            $routeProvider.when(url, definition);
-            return $routeProvider;
+            $stateProvider.state(name, definition);
+            return $stateProvider;
         }
 
         prime.$inject = ['datacontext'];
@@ -30,12 +30,13 @@
         }
     }
 
-    // Define the routes 
-    function getRoutes() {
+    // Define the states 
+    function getStates() {
         return [
             {
-                url: '/',
+                name: 'dashboard',
                 config: {
+                    url: '/',
                     templateUrl: 'app/dashboard/dashboard.html',
                     title: 'Dashboard',
                     settings: {
@@ -44,8 +45,9 @@
                     }
                 }
             }, {
-                url: '/customer',
+                name: 'customer',
                 config: {
+                    url: '/customer',
                     title: 'Master Customer Address',
                     templateUrl: 'app/customer/customers.html',
                     settings: {
@@ -54,8 +56,9 @@
                     }
                 }
             }, {
-                url: '/batch',
+                name: 'batch',
                 config: {
+                    url: '/batch',
                     title: 'Customer Item List',
                     templateUrl: 'app/batch/batches.html',
                     settings: {
@@ -64,8 +67,9 @@
                     }
                 }
             }, {
-                url: '/masterCustomerAddress',
+                name: 'masterCustomerAddress',
                 config: {
+                    url: '/masterCustomerAddress',
                     title: 'Upload MCA',
                     templateUrl: 'app/upload/masterCustomerAddress/masterCustomerAddress.html',
                     settings: {
@@ -74,8 +78,9 @@
                     }
                 }
             }, {
-                url: '/customerItemList',
+                name: 'customerItemList',
                 config: {
+                    url: '/customerItemList',
                     title: 'Upload CIL',
                     templateUrl: 'app/upload/customerItemList/customerItemList.html',
                     settings: {
@@ -84,8 +89,9 @@
                     }
                 }
             }, {
-                url: '/shippingAddress',
+                name: 'shippingAddress',
                 config: {
+                    url: '/shippingAddress',
                     title: 'Shipping Address',
                     templateUrl: 'app/forms/shippingAddress.html',
                     settings: {
@@ -94,22 +100,25 @@
                     }
                 }
             }, {
-                url: '/batch/:id',
+                name: 'batchDetail',
                 config: {
+                    url: '/batch/:id',
                     title: 'Batch Detail',
                     templateUrl: 'app/batch/batchDetails.html',
-                    settings: { }
+                    settings: {}
                 }
             }, {
-                url: '/customer/:id',
+                name: 'customerDetail',
                 config: {
+                    url: '/customer/:id',
                     title: 'Customer Detail',
                     templateUrl: 'app/customer/customerDetails.html',
-                    settings: { }
+                    settings: {}
                 }
             }, {
-                url: '/workInProgress',
+                name: 'wip',
                 config: {
+                    url: '/workInProgress',
                     title: 'Work In Progress',
                     templateUrl: 'app/wip/wip.html',
                     settings: {
@@ -117,7 +126,8 @@
                     }
                 }
             }
-        
+
         ];
     }
+
 })();

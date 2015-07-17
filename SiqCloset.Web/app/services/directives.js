@@ -186,11 +186,11 @@
         }
     });
 
-    app.directive('ccWip', ['$route', function ($route) {
+    app.directive('ccWip', ['$state', function ($state) {
         //Usage:
         //<li data-cc-wip
         //wip="vm.wip"
-        //routes="vm.routes"
+        //states="vm.states"
         //changed-event="{{vm.wipChangedEvent}}"
         //        class="nlightblue"></li>
 
@@ -200,19 +200,19 @@
             scope: {
                 'wip': '=',
                 'changedEvent': '@',
-                'routes': '=',
+                'states': '=',
             },
             template: getTemplate(),
             restrict: 'A',
         };
 
-        var wipRouteName = 'workInProgress';
+        var wipStateName = 'wip';
 
         return directive;
 
         function wipController($scope) {
             $scope.wipExists = function () { return !!$scope.wip.length; };
-            $scope.wipRoute = undefined;
+            $scope.wipState = undefined;
             $scope.getWipClass = function() {
                 return $scope.wipExists() ? 'icon-asterisk-alert' : '';
             }
@@ -224,8 +224,8 @@
                 $scope.$on(eventName, function(event, data) {
                     $scope.wip = data.wip;
                 });
-                $scope.wipRoute = $scope.routes.filter(function(r) {
-                    return r.url.substr(1) === wipRouteName;
+                $scope.wipState = $scope.states.filter(function(s) {
+                    return s.name === wipStateName;
                 })[0];
             }
         }
@@ -236,16 +236,15 @@
             });
 
             function wipIsCurrent() {
-                if (!$route.current || !$route.current.title) {
+                if (!$state.current || !$state.current.title) {
                     return false;
                 }
-                return $route.current.originalPath.substr(1, wipRouteName.length)
-                    === wipRouteName;
+                return $state.current.name === wipStateName;
             }
         }
 
         function getTemplate() {
-            return '<a href="#{{wipRoute.url}}" >'
+            return '<a ui-sref="{{wipState.name}}" >'
                 + '<i class="icon-asterisk" data-ng-class="getWipClass()"></i>'
                 + 'Work in Progress ({{wip.length}})</a>';
         }

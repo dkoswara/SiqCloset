@@ -4,9 +4,9 @@
     var controllerId = 'customers';
 
     angular.module('app').controller(controllerId,
-        ['$location','common','config','datacontext', customers]);
+        ['$state','common','config','datacontext', customers]);
 
-    function customers($location, common, config, datacontext) {
+    function customers($state, common, config, datacontext) {
         var vm = this;
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
@@ -37,7 +37,7 @@
         
         function goToCustomer(customer) {
             if (customer && customer.customerID) {
-                $location.path('/customer/' + customer.customerID);
+                $state.go('customerDetail', { id: customer.customerID });
             }
         }
 

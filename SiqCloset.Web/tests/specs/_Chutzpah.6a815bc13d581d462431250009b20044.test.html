@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Jasmine Spec Runner</title>
+    <link rel="stylesheet" type="text/css" href="file:///C:/Users/DenisK/AppData/Local/Microsoft/VisualStudio/12.0/Extensions/ax2sakvz.4nk/TestFiles/jasmine/v2/jasmine.css"/>
+<script type="text/javascript" src="file:///C:/Users/DenisK/AppData/Local/Microsoft/VisualStudio/12.0/Extensions/ax2sakvz.4nk/TestFiles/jasmine/v2/jasmine.js"></script>
+<script type="text/javascript" src="file:///C:/Users/DenisK/AppData/Local/Microsoft/VisualStudio/12.0/Extensions/ax2sakvz.4nk/TestFiles/jasmine/v2/jasmine-html.js"></script>
+<script type="text/javascript" src="file:///C:/Users/DenisK/AppData/Local/Microsoft/VisualStudio/12.0/Extensions/ax2sakvz.4nk/TestFiles/jasmine/v2/boot.js"></script>
+<link rel="shortcut icon" type="image/png" href="file:///C:/Users/DenisK/AppData/Local/Microsoft/VisualStudio/12.0/Extensions/ax2sakvz.4nk/TestFiles/jasmine/v2/jasmine_favicon.png"/>
+
+    
+    
+    
+    <script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/jquery-2.0.3.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/angular.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/angular-mocks.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/angular-animate.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/angular-route.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/angular-sanitize.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/bootstrap.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/toastr.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/moment.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/ui-bootstrap-tpls-0.7.0.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/spin.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/q.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/datajs-1.1.2.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/breeze.debug.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/breeze.angular.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/breeze.directives.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/breeze.saveErrorExtensions.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/breeze.metadata-helper.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/angular-file-upload.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/angular.breeze.storagewip.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/underscore.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/ng-grid-2.0.7.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/scripts/stringformat-1.09.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/app.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/config.exceptionHandler.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/config.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/config.route.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/metadata.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/batch/batchDetails.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/batch/batches.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/batch/orderCustomerLookupsBy.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/common/common.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/common/logger.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/common/spinner.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/common/bootstrap/bootstrap.dialog.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/customer/customerDetails.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/customer/customers.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/dashboard/dashboard.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/forms/shippingAddress.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/layout/shell.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/layout/sidebar.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/services/currencyExchange.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/services/customerItemListReader.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/services/datacontext.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/services/directives.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/services/entityManagerFactory.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/services/helper.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/services/masterCustomerAddressReader.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/services/model.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/services/model.validation.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/services/repositories.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/services/repository.abstract.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/services/repository.batch.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/services/repository.box.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/services/repository.customer.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/services/repository.item.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/services/routeMediator.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/upload/customerItemList/customerItemList.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/upload/masterCustomerAddress/masterCustomerAddress.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/app/wip/wip.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/tests/support/testFns.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/tests/support/customerTestData.js"></script>
+<script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/tests/support/functionBindPolyfill.js"></script>
+
+    <script type="text/javascript" src="file:///C:/Workspace/Projects/JavaScript/SiqCloset/SiqCloset.Web/tests/specs/learning.specs.js"></script>
+
+    <script type="text/javascript">
+
+        (function () {
+            var amdTestPath = "";
+            if (window.require && typeof window.require === "function" && amdTestPath !== "") {
+                if (window.chutzpah) {
+                    window.chutzpah.usingModuleLoader = true;
+                }
+
+                requirejs.config({
+                    map: {
+                        '*': {
+                            
+                            }
+                    }
+                });
+
+                window.require([amdTestPath], function () {
+
+                    console.log("!!_!! Stating Jasmine from AMD callback...");
+                    window.initializeJasmine();
+                });
+            }
+            else {
+                var currentWindowOnload = window.onload;
+
+                window.onload = function() {
+                    if (currentWindowOnload) {
+                        currentWindowOnload();
+                    }
+                    window.initializeJasmine();
+                };
+            }
+
+        })();
+    </script>
+</head>
+<body>
+</body>
+</html>
